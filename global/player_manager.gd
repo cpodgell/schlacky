@@ -1,9 +1,7 @@
 extends Node
 
-var player_0
-var player_1
-var player_2
-var player_3
+var players: Array[Node] = []
+@onready var PlayerScene := preload("res://character/player/player.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -11,11 +9,11 @@ func _ready() -> void:
 
 
 func create_players():
-	player_0 = load("res://character/player/player.tscn").instantiate()
-	player_1 = load("res://character/player/player.tscn").instantiate()
-	player_2 = load("res://character/player/player.tscn").instantiate()
-	player_3 = load("res://character/player/player.tscn").instantiate()
-
+	players.clear()
+	for i in range(global.number_of_players):
+		var player = PlayerScene.instantiate()
+		players.append(player)
+		add_child(player)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass

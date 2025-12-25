@@ -5,15 +5,19 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 func add_players():
-	$ysort.add_child(player_manager.player_0)
-	$ysort.add_child(player_manager.player_1)
-	$ysort.add_child(player_manager.player_2)
-	$ysort.add_child(player_manager.player_3)
-	player_manager.player_0.global_position = $start_positions/start_position_0.global_position
-	player_manager.player_1.global_position = $start_positions/start_position_1.global_position
-	player_manager.player_2.global_position = $start_positions/start_position_2.global_position
-	player_manager.player_3.global_position = $start_positions/start_position_3.global_position
+	var starts := $start_positions.get_children()
+	starts.sort_custom(func(a, b): return a.name < b.name)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+	for i in range(player_manager.players.size()):
+		var player = player_manager.players[i]
+
+		if player.get_parent() != $ysort:
+			player.reparent($ysort)
+
+		if i < starts.size():
+			player.global_position = starts[i].global_position
+
+
+
 func _process(delta: float) -> void:
 	pass
