@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dlfw21pgpu6yf"
+path="res://.godot/imported/schlacky.aseprite-fd71b548dc4bed89e05b145eda0b8a97.res"
+
+[deps]
+
+source_file="res://assets/pallette/schlacky.aseprite"
+dest_files=["res://.godot/imported/schlacky.aseprite-fd71b548dc4bed89e05b145eda0b8a97.res"]
+
+[params]
+

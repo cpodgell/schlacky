@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://cshb6amm83r53"]
+
+[ext_resource type="Script" uid="uid://17f067pbemf5" path="res://mechanics/player_start_position.gd" id="1_gtkdk"]
+[ext_resource type="Texture2D" uid="uid://cao3xyri0wern" path="res://assets/misc/marker.png" id="2_bd6m8"]
+
+[node name="player_start_position" type="Node2D"]
+script = ExtResource("1_gtkdk")
+
+[node name="Marker" type="Sprite2D" parent="."]
+texture = ExtResource("2_bd6m8")

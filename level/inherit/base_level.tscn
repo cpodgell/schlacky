@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://bhb5rbq20d7br"]
+
+[ext_resource type="Script" uid="uid://jatcvsujpdwl" path="res://level/inherit/base_level.gd" id="1_xsb8f"]
+[ext_resource type="PackedScene" uid="uid://cshb6amm83r53" path="res://mechanics/player_start_position.tscn" id="2_q300j"]
+
+[node name="base_level" type="Node2D"]
+script = ExtResource("1_xsb8f")
+
+[node name="TileMaps" type="Node2D" parent="."]
+
+[node name="start_positions" type="Node2D" parent="."]
+
+[node name="start_position_0" parent="start_positions" instance=ExtResource("2_q300j")]
+modulate = Color(1, 0, 0, 1)
+position = Vector2(199, 208)
+
+[node name="start_position_1" parent="start_positions" instance=ExtResource("2_q300j")]
+modulate = Color(0, 0, 0.99607843, 1)
+position = Vector2(475, 202)
+
+[node name="start_position_2" parent="start_positions" instance=ExtResource("2_q300j")]
+modulate = Color(0.98333335, 1, 0, 1)
+position = Vector2(201, 339)
+
+[node name="start_position_3" parent="start_positions" instance=ExtResource("2_q300j")]
+modulate = Color(0, 1, 0.14999986, 1)
+position = Vector2(485, 345)
+
+[node name="ysort" type="Node2D" parent="."]
+y_sort_enabled = true

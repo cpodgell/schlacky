@@ -1,0 +1,116 @@
+[gd_scene load_steps=8 format=4 uid="uid://2l8rxidok4e1"]
+
+[ext_resource type="Script" uid="uid://dtl26132qvfvl" path="res://character/sprite_body/sprite_body.gd" id="1_86qrs"]
+
+[sub_resource type="PortableCompressedTexture2D" id="PortableCompressedTexture2D_86qrs"]
+_data = PackedByteArray("AAADAAUAAAABAAAAkAAAAGAAAAC2AAAAUklGRq4AAABXRUJQVlA4TKIAAAAvj8AXEBcw//M///MfgAfHkSQ5yswpD6Q3a8IdcPKNtmbf+0eNoSsaDZ+I/jNw27YRu9sbvnsG/fdK13F4BiWSPUqG3qbv7XmsjI0x9jyYxdM6e19ytppTi+PJkQfz7a8L3YQBGVYdATLo2ma99s+DUGsOpzKVATCltv+zsmly+mOWruNwSiR7FFsI8zCdvBwz5pIXjG7CAKuOAHT9ajR5GAI=")
+size_override = Vector2(144, 96)
+
+[sub_resource type="Animation" id="Animation_3a0bs"]
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 0]
+}
+
+[sub_resource type="Animation" id="Animation_x40f3"]
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [1, 2]
+}
+
+[sub_resource type="Animation" id="Animation_y4m87"]
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [3]
+}
+
+[sub_resource type="Animation" id="Animation_scib7"]
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_scib7"]
+_data = {
+&"Disabled": SubResource("Animation_scib7"),
+&"Idle": SubResource("Animation_3a0bs"),
+&"Injure": SubResource("Animation_y4m87"),
+&"Walk": SubResource("Animation_x40f3")
+}
+
+[node name="sprite_body" type="Node2D"]
+script = ExtResource("1_86qrs")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = SubResource("PortableCompressedTexture2D_86qrs")
+hframes = 3
+vframes = 2
+metadata/_aseprite_wizard_interface_config_ = {
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"convert_fps_field": 60.0,
+"convert_ms_field": 16.0,
+"convert_to_fps": false,
+"embed_tex": true,
+"i_mode": 0,
+"keep_anim_length": false,
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"player": "AnimationPlayer",
+"scale": "1.0",
+"slice": "",
+"source": "res://assets/character/player/schlacky.aseprite",
+"source_uid": 2033012569854847372
+}
+metadata/_aseprite_wizard_source_file_hash_ = "b77efe966361ec8b30c64071dfda493a"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Sprite2D")
+libraries = {
+&"": SubResource("AnimationLibrary_scib7")
+}

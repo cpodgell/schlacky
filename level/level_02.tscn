@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=4 uid="uid://kuv4s5idjjbb"]
+
+[ext_resource type="PackedScene" uid="uid://bhb5rbq20d7br" path="res://level/inherit/base_level.tscn" id="1_6lx4v"]
+[ext_resource type="PackedScene" uid="uid://e7u14hli4si8" path="res://tilesets/default_map_layer.tscn" id="2_7m6d7"]
+[ext_resource type="TileSet" uid="uid://cxwqnt4qsa1he" path="res://tilesets/default_tile_set.tres" id="3_bulvt"]
+
+[node name="level_02" instance=ExtResource("1_6lx4v")]
+position = Vector2(73, 126)
+
+[node name="default_map_layer" parent="TileMaps" index="0" instance=ExtResource("2_7m6d7")]
+tile_map_data = PackedByteArray("AAADAAQAAAANAAAAAAAEAAQAAAANAAAAAAACAAQAAAAMAAAAAAAFAAQAAAANAAAAAAAGAAQAAAANAAAAAAAHAAQAAAANAAAAAAAIAAQAAAAOAAAAAAA=")
+tile_set = ExtResource("3_bulvt")
+
+[node name="start_position_0" parent="start_positions" index="0"]
+position = Vector2(47, 20)
+
+[node name="start_position_1" parent="start_positions" index="1"]
+position = Vector2(122, 19)
+
+[node name="start_position_2" parent="start_positions" index="2"]
+position = Vector2(47, -26)
+
+[node name="start_position_3" parent="start_positions" index="3"]
+position = Vector2(125, -25)
