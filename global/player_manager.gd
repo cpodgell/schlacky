@@ -11,9 +11,10 @@ func _ready() -> void:
 func create_players():
 	players.clear()
 	for i in range(global.number_of_players):
-		var player = PlayerScene.instantiate()
+		var player : Player = PlayerScene.instantiate()
 		players.append(player)
 		add_child(player)
+		player.set_player_number(i)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass

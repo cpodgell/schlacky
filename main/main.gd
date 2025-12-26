@@ -1,12 +1,12 @@
 extends Node2D
 
-@export var number_of_players: int = 1
+@export var number_of_players: int = 2
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	global.number_of_players = number_of_players
 	player_manager.create_players()
-	$Camera2D.is_current()
+	$Camera2D.make_current()
 	load_level()
 	
 	pass # Replace with function body.

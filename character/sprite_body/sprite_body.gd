@@ -9,7 +9,7 @@ var backwards : bool = false
 
 var dfr = 1
 var current_state 
-var anp_player
+var anp_player  : AnimationPlayer
 
 enum states { NONE, WALK, IDLE, DEAD, DISABLED, INJURE }
 
@@ -53,16 +53,16 @@ func play_injure():
 func play_anim(tmp_anim, tmp_frame_rate = null):
 	if(anp_player != null):
 		if(tmp_frame_rate != null):
-			anp_player.playback_speed = tmp_frame_rate
+			anp_player.speed_scale = tmp_frame_rate
 		else:
-			anp_player.playback_speed = dfr
+			anp_player.speed_scale = dfr
 		anp_player.play(tmp_anim)
 
 func play_anim_backwards(tmp_anim, tmp_frame_rate = null):
 	if(tmp_frame_rate != null):
-		anp_player.playback_speed = tmp_frame_rate
+		anp_player.speed_scale = tmp_frame_rate
 	else:
-		anp_player.playback_speed = dfr
+		anp_player.speed_scale = dfr
 	anp_player.play_backwards(tmp_anim)
 
 func attack_1_triggered():

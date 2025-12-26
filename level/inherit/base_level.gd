@@ -5,8 +5,8 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 func add_players():
-	var starts := $start_positions.get_children()
-	starts.sort_custom(func(a, b): return a.name < b.name)
+	var start_positions := $start_positions.get_children()
+	start_positions.sort_custom(func(a, b): return a.name < b.name)
 
 	for i in range(player_manager.players.size()):
 		var player = player_manager.players[i]
@@ -14,8 +14,8 @@ func add_players():
 		if player.get_parent() != $ysort:
 			player.reparent($ysort)
 
-		if i < starts.size():
-			player.global_position = starts[i].global_position
+		if i < start_positions.size():
+			player.global_position = start_positions[i].global_position
 
 
 
