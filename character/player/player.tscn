@@ -1,11 +1,15 @@
-[gd_scene load_steps=8 format=3 uid="uid://cmys3h2m51j1b"]
+[gd_scene load_steps=12 format=3 uid="uid://cmys3h2m51j1b"]
 
 [ext_resource type="Script" uid="uid://qhn36ab35e1h" path="res://character/player/player.gd" id="1_y0s34"]
 [ext_resource type="PackedScene" uid="uid://2l8rxidok4e1" path="res://character/sprite_body/sprite_body.tscn" id="2_8eijk"]
 [ext_resource type="Script" uid="uid://btmjtxoxxqx28" path="res://character/states/idle.gd" id="3_eu8pa"]
+[ext_resource type="PackedScene" uid="uid://dice1e7tigbs" path="res://weapons/pistol.tscn" id="3_noxpy"]
 [ext_resource type="Script" uid="uid://bqdjespu4h6wc" path="res://character/states/dead.gd" id="4_noxpy"]
 [ext_resource type="Script" uid="uid://fonbseyemth4" path="res://character/states/disabled.gd" id="5_0cf6c"]
 [ext_resource type="Script" uid="uid://b6770krcxnow0" path="res://character/states/walk.gd" id="6_v2h1c"]
+[ext_resource type="AudioStream" uid="uid://nim83ibntaux" path="res://assets/sfx/hits/hurt_blood.ogg" id="8_0cf6c"]
+[ext_resource type="PackedScene" uid="uid://bnk5012wxbkep" path="res://effects/blood.tscn" id="9_v2h1c"]
+[ext_resource type="PackedScene" uid="uid://6l1gwpv3latl" path="res://interface/health_bar/health_bar.tscn" id="10_qh58e"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hmqog"]
 radius = 5.4
@@ -22,6 +26,9 @@ shape = SubResource("CapsuleShape2D_hmqog")
 
 [node name="sprite_body" parent="sb_container" instance=ExtResource("2_8eijk")]
 position = Vector2(0, -24)
+
+[node name="Pistol" parent="sb_container" instance=ExtResource("3_noxpy")]
+position = Vector2(8, -12)
 
 [node name="States" type="Node" parent="."]
 
@@ -56,3 +63,13 @@ offset_left = 29.0
 offset_top = -22.0
 offset_right = 69.0
 offset_bottom = 1.0
+
+[node name="asp_damage" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_0cf6c")
+
+[node name="blood" parent="." instance=ExtResource("9_v2h1c")]
+position = Vector2(0, -12)
+emitting = false
+one_shot = true
+
+[node name="health_bar" parent="." instance=ExtResource("10_qh58e")]

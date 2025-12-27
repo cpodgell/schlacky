@@ -2,7 +2,6 @@
 class_name Player
 extends all_kinematic_bodies
 
-var health
 var current_state = null
 var state_name
 var states_map
@@ -64,11 +63,13 @@ func _change_state(state_name):
 
 func _input(event):
 	if Input.is_key_pressed(KEY_UP):
-		take_damage(10, 0, Vector2.ZERO, Vector2.ZERO, 0)
+		take_damage(10)
 
 	# Jump uses base class constant + helper
 	if event.is_action_pressed(player_prefix + global_input_map.JUMP) and is_on_floor() and not player_disabled:
 		try_jump()
+	if event.is_action_pressed(player_prefix + global_input_map.ACTION) and is_on_floor() and not player_disabled:
+		attack_1_on()
 
 	if current_state:
 		var new_state = current_state.handle_input(event)
@@ -81,11 +82,14 @@ func set_player_number(value):
 	group_name = "P" + str(player_number)
 	add_to_group(group_name)
 
+func get_look_direction():
+	return look_direction
+
 func update_camera():
 	pass
 
 func attack_1_on():
-	pass
+	$sb_container/Pistol.fire()
 
 func attack_1_off():
 	pass
@@ -99,7 +103,12 @@ func idle():
 func write_x(_x):
 	$lbl_state2.text = str(_x)
 
-func take_damage(_damage: int, _pushback: int, _direction: Vector2, _bullet_position: Vector2, _damage_type) -> int:
+func take_damage(_damage: int) -> int:
+	$asp_damage.play()
+	$blood.restart()
+	$blood.emitting = true
+	$health_bar.add_health(-1 * _damage)
+	var health = $health_bar.value
 	if health < 0:
 		_change_state("disabled")
 		$pts_blood_splatter.play_effect()

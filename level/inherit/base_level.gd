@@ -17,7 +17,8 @@ func add_players():
 		if i < start_positions.size():
 			player.global_position = start_positions[i].global_position
 
-
+func add_bullet(_bullet):
+	$ysort.add_child(_bullet)
 
 func _process(delta: float) -> void:
 	pass

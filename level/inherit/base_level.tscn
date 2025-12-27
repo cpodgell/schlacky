@@ -11,11 +11,11 @@ script = ExtResource("1_xsb8f")
 [node name="start_positions" type="Node2D" parent="."]
 
 [node name="start_position_0" parent="start_positions" instance=ExtResource("2_q300j")]
-modulate = Color(1, 0, 0, 1)
+modulate = Color(0.68, 0.3876, 0.46557322, 1)
 position = Vector2(199, 208)
 
 [node name="start_position_1" parent="start_positions" instance=ExtResource("2_q300j")]
-modulate = Color(0, 0, 0.99607843, 1)
+modulate = Color(0, 0.6, 0.6, 0.8666667)
 position = Vector2(475, 202)
 
 [node name="start_position_2" parent="start_positions" instance=ExtResource("2_q300j")]

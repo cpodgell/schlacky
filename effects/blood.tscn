@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://bnk5012wxbkep"]
+
+[ext_resource type="Texture2D" uid="uid://bj83igqimckb4" path="res://assets/effects/blood.png" id="1_xnilh"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_4337f"]
+particles_animation = true
+particles_anim_h_frames = 6
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_53cnx"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 3.0
+direction = Vector3(0, 0, 0)
+spread = 107.158
+initial_velocity_max = 87.11
+gravity = Vector3(0, 0, 0)
+anim_speed_min = 2.4099998
+anim_speed_max = 5.0899997
+
+[node name="blood" type="GPUParticles2D"]
+material = SubResource("CanvasItemMaterial_4337f")
+amount = 4
+texture = ExtResource("1_xnilh")
+explosiveness = 0.97
+randomness = 0.86
+process_material = SubResource("ParticleProcessMaterial_53cnx")

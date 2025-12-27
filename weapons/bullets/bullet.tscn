@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://bodcqunj8moyp"]
+
+[ext_resource type="Script" uid="uid://e81as2a2fhuh" path="res://weapons/bullets/bullet.gd" id="1_d6jwi"]
+[ext_resource type="Texture2D" uid="uid://rtfdo8moo3u5" path="res://assets/misc/8x8_Circle.png" id="1_si2ka"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_d6jwi"]
+radius = 3.0
+height = 8.0
+
+[node name="Bullet" type="Area2D"]
+collision_layer = 4
+collision_mask = 3
+script = ExtResource("1_d6jwi")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1, 0.625)
+texture = ExtResource("1_si2ka")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_d6jwi")
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

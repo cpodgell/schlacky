@@ -11,10 +11,12 @@ func _ready() -> void:
 	
 	pass # Replace with function body.
 
+func _physics_process(delta: float) -> void:
+	$Camera2D.update_camera(delta)
+
 func load_level():
 	var current_level = preload("res://level/level_02.tscn").instantiate()
 	global.current_level = current_level
 	$staging.add_child(current_level)
 	global.current_level.add_players()
-	if(player_manager.players.size() > 0):
-		$Camera2D.target = player_manager.players[0]
+	
