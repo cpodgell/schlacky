@@ -19,11 +19,11 @@ modulate = Color(0, 0.6, 0.6, 0.8666667)
 position = Vector2(475, 202)
 
 [node name="start_position_2" parent="start_positions" instance=ExtResource("2_q300j")]
-modulate = Color(0.98333335, 1, 0, 1)
+modulate = Color(0.99607843, 0.90588236, 0.38039216, 1)
 position = Vector2(201, 339)
 
 [node name="start_position_3" parent="start_positions" instance=ExtResource("2_q300j")]
-modulate = Color(0, 1, 0.14999986, 1)
+modulate = Color(0.3882353, 0.78039217, 0.3019608, 1)
 position = Vector2(485, 345)
 
 [node name="ysort" type="Node2D" parent="."]

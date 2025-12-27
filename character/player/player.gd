@@ -6,9 +6,11 @@ var current_state = null
 var state_name
 var states_map
 var player_disabled = false
+var player_dead = false
 var player_number = 0
 var player_prefix = ""
 var group_name
+var start_position : Vector2 = Vector2.ZERO
 
 func init_states():
 	states_map = {
@@ -24,7 +26,19 @@ func _ready():
 	current_state = states_map["idle"]
 	current_state.enter()
 
+func reset():
+	velocity = Vector2.ZERO
+	$health_bar.reset()
+	_change_state('idle')
+	player_disabled = false
+	player_dead = false
+	global_position = start_position
+	$sb_container.rotation = 0
+	global_collisions.set_player(self)
+
 func _physics_process(delta: float) -> void:
+	if(player_dead):
+		$sb_container.rotation += .3
 	# --- always apply gravity (platformer baseline) ---
 	if not is_on_floor():
 		velocity += get_gravity() * delta
@@ -60,6 +74,9 @@ func _change_state(state_name):
 		current_state = states_map[state_name]
 		current_state.enter()
 		$lbl_state.text = current_state.get_state()
+
+func set_player_color(_color):
+	$sb_container/sprite_body.modulate = _color
 
 func _input(event):
 	if Input.is_key_pressed(KEY_UP):
@@ -103,14 +120,25 @@ func idle():
 func write_x(_x):
 	$lbl_state2.text = str(_x)
 
+func death():
+	velocity.y = JUMP_VELOCITY
+	$asp_death.play()
+	_change_state("dead")
+	$tmr_respawn.start()
+
+
+func add_health(_health):
+	$health_bar.add_health(_health)
+
 func take_damage(_damage: int) -> int:
 	$asp_damage.play()
 	$blood.restart()
 	$blood.emitting = true
 	$health_bar.add_health(-1 * _damage)
 	var health = $health_bar.value
-	if health < 0:
-		_change_state("disabled")
-		$pts_blood_splatter.play_effect()
-		$Sprite_Body.visible = false
+	if health <= 0:
+		death()
 	return health
+
+func _on_tmr_respawn_timeout() -> void:
+	reset()

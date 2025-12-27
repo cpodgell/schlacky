@@ -1,11 +1,14 @@
 extends TextureProgressBar
 
-var max_health = 20
+var max_health = 5
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	max_value = max_health
 	pass # Replace with function body.
+
+func reset():
+	value = max_health
 
 func add_health(_value):
 	value += _value

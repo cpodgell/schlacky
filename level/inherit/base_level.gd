@@ -16,9 +16,11 @@ func add_players():
 
 		if i < start_positions.size():
 			player.global_position = start_positions[i].global_position
+			player.start_position = start_positions[i].global_position
+			player.set_player_color(start_positions[i].modulate)
 
-func add_bullet(_bullet):
-	$ysort.add_child(_bullet)
+func add_to_ysort(_object):
+	$ysort.add_child(_object)
 
 func _process(delta: float) -> void:
 	pass

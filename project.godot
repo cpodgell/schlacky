@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 global="*res://global/global.gd"
 player_manager="*res://global/player_manager.gd"
 global_input_map="*res://global/global_input_map.gd"
+global_collisions="*res://global/global_collisions.gd"
 
 [display]
 

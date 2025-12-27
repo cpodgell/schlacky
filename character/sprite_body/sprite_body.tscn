@@ -6,6 +6,22 @@
 _data = PackedByteArray("AAADAAUAAAABAAAAkAAAAGAAAAC2AAAAUklGRq4AAABXRUJQVlA4TKIAAAAvj8AXEBcw//M///MfgAfHkSQ5yswpD6Q3a8IdcPKNtmbf+0eNoSsaDZ+I/jNw27YRu9sbvnsG/fdK13F4BiWSPUqG3qbv7XmsjI0x9jyYxdM6e19ytppTi+PJkQfz7a8L3YQBGVYdATLo2ma99s+DUGsOpzKVATCltv+zsmly+mOWruNwSiR7FFsI8zCdvBwz5pIXjG7CAKuOAHT9ajR5GAI=")
 size_override = Vector2(144, 96)
 
+[sub_resource type="Animation" id="Animation_scib7"]
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+
 [sub_resource type="Animation" id="Animation_3a0bs"]
 length = 0.2
 loop_mode = 1
@@ -20,22 +36,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [0, 0]
-}
-
-[sub_resource type="Animation" id="Animation_x40f3"]
-length = 0.2
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = false
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [1, 2]
 }
 
 [sub_resource type="Animation" id="Animation_y4m87"]
@@ -54,8 +54,8 @@ tracks/0/keys = {
 "values": [3]
 }
 
-[sub_resource type="Animation" id="Animation_scib7"]
-length = 0.1
+[sub_resource type="Animation" id="Animation_x40f3"]
+length = 0.2
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -64,10 +64,10 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = false
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [4]
+"values": [1, 2]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_scib7"]
@@ -83,6 +83,7 @@ script = ExtResource("1_86qrs")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
+position = Vector2(-1, -11)
 texture = SubResource("PortableCompressedTexture2D_86qrs")
 hframes = 3
 vframes = 2
