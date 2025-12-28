@@ -42,3 +42,31 @@ func set_all_mask_bits(body: CollisionObject2D, bit := true) -> void:
 func set_player(body: PhysicsBody2D) -> void:
 	set_layer_bits(body, [PLAYER])				# is Player (3)
 	set_mask_bits(body, [ENVIRONMENT, WALLS, PLAYER])		# collides with Env (1) + Enemy (4)
+
+func set_enemy(body: PhysicsBody2D) -> void:
+	set_layer_bits(body, [ENEMY])
+	set_mask_bits(body, [WALLS, PLAYER, ENEMY])
+
+func set_enemy_dead_walls(body: PhysicsBody2D) -> void:
+	set_all_layer_bits(body, false)
+	set_all_mask_bits(body, false)
+	set_mask_bits(body, [ENEMY], true)
+	set_mask_bits(body, [WALLS], true)
+	print_layer_bits(body)
+	print_mask_bits(body)
+#######################
+# Debug helpers
+
+func print_layer_bits(body: CollisionObject2D) -> void:
+	var layers := []
+	for i in range(1, 33):	# 1..32 inclusive
+		if body.get_collision_layer_value(i):
+			layers.append(i)
+	print("%s layer: %s" % [body.name, layers])
+
+func print_mask_bits(body: CollisionObject2D) -> void:
+	var masks := []
+	for i in range(1, 33):	# 1..32 inclusive
+		if body.get_collision_mask_value(i):
+			masks.append(i)
+	print("%s mask: %s" % [body.name, masks])

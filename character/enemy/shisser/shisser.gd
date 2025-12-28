@@ -6,7 +6,7 @@ var direction: int = 1
 
 func _ready() -> void:
 	
-	$AnimationPlayer.play("default")
+	$AnimationPlayer.play("Walk")
 	
 	# Set the collision mask to detect the player and walls, but prevent being pushed by the player
 	collision_mask = 2 | 3 | 4  # Layer 2 for walls, and Layer 3 and 4 for any other layers you need
@@ -35,3 +35,12 @@ func _physics_process(delta: float) -> void:
 		direction *= -1
 		# Optionally flip the sprite horizontally to face the new direction
 		$Sprite2D.flip_h = (direction == -1)
+
+func _on_ara_top_body_entered(body: Node2D) -> void:
+	if body is Player:
+		if body.velocity.y >= 0:
+			speed = 0
+			body.velocity.y += -200
+			global_collisions.set_enemy_dead_walls(self)
+			$ara_top/cls_top.set_deferred("disabled", true)
+			$AnimationPlayer.play("Squish")

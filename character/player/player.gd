@@ -37,6 +37,7 @@ func reset():
 	global_collisions.set_player(self)
 
 func _physics_process(delta: float) -> void:
+	$lbl_state_y.text = "Y: " + str(velocity.y)
 	if(player_dead):
 		$sb_container.rotation += .3
 	# --- always apply gravity (platformer baseline) ---
@@ -122,7 +123,7 @@ func walk(_crouching):
 func idle():
 	$sb_container/sprite_body.play_idle()
 
-func write_x(_x):
+func print_x(_x):
 	$lbl_state2.text = str(_x)
 
 func death():

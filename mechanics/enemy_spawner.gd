@@ -2,12 +2,14 @@ extends Node2D
 
 @export var enemy_scene : PackedScene  # Export PackedScene
 @export var spawn_frequency : int = 1
+@export var enabled : bool = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	visible = false
 	$Timer.wait_time = spawn_frequency
-	$Timer.start()
+	if(enabled):
+		$Timer.start()
 	pass # Replace with function body.
 
 

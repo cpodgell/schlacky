@@ -28,7 +28,7 @@ func handle_input(event):
 
 
 	host_reference.input_x = clamp(x, -1.0, 1.0)
-	host_reference.write_x(host_reference.input_x)
+	host_reference.print_x(host_reference.input_x)
 
 	# Transition logic
 	if abs(host_reference.input_x) > 0.0:
