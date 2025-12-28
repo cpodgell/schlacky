@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://gi38rru804od"]
+[gd_scene load_steps=5 format=3 uid="uid://gi38rru804od"]
 
 [ext_resource type="Texture2D" uid="uid://dvyeko2pkauk7" path="res://assets/effects/ricochet-sheet.png" id="1_d808p"]
+[ext_resource type="Script" uid="uid://scrf4odqua57" path="res://effects/ricochet.gd" id="2_41nl3"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_41nl3"]
 particles_animation = true
@@ -21,3 +22,8 @@ material = SubResource("CanvasItemMaterial_41nl3")
 amount = 1
 texture = ExtResource("1_d808p")
 process_material = SubResource("ParticleProcessMaterial_oms6s")
+script = ExtResource("2_41nl3")
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

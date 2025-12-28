@@ -11,6 +11,7 @@ enum WeaponType {
 signal reload(time)
 var shots_before_reload = 1
 var shots_counter = 0
+var disabled = false
 
 var bullet_scene = preload("res://weapons/bullets/bullet.tscn")
 var gun_owner
@@ -21,12 +22,19 @@ var gun_owner
 var machine_gun
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	weapon_type = WeaponType.SHOTGUN
 	for c in $gun_sprites.get_children():
 		c.visible = false
 	match weapon_type:
 		WeaponType.PISTOL:
+			var g : ParticleProcessMaterial 
+			$casings.process_material.anim_offset_max = 0.5
+			$casings.process_material.anim_offset_min = 0.5
 			pistol.visible = true
 		WeaponType.SHOTGUN:
+			$casings.process_material.anim_offset_max = 0.0
+			$casings.process_material.anim_offset_min = 0.0
+			$tmr_shot_delay.wait_time = .7
 			shotgun.visible = true
 		WeaponType.MACHINE_GUN:
 			machine_gun.visible = true
@@ -34,7 +42,14 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 func fire():
+	$casings.restart()
+	$casings.emitting = true
+	if(disabled):
+		return
 	if(weapon_type == WeaponType.SHOTGUN):
+		disabled = true
+		$tmr_reload_sound.start()
+		$tmr_shot_delay.start()
 		for i in 10:
 			var spread = randf_range(-.15, .15)
 			var speed = randf_range(200, 450)
@@ -54,3 +69,11 @@ func spawn_bullet(_direction = Vector2.ZERO, _speed = 0):
 	if(_speed != 0):
 		bullet.speed = _speed
 	bullet.global_position = $Marker2D.global_position
+
+
+func _on_tmr_shot_delay_timeout() -> void:
+	disabled = false
+
+
+func _on_tmr_reload_sound_timeout() -> void:
+	$asp_reload.play()

@@ -1,6 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://bnk5012wxbkep"]
+[gd_scene load_steps=6 format=3 uid="uid://bnk5012wxbkep"]
 
 [ext_resource type="Texture2D" uid="uid://bj83igqimckb4" path="res://assets/effects/blood.png" id="1_xnilh"]
+[ext_resource type="Script" uid="uid://dktxjbp4hqbvu" path="res://effects/blood.gd" id="2_53cnx"]
+[ext_resource type="AudioStream" uid="uid://nim83ibntaux" path="res://assets/sfx/hits/hurt_blood.ogg" id="3_o1frw"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_4337f"]
 particles_animation = true
@@ -26,3 +28,7 @@ texture = ExtResource("1_xnilh")
 explosiveness = 0.97
 randomness = 0.86
 process_material = SubResource("ParticleProcessMaterial_53cnx")
+script = ExtResource("2_53cnx")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_o1frw")

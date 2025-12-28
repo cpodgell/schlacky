@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://cxr60bx56li3o"]
+
+[ext_resource type="Script" uid="uid://bacyeh0kj26a7" path="res://mechanics/health.gd" id="1_gog7m"]
+[ext_resource type="AudioStream" uid="uid://crpoy8nh4outo" path="res://assets/sfx/death/random.wav" id="2_udgh2"]
+
+[node name="Health" type="Node"]
+script = ExtResource("1_gog7m")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_udgh2")
