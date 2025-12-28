@@ -10,7 +10,9 @@ var is_disabled := false
 var inertia := 50.0
 
 # --- PLATFORMER TUNING (moved from Player) ---
-const MAX_SPEED = 220.0
+var MAX_SPEED = 220.0
+const CROUCH_SPEED_MAX = 150
+const WALK_SPEED_MAX = 220.0
 const JUMP_VELOCITY = -300.0
 const acceleration = 1600.00
 const deceleration = 1600.0
@@ -64,7 +66,7 @@ func apply_external_force(amount: float, direction: Vector2, max_speed: float) -
 # PLATFORMER HELPERS
 
 func accelerate_horizontal(delta: float) -> void:
-	var target_vx := input_x * MAX_SPEED
+	var target_vx = input_x * MAX_SPEED
 	if input_x != 0.0:
 		velocity.x = move_toward(velocity.x, target_vx, acceleration * delta)
 	else:

@@ -111,8 +111,13 @@ func attack_1_on():
 func attack_1_off():
 	pass
 
-func walk():
-	$sb_container/sprite_body.play_walk()
+func walk(_crouching):
+	if(_crouching):
+		MAX_SPEED = CROUCH_SPEED_MAX
+		$sb_container/sprite_body.play_crouch_walk()
+	else:
+		MAX_SPEED = WALK_SPEED_MAX
+		$sb_container/sprite_body.play_walk()
 
 func idle():
 	$sb_container/sprite_body.play_idle()

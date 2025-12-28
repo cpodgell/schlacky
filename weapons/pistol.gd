@@ -42,10 +42,9 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 func fire():
-	$casings.restart()
-	$casings.emitting = true
 	if(disabled):
 		return
+	release_casing()
 	if(weapon_type == WeaponType.SHOTGUN):
 		disabled = true
 		$tmr_reload_sound.start()
@@ -70,7 +69,10 @@ func spawn_bullet(_direction = Vector2.ZERO, _speed = 0):
 		bullet.speed = _speed
 	bullet.global_position = $Marker2D.global_position
 
-
+func release_casing():
+	$casings.restart()
+	$casings.emitting = true
+	
 func _on_tmr_shot_delay_timeout() -> void:
 	disabled = false
 

@@ -4,8 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://bnk5012wxbkep" path="res://effects/blood.tscn" id="2_87bvc"]
 [ext_resource type="PackedScene" uid="uid://cxr60bx56li3o" path="res://mechanics/health.tscn" id="3_203s1"]
 
-[sub_resource type="PortableCompressedTexture2D" id="PortableCompressedTexture2D_884uy"]
-_data = PackedByteArray("AAADAAUAAAABAAAAIAAAACQAAADGAAAAUklGRr4AAABXRUJQVlA4TLIAAAAvH8AIEB8gEEjyV1hlUIFAkusO8wsEkmD3V3j+A7D2gavatlVl/5zbAE1zI+D66ycNFuHZ3RFxOAeJENF/skmbdjOf4P8PxXlMI+cdqpjvyPDhdfMT2TbPlC3n9/PcOalffETNSc1X1ERqGlGHH0crBmAB1KIAA/zxobjFNHKpQxVLOzJY2pF1SyeybSlTtixl9/PcUkaqJTdSc47cEleaU5fD9xN1hSiwhBiABYAowAAA")
+[sub_resource type="PortableCompressedTexture2D" id="PortableCompressedTexture2D_203s1"]
+_data = PackedByteArray("AAADAAUAAAABAAAAIAAAACQAAADGAAAAUklGRr4AAABXRUJQVlA4TLIAAAAvH8AIEB8gkE3xaVoCgSTkmSYVCKQ4p12e/wDs3OC2te22eQ3BCQxVglbhCM7sNEVw+QZyWiWOQpXEA/y/wwgR/SebtGk38wn+/y44TzU7X4rB/CbFD2/MX1JnXqjW+fHaO5f4xbM4S5wPYpVYs7j7ONoUgQFYpABs8cd3wS3V7NJSDJZuUrR0kxpLL6mzVKjWUjlee0tFoiU3ibOyW9WBszju3q/iASnAElIEBgApAFsA")
 size_override = Vector2(32, 36)
 
 [sub_resource type="Animation" id="Animation_203s1"]
@@ -40,7 +40,7 @@ script = ExtResource("1_884uy")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
 position = Vector2(0, -9)
-texture = SubResource("PortableCompressedTexture2D_884uy")
+texture = SubResource("PortableCompressedTexture2D_203s1")
 hframes = 2
 vframes = 2
 metadata/_aseprite_wizard_interface_config_ = {
@@ -64,7 +64,7 @@ metadata/_aseprite_wizard_config_ = {
 "source": "res://assets/character/enemy/shitass.aseprite",
 "source_uid": 1000357481702102203
 }
-metadata/_aseprite_wizard_source_file_hash_ = "226db304c273268e6d9a471f3fdb4000"
+metadata/_aseprite_wizard_source_file_hash_ = "0e2594459c65c6994184bd110f8767f5"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

@@ -22,8 +22,10 @@ func handle_input(event):
 
 	# Gather horizontal-only input (-1..1) and store it on the host.
 	var x := Input.get_joy_axis(host_reference.player_number, JOY_AXIS_LEFT_X)
+
 	if abs(x) <= 0.35:
 		x = 0.0
+
 
 	host_reference.input_x = clamp(x, -1.0, 1.0)
 	host_reference.write_x(host_reference.input_x)

@@ -76,11 +76,11 @@ _data = {
 
 [node name="Pistol" type="Node2D"]
 script = ExtResource("1_5icxk")
+weapon_type = null
 
 [node name="casings" type="GPUParticles2D" parent="."]
 material = SubResource("CanvasItemMaterial_qvlev")
 position = Vector2(4, -1)
-rotation = 0.020559013
 emitting = false
 amount = 1
 texture = ExtResource("4_icjny")
