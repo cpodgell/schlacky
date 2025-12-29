@@ -1,7 +1,7 @@
 extends Node
 
 var node = null
-var health = 2
+@export var health = 40
 
 @export var hurt_sound: AudioStream
 @export var death_sound: AudioStream

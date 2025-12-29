@@ -18,6 +18,7 @@ anim_speed_min = 3.3999999
 anim_speed_max = 6.02
 
 [node name="ricochet" type="GPUParticles2D"]
+z_index = 1000
 material = SubResource("CanvasItemMaterial_41nl3")
 amount = 1
 texture = ExtResource("1_d808p")

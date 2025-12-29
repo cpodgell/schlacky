@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://kuv4s5idjjbb"]
+[gd_scene load_steps=11 format=4 uid="uid://kuv4s5idjjbb"]
 
 [ext_resource type="PackedScene" uid="uid://bhb5rbq20d7br" path="res://level/inherit/base_level.tscn" id="1_6lx4v"]
 [ext_resource type="PackedScene" uid="uid://e7u14hli4si8" path="res://tilesets/default_map_layer.tscn" id="2_7m6d7"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dfftwywwxu2s3" path="res://items/heart.tscn" id="4_c1m10"]
 [ext_resource type="PackedScene" uid="uid://cdjj5eat0aw0n" path="res://character/enemy/shisser/shisser.tscn" id="5_odkgp"]
 [ext_resource type="PackedScene" uid="uid://dw8n47su7k3wo" path="res://mechanics/enemy_spawner.tscn" id="6_ijmwx"]
+[ext_resource type="PackedScene" uid="uid://cxo1p2pe1wy0j" path="res://character/enemy/shnibber/shnibber.tscn" id="8_eh72w"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eh72w"]
 texture = ExtResource("4_0wnyk")
@@ -105,3 +106,6 @@ enemy_scene = ExtResource("5_odkgp")
 [node name="Enemy_Spawner3" parent="ysort" index="8" instance=ExtResource("6_ijmwx")]
 position = Vector2(663, 126)
 enemy_scene = ExtResource("5_odkgp")
+
+[node name="shnibber" parent="ysort" index="9" instance=ExtResource("8_eh72w")]
+position = Vector2(356, 21)

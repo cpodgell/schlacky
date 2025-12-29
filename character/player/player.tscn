@@ -79,6 +79,7 @@ offset_bottom = -23.0
 text = "X"
 
 [node name="lbl_state_y" type="Label" parent="."]
+visible = false
 offset_left = 31.0
 offset_top = -24.0
 offset_right = 71.0

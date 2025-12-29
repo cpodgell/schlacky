@@ -102,6 +102,7 @@ emitting = false
 one_shot = true
 
 [node name="Health" parent="." instance=ExtResource("3_203s1")]
+health = 2
 hurt_sound = ExtResource("5_mp44s")
 death_sound = ExtResource("5_mp44s")
 

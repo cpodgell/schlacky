@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://trik1sg0ixr6"
+path="res://.godot/imported/shnibber.aseprite-2a85781a23c7c2d48c0041adcbfe11b6.res"
+
+[deps]
+
+source_file="res://assets/character/enemy/shnibber.aseprite"
+dest_files=["res://.godot/imported/shnibber.aseprite-2a85781a23c7c2d48c0041adcbfe11b6.res"]
+
+[params]
+

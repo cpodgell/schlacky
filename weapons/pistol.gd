@@ -49,10 +49,10 @@ func fire():
 		disabled = true
 		$tmr_reload_sound.start()
 		$tmr_shot_delay.start()
-		for i in 20:
+		for i in 12:
 			var spread = randf_range(-.15, .15)
-			var speed = randf_range(450, 700)
-			spawn_bullet(Vector2(0,spread), speed, .5)
+			var speed = randf_range(390, 550)
+			spawn_bullet(Vector2(0,spread), speed, .3)
 			$asp_shotgun.play()
 	if(weapon_type == WeaponType.PISTOL):
 		var speed = 500

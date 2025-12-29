@@ -29,7 +29,6 @@ func handle_input(event):
 			host_reference.set_crouching(false)
 	else:
 		host_reference.set_crouching(true)
-
 	host_reference.input_x = x
 	host_reference.input_y = y
 	host_reference.print_x(host_reference.input_x)
