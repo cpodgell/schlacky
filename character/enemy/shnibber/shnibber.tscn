@@ -1,14 +1,16 @@
-[gd_scene load_steps=12 format=4 uid="uid://cxo1p2pe1wy0j"]
+[gd_scene load_steps=14 format=4 uid="uid://cxo1p2pe1wy0j"]
 
 [ext_resource type="Script" uid="uid://d1ny0ykilsy5o" path="res://character/enemy/shnibber/shnibber.gd" id="1_qq37m"]
 [ext_resource type="PackedScene" uid="uid://cxr60bx56li3o" path="res://mechanics/health.tscn" id="2_jrq30"]
 [ext_resource type="AudioStream" uid="uid://duq4gc2vw853j" path="res://assets/sfx/death/hurt_rat_02.ogg" id="3_6s6l5"]
+[ext_resource type="Texture2D" uid="uid://bmss0jpsjuvbp" path="res://assets/misc/corshair.png" id="3_t0nwx"]
 [ext_resource type="AudioStream" uid="uid://d1orc3c018dsj" path="res://assets/sfx/death/hurt_rat_01.ogg" id="4_hdavi"]
 [ext_resource type="PackedScene" uid="uid://bnk5012wxbkep" path="res://effects/blood.tscn" id="5_6s6l5"]
+[ext_resource type="PackedScene" uid="uid://c3vyhjohw70vj" path="res://character/enemy/shnibber/spr_cornea.tscn" id="6_hdavi"]
 
-[sub_resource type="PortableCompressedTexture2D" id="PortableCompressedTexture2D_6s6l5"]
-_data = PackedByteArray("AAADAAUAAAABAAAAwAAAAIAAAABGBQAAUklGRj4FAABXRUJQVlA4TDEFAAAvv8AfECcgECAEOfHfY0MgQNjwHyKNQIAQIcT/nPkPAPBXUYF2bbtVZAtngLqcQMNJgJYTADv/oLC09fB53PsX0X8JbiM5kqTq2xoPdo65P2z/jEVEOa6dxMo5j4Lb71HL1Cv37nNNzZirug4iw30Pwza9tNE9lJuGyzUvARhZLrptdy14LEJzA/ftcw207gz3IJjComW7XKuE3RXWhTvbVVLdvMRVct19haukui9e4SqZ7o1cUdhVUt37pWt6xDXg1q4lbuZjrmfmnbt0RdyS5Xbzeahlf25Uv6CLQu5huYm7nOmheww36WFjVy1et75IjtMW/8CZV+hSGa5BIfcw3Oq0T9jzzgVe1y5ji7nfCkzdZsBA5HM5amyct8d9Gj1o7pfXVUvwvB3uw1q96nvcDZ3Xhd3j7XRUjHvYdMGkK+Lu6kNpDsZynZG6M8v9y5X1sXC4SOd1hTsGxT4Wx6GfuKv8bhIdLne8gl8r4k7q9DRwvKAn3BPuCUT07clywUhmuWN9EZGo4CwX7JL53N7o7dt2n2EXh1zD6GtGtutMd/3PyPU0R2tdru+do7Uuz++Gp5WuLlyu3y2dy5Xkjrctb/tNomUNI478vyPigJu8rp9wDyjs3nnWQvXpOl1h9xnudIyd1Fxl7HBVkNdFOudg37GEXTXbbW1P3IW6wu6ruwY7YE4XaNPu03Yjl+PEH5zbRaabzbGCeDgGM3AsGg6XirTrNE67bsDlOPEHdylXc7jQYM2bhhwrGIzHhecKNjZcoEu7JPxHMsoGXdbkH9FmN/hdAmG4NuSWq6vThlchTCEbIZbX5XeD08abYzGeq+FSlYhb3YNP3MH+lA1vjj4l4FbXgxu/5x3bGkXdn20zNt+ON88edZPRzp49OBc23ZfjtM2sT10zXRR2bZfpos1z3h/0reF010bSRXRxF7vH1Wiq5KJ8134LV9mIhGtzuMS50rsEO901RWpWOwnXP29RibsWt98Ud2WP6V3qleZEdhq1xF3JYxoTSrf4wX3X/N2Nu3J36b0HXDXuSk2DjVyudV3hrvX1cH15HI5XR64o7sp9ocszlhJ3Jf9xFXfl7iJWS8JL2JUb95l4XGOWCoq71l1X8Bp3pX/tmoCr0Yg3Nu7Krg8TXsKuxPZZg402J09xV/Ijm/Gpn9W4KzPwgUGDmW+s4RJZrrz6QF8rOJhiuKzr05UXiRqfx486muGm5V2i99+71NHn4Mn7vwJyJT5TzOIQ62cencUbq1x2wJX4TLmj41VzB7Ejnq7s5K7vdNU6L+48wDYhzfOnMX6BxEjU0PG5uM+TqAW49AEuSFfWM6WbwUHELD6YBbukrcNGXnoosi8ies8Fhn5VGVzsqQEziJit0E3Ma/50eZwqcafnj8SxrCcHpsIf0fHYwQt9Pi07OPmP6Bh2+Mb5Qqk1ay5E38fxwJoOjTc7k02HyHCZFzk5B/s8RqTRcpsz7w72M2rxuvQza2KOxTzdARcP6UqKHL0QGL0ZN7Xeemq7ozYboxquDnfhSq9n1rLjV+rMcPHCLvG9ZZj4WA6yXM3lSnwio58GgZhnWRJceU/Eg5dDEiW4Uh/Y5yyAnPss5sqvMYLLsdQSdiXGehQdjGXmcjXDlVgXs7DGMijuSozEYARcAvqsJLgSj0tMA60h3tawKyn802mwB2W40reh6nIsGa78bTShlmPJcGVv1qolwZW87CjBlR2ZlQxX9tXZh4hZjT3sWpBgbzvR1SchwZUf3Y3kO3AxfyjBtWARFQ0gSnBltQEA")
-size_override = Vector2(192, 128)
+[sub_resource type="PortableCompressedTexture2D" id="PortableCompressedTexture2D_t0nwx"]
+_data = PackedByteArray("AAADAAUAAAABAAAAgAAAAIIAAABiBAAAUklGRloEAABXRUJQVlA4TE0EAAAvf0AgECcgECAEOfHfY0MgQNjwHyKNQIAQIcT/nPkPAPBXUYF2bat1ZEvKwIxWBPZJwI0SKIv8gxKwAdd9/kX034HbtpGkdNbTmd2F0jke0f4xioje8TrIVILjI6NvO1fq1xNeaiNaIzHUhxp9xHqpHyW8dA+IEQVtGZkP8NoGo8degir2cjJBEfZKFWalvAb2KsNluM4qs6rcXOXmIo1SEPYqc9yeyctlz1PyYj61HkNyUvTi63QVX1fHH+hFOJf92ul5cl4iyEsjkScq/Rn0Wn7LxeHygjy4L2bvFQTEHQsaA1DOC0KWK+BB63JnvUaPvM6o1vBn0kgPvnkl6MEZDr02wTfPkCf0uqr8KUBgHl+YIqdQcFkyXgP3daa86nTr9RJXBqnylHn+BvRvI+8hZeT/LivtNb5P+5sjAVx475CBY37LPJ6DlVliqddV5kosC1nIwgmv4UlOta2q12gBV2JZil6I/cPMwggk6QVom0RjDybtRR6WRGOCYYOkvRr5xhi1hbmd10x4+cZ8XLit4b1uEBx4AfY0WpnH0CB+MBsJ5xVORaDXJKSV94KRKO5QK/By9IYjofXTG44E26sWvJclG2iOI5c4Cume/VTidUl5RYCrCjJYl4xXxK1LwaaWbetlr0Z6JYhutkX9da/jY64E7bJab3sZI2dItLXqXv949cLSUE+Jkiu9SlTk+FC0p6L0cS8Uov29oDHTjWus6x8EXsdHbXVzQw0o+FfTiDXTU+oFMbZuA1/FaX0DswFZilTwLeXhMnedVWZVublK3YtS0Ktex+2ZfglHD7wy2VN9MZ+7npRXisxhvk5bKpHxYld2QMgu1jT7fpcS94WTY2tBidQNxcjP3RhxW/M68Rg9uu2mGe6g0iMmK/BQyJJwAMhx4oILeyhTgXcX9LotO3GsEazLDP5VGdFTwWdUa/TwsQ4CnrhXEgGsxN7SAPh5NAVQlSPLKVR5ayydUvBfZ4IB+kpsrAwMV+AEzPvHdZ6IuTgLvYG/WfAfAO4C3b8VgucFNDF6FQFeaL0WRDyyuUqgp5bB7nobdIj5ax9gl929/zpwZ+nPvgA+qH/0KhMzWettoufGjK8iE7PSDOiFJ/6Xo07htcPC8LktQ5vg0FxzQY4l1feO/Vg4ZZ8p81thRrBxuQqwNS0Thwg5bnPf8kSYXwp5klO9rdAPGd36RkJ77b4vSzR9ELTw1C4CpFlmNESBX1y7V3zXRpjgKEfAZDQ0oRc5HxiPejUP+1bX9Bl5LQkPyYYiL2aYkdftw45fq9EBZMIMK7ACr+YRtrXELitqzEihCr2IFx4ihoaKVjDEzfEUl/eCkVwWHBjnFYb7wQJtFeOnRWKptnDETApoCJ/Vvn56BIWEWg3dGclsh2mGyHmNGFItZqKbl8kYs7VjixmvFnt9dq9EvRHxLkp40cetBd3MPxSzfV2vB+2tt5RY9wIUbs4XCOztrWoA")
+size_override = Vector2(128, 130)
 
 [sub_resource type="Animation" id="Animation_qq37m"]
 length = 0.3
@@ -27,7 +29,7 @@ tracks/0/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_e7qw3"]
-length = 0.2
+length = 0.1
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -36,10 +38,10 @@ tracks/0/path = NodePath("../Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = false
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [3, 4]
+"values": [3]
 }
 
 [sub_resource type="Animation" id="Animation_aeqiy"]
@@ -74,8 +76,8 @@ script = ExtResource("1_qq37m")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
 position = Vector2(-2, -31)
-texture = SubResource("PortableCompressedTexture2D_6s6l5")
-hframes = 3
+texture = SubResource("PortableCompressedTexture2D_t0nwx")
+hframes = 2
 vframes = 2
 metadata/_aseprite_wizard_interface_config_ = {
 "pending_changes": {}
@@ -98,7 +100,17 @@ metadata/_aseprite_wizard_config_ = {
 "source": "res://assets/character/enemy/shnibber.aseprite",
 "source_uid": 1369187438542757965
 }
-metadata/_aseprite_wizard_source_file_hash_ = "0eac0d7b0b485922082f760c8ddb3897"
+metadata/_aseprite_wizard_source_file_hash_ = "4a836a0b13d483c5692ff40514480197"
+
+[node name="Node2D" type="Node2D" parent="Sprite2D"]
+position = Vector2(10, 2)
+
+[node name="spr_cornea" parent="Sprite2D/Node2D" instance=ExtResource("6_hdavi")]
+modulate = Color(0, 0, 0, 1)
+
+[node name="Corshair" type="Sprite2D" parent="Sprite2D/Node2D"]
+modulate = Color(1, 0, 0, 1)
+texture = ExtResource("3_t0nwx")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Collision2D")
@@ -118,5 +130,11 @@ death_sound = ExtResource("4_hdavi")
 
 [node name="tmr_recover" type="Timer" parent="."]
 wait_time = 0.3
+
+[node name="mkr_right" type="Marker2D" parent="."]
+position = Vector2(6, -29)
+
+[node name="mkr_left" type="Marker2D" parent="."]
+position = Vector2(-10, -29)
 
 [connection signal="timeout" from="tmr_recover" to="." method="_on_tmr_recover_timeout"]

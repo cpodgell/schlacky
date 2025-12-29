@@ -42,7 +42,10 @@ func _physics_process(delta: float) -> void:
 		direction *= -1
 		# Optionally flip the sprite horizontally to face the new direction
 		$Sprite2D.flip_h = (direction == -1)
-
+		if(direction < 0):
+			$Sprite2D/Node2D.global_position = $mkr_left.global_position
+		else:
+			$Sprite2D/Node2D.global_position = $mkr_right.global_position
 
 func _on_tmr_recover_timeout() -> void:
 	injured = false

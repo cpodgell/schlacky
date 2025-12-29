@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://c3vyhjohw70vj"]
+
+[ext_resource type="Texture2D" uid="uid://dr3ohfi2yjmfj" path="res://assets/misc/10x10_Circle.png" id="1_nm8oh"]
+[ext_resource type="Script" uid="uid://b8td8dhcdrs7v" path="res://character/enemy/shnibber/spr_cornea.gd" id="2_1ag7e"]
+
+[node name="spr_cornea" type="Sprite2D"]
+texture = ExtResource("1_nm8oh")
+script = ExtResource("2_1ag7e")
+
+[node name="tmr_check_player" type="Timer" parent="."]
+
+[connection signal="timeout" from="tmr_check_player" to="." method="_on_tmr_check_player_timeout"]
