@@ -61,6 +61,8 @@ func fire():
 	
 func spawn_bullet(_direction = Vector2.ZERO, _speed = 0,  _death  = 0):
 	var bullet : Bullet = bullet_scene.instantiate()
+	bullet.bullet_type = Bullet.BulletType.FLAT
+	global_collisions.set_player_bullet(bullet)
 	global.current_level.add_to_ysort(bullet)
 	var x = get_parent().scale.x
 	bullet.bullet_owner = gun_owner

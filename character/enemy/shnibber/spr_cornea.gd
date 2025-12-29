@@ -54,3 +54,18 @@ func _get_center_global_pos() -> Vector2:
 	if p != null and p is Node2D:
 		return (p as Node2D).global_position
 	return global_position
+
+func get_direction() -> Vector2:
+	if _target_player == null:
+		return Vector2.ZERO
+
+	if "player_dead" in _target_player and _target_player.player_dead:
+		return Vector2.ZERO
+
+	var center_global := _get_center_global_pos()
+	var to_player = _target_player.global_position - center_global
+
+	if to_player.length() < 0.0001:
+		return Vector2.ZERO
+
+	return to_player.normalized()

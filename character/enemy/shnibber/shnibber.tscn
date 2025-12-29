@@ -1,9 +1,8 @@
-[gd_scene load_steps=14 format=4 uid="uid://cxo1p2pe1wy0j"]
+[gd_scene load_steps=13 format=4 uid="uid://cxo1p2pe1wy0j"]
 
 [ext_resource type="Script" uid="uid://d1ny0ykilsy5o" path="res://character/enemy/shnibber/shnibber.gd" id="1_qq37m"]
 [ext_resource type="PackedScene" uid="uid://cxr60bx56li3o" path="res://mechanics/health.tscn" id="2_jrq30"]
 [ext_resource type="AudioStream" uid="uid://duq4gc2vw853j" path="res://assets/sfx/death/hurt_rat_02.ogg" id="3_6s6l5"]
-[ext_resource type="Texture2D" uid="uid://bmss0jpsjuvbp" path="res://assets/misc/corshair.png" id="3_t0nwx"]
 [ext_resource type="AudioStream" uid="uid://d1orc3c018dsj" path="res://assets/sfx/death/hurt_rat_01.ogg" id="4_hdavi"]
 [ext_resource type="PackedScene" uid="uid://bnk5012wxbkep" path="res://effects/blood.tscn" id="5_6s6l5"]
 [ext_resource type="PackedScene" uid="uid://c3vyhjohw70vj" path="res://character/enemy/shnibber/spr_cornea.tscn" id="6_hdavi"]
@@ -108,10 +107,6 @@ position = Vector2(10, 2)
 [node name="spr_cornea" parent="Sprite2D/Node2D" instance=ExtResource("6_hdavi")]
 modulate = Color(0, 0, 0, 1)
 
-[node name="Corshair" type="Sprite2D" parent="Sprite2D/Node2D"]
-modulate = Color(1, 0, 0, 1)
-texture = ExtResource("3_t0nwx")
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Collision2D")
 libraries = {
@@ -137,4 +132,8 @@ position = Vector2(6, -29)
 [node name="mkr_left" type="Marker2D" parent="."]
 position = Vector2(-10, -29)
 
+[node name="tmr_shoot" type="Timer" parent="."]
+wait_time = 0.5
+
 [connection signal="timeout" from="tmr_recover" to="." method="_on_tmr_recover_timeout"]
+[connection signal="timeout" from="tmr_shoot" to="." method="_on_tmr_shoot_timeout"]

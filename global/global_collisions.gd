@@ -21,6 +21,30 @@ func _ready() -> void:
 	for i in range(1, 33):	# layers 1..32
 		collisions.append(i)
 
+func set_player(body: PhysicsBody2D) -> void:
+	set_layer_bits(body, [PLAYER])
+	set_mask_bits(body, [ENVIRONMENT, WALLS, PLAYER])
+
+func set_player_bullet(body: Area2D) -> void:
+	set_layer_bits(body, [PLAYER_BULLET])
+	set_mask_bits(body, [WALLS, PLAYER, ENEMY])
+
+func set_enemy(body: PhysicsBody2D) -> void:
+	set_layer_bits(body, [ENEMY])
+	set_mask_bits(body, [WALLS, PLAYER, ENEMY])
+
+func set_enemy_bullet(body: Area2D) -> void:
+	set_layer_bits(body, [ENEMY_BULLET])
+	set_mask_bits(body, [PLAYER])
+
+func set_enemy_dead_walls(body: PhysicsBody2D) -> void:
+	set_all_layer_bits(body, false)
+	set_all_mask_bits(body, false)
+	set_mask_bits(body, [ENEMY], true)
+	set_mask_bits(body, [WALLS], true)
+
+
+
 
 func set_layer_bits(body: CollisionObject2D, array: Array, bit := true) -> void:
 	for idx in array:
@@ -37,21 +61,6 @@ func set_all_layer_bits(body: CollisionObject2D, bit := true) -> void:
 func set_all_mask_bits(body: CollisionObject2D, bit := true) -> void:
 	for i in collisions:
 		body.set_collision_mask_value(i, bit)
-		
-		
-func set_player(body: PhysicsBody2D) -> void:
-	set_layer_bits(body, [PLAYER])				# is Player (3)
-	set_mask_bits(body, [ENVIRONMENT, WALLS, PLAYER])		# collides with Env (1) + Enemy (4)
-
-func set_enemy(body: PhysicsBody2D) -> void:
-	set_layer_bits(body, [ENEMY])
-	set_mask_bits(body, [WALLS, PLAYER, ENEMY])
-
-func set_enemy_dead_walls(body: PhysicsBody2D) -> void:
-	set_all_layer_bits(body, false)
-	set_all_mask_bits(body, false)
-	set_mask_bits(body, [ENEMY], true)
-	set_mask_bits(body, [WALLS], true)
 #######################
 # Debug helpers
 

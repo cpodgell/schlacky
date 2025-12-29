@@ -54,8 +54,8 @@ radius = 7.0
 size = Vector2(14, 9)
 
 [node name="Shisser" type="CharacterBody2D"]
-collision_layer = 8
-collision_mask = 14
+collision_layer = 0
+collision_mask = 0
 script = ExtResource("1_884uy")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

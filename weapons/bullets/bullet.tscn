@@ -9,12 +9,12 @@ radius = 3.0
 height = 8.0
 
 [node name="Bullet" type="Area2D"]
-collision_layer = 16
-collision_mask = 14
+z_index = 500
+collision_layer = 0
+collision_mask = 0
 script = ExtResource("1_d6jwi")
 
 [node name="spr_bullet" type="Sprite2D" parent="."]
-scale = Vector2(1, 0.625)
 texture = ExtResource("1_si2ka")
 
 [node name="cls_bullet" type="CollisionShape2D" parent="."]

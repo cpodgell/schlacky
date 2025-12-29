@@ -63,9 +63,9 @@ func _on_body_entered(body: Node2D) -> void:
 	if body == bullet_owner:
 		return
 
-	var dead := false
+	var health = 1000
 	if body.has_method("take_damage"):
-		dead = body.take_damage(damage)
-
-	if not dead:
+		health = body.take_damage(damage)
+	
+	if health >= 0:
 		destroy_bullet()

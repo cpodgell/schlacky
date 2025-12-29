@@ -18,13 +18,11 @@ func play_death_sound():
 func play_hurt_sound():
 	$asp_hurt.play()
 
-func remove_health(_damage):
-	play_hurt_sound()
+func remove_health(_damage) -> int:
 	health -= _damage
 	return health
 
 func death(_node):
-	play_death_sound()
 	node = _node.get_node("Sprite2D")
 	_node.velocity.y = -300
 	_node.get_node("Collision2D").set_deferred("disabled", true)

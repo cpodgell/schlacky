@@ -7,19 +7,17 @@ var dead = false
 
 func _ready() -> void:
 	$AnimationPlayer.play("Walk")
+	global_collisions.set_enemy(self)
 	# Set the collision mask to detect the player and walls, but prevent being pushed by the player
-	collision_mask = 2 | 3 | 4  # Layer 2 for walls, and Layer 3 and 4 for any other layers you need
-	# Collision layer 1 is for the enemy (or whatever you need)
-	collision_layer = 4
 
-func take_damage(_damage) -> bool:
+
+func take_damage(_damage) -> int:
 	$blood.play_blood()
 	var health = $Health.remove_health(_damage)
 	if(health <= 0):
 		$ara_top/cls_top.set_deferred("disabled", true)
 		$Health.death(self)
-		return true
-	return false
+	return health
 
 func _physics_process(delta: float) -> void:
 	# Apply gravity to the vertical velocity (y)
