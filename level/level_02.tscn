@@ -95,5 +95,13 @@ position = Vector2(244, 48)
 position = Vector2(244, 48)
 
 [node name="Enemy_Spawner" parent="ysort" index="6" instance=ExtResource("6_ijmwx")]
-position = Vector2(320, 32)
+position = Vector2(331, 42)
+enemy_scene = ExtResource("5_odkgp")
+
+[node name="Enemy_Spawner2" parent="ysort" index="7" instance=ExtResource("6_ijmwx")]
+position = Vector2(401, 38)
+enemy_scene = ExtResource("5_odkgp")
+
+[node name="Enemy_Spawner3" parent="ysort" index="8" instance=ExtResource("6_ijmwx")]
+position = Vector2(663, 126)
 enemy_scene = ExtResource("5_odkgp")

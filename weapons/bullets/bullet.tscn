@@ -22,6 +22,7 @@ rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_d6jwi")
 
 [node name="tmr_free" type="Timer" parent="."]
+wait_time = 10.0
 
 [node name="ricochet" parent="." instance=ExtResource("3_0dwqp")]
 scale = Vector2(1, 0.625)

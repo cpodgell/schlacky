@@ -3,21 +3,23 @@ extends CharacterBody2D
 @export var speed: float = 30.0
 # The direction the enemy is currently moving (-1 for left, 1 for right)
 var direction: int = 1
+var dead = false
 
 func _ready() -> void:
-	
 	$AnimationPlayer.play("Walk")
-	
 	# Set the collision mask to detect the player and walls, but prevent being pushed by the player
 	collision_mask = 2 | 3 | 4  # Layer 2 for walls, and Layer 3 and 4 for any other layers you need
 	# Collision layer 1 is for the enemy (or whatever you need)
 	collision_layer = 4
 
-func take_damage(_damage):
+func take_damage(_damage) -> bool:
 	$blood.play_blood()
 	var health = $Health.remove_health(_damage)
 	if(health <= 0):
+		$ara_top/cls_top.set_deferred("disabled", true)
 		$Health.death(self)
+		return true
+	return false
 
 func _physics_process(delta: float) -> void:
 	# Apply gravity to the vertical velocity (y)
@@ -40,7 +42,8 @@ func _on_ara_top_body_entered(body: Node2D) -> void:
 	if body is Player:
 		if body.velocity.y >= 0:
 			speed = 0
-			body.velocity.y += -200
+			body.velocity.y = -200
 			global_collisions.set_enemy_dead_walls(self)
 			$ara_top/cls_top.set_deferred("disabled", true)
+			$Health.play_death_sound()
 			$AnimationPlayer.play("Squish")

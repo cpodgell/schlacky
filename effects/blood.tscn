@@ -32,3 +32,4 @@ script = ExtResource("2_53cnx")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_o1frw")
+volume_db = -10.706

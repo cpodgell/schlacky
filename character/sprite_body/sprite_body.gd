@@ -11,7 +11,7 @@ var dfr = 1
 var current_state 
 var anp_player  : AnimationPlayer
 
-enum states { NONE, WALK, IDLE, DEAD, DISABLED, INJURE, CROUCH_WALK }
+enum states { NONE, WALK, IDLE, DEAD, DISABLED, INJURE, CROUCH_WALK, CROUCH_IDLE }
 
 func get_custom_class():
 	return "Sprite_Body"
@@ -44,6 +44,15 @@ func play_crouch_walk(tmp_backwards = false):
 			play_anim_backwards('crouch_walk')
 		else:
 			play_anim('crouch_walk')
+
+func play_crouch_idle(tmp_backwards = false):
+	if(current_state != states.CROUCH_IDLE or tmp_backwards != backwards):
+		backwards = tmp_backwards
+		current_state = states.CROUCH_IDLE
+		if(backwards):
+			play_anim_backwards('crouch_idle')
+		else:
+			play_anim('crouch_idle')
 
 func play_dead():
 	if(current_state != states.DEAD):

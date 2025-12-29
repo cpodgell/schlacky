@@ -52,8 +52,6 @@ func set_enemy_dead_walls(body: PhysicsBody2D) -> void:
 	set_all_mask_bits(body, false)
 	set_mask_bits(body, [ENEMY], true)
 	set_mask_bits(body, [WALLS], true)
-	print_layer_bits(body)
-	print_mask_bits(body)
 #######################
 # Debug helpers
 

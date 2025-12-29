@@ -37,7 +37,6 @@ func reset():
 	global_collisions.set_player(self)
 
 func _physics_process(delta: float) -> void:
-	$lbl_state_y.text = "Y: " + str(velocity.y)
 	if(player_dead):
 		$sb_container.rotation += .3
 	# --- always apply gravity (platformer baseline) ---
@@ -112,19 +111,35 @@ func attack_1_on():
 func attack_1_off():
 	pass
 
-func walk(_crouching):
-	if(_crouching):
+func set_crouching(_crouching):
+	crouching = _crouching
+	$cls_player.disabled = crouching
+	if(crouching):
 		MAX_SPEED = CROUCH_SPEED_MAX
+		$sb_container/Pistol.global_position = $mrk_crouch_gun.global_position
+	else:
+		MAX_SPEED = WALK_SPEED_MAX
+		$sb_container/Pistol.global_position = $mrk_stand_gun.global_position
+
+func walk():
+	if(crouching):
+
 		$sb_container/sprite_body.play_crouch_walk()
 	else:
 		MAX_SPEED = WALK_SPEED_MAX
 		$sb_container/sprite_body.play_walk()
 
 func idle():
-	$sb_container/sprite_body.play_idle()
+	if(crouching):
+		$sb_container/sprite_body.play_crouch_idle()
+	else:
+		$sb_container/sprite_body.play_idle()
 
 func print_x(_x):
 	$lbl_state2.text = str(_x)
+
+func print_y(_y):
+	$lbl_state_y.text = str(_y)
 
 func death():
 	velocity.y = JUMP_VELOCITY

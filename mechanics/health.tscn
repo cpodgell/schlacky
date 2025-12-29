@@ -6,5 +6,8 @@
 [node name="Health" type="Node"]
 script = ExtResource("1_gog7m")
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="asp_hurt" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_udgh2")
+
+[node name="asp_death" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_udgh2")

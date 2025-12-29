@@ -1,28 +1,13 @@
-[gd_scene load_steps=10 format=4 uid="uid://cdjj5eat0aw0n"]
+[gd_scene load_steps=11 format=4 uid="uid://cdjj5eat0aw0n"]
 
 [ext_resource type="Script" uid="uid://d2jbwjb6xm58w" path="res://character/enemy/shisser/shisser.gd" id="1_884uy"]
 [ext_resource type="PackedScene" uid="uid://bnk5012wxbkep" path="res://effects/blood.tscn" id="2_87bvc"]
 [ext_resource type="PackedScene" uid="uid://cxr60bx56li3o" path="res://mechanics/health.tscn" id="3_203s1"]
+[ext_resource type="AudioStream" uid="uid://b3wh5vsaqemlh" path="res://assets/sfx/death/smw_stomp.wav" id="5_mp44s"]
 
 [sub_resource type="PortableCompressedTexture2D" id="PortableCompressedTexture2D_203s1"]
 _data = PackedByteArray("AAADAAUAAAABAAAAMAAAACQAAADWAAAAUklGRs4AAABXRUJQVlA4TMIAAAAvL8AIEB8gkE3xaVoCgSTkmSYVCKQ4p12e/wDs3AC3kSRHUiqDteBw0mJdGROONUY7K5jYBj1zhervxBGpUc+mn1gQ0X+Fbds2TKdO4e9jJek1WtIX8tL3R2lI+7zvr9LU95NrTPrNwzbpkv+iN/lZzc+Sn4/y0NFD8mhyS4daYKwD7KAOMKsFNlAL/zRWEjVaYiFPrkdpSM17r9LUO7nGxM3DNiH575zl+4VZAQj58XR9mwDMzCLcAdhBeHy3ATMzAA==")
 size_override = Vector2(48, 36)
-
-[sub_resource type="Animation" id="Animation_linyn"]
-length = 0.4
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = false
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3]
-}
 
 [sub_resource type="Animation" id="Animation_mp44s"]
 length = 0.1
@@ -38,6 +23,22 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [4]
+}
+
+[sub_resource type="Animation" id="Animation_linyn"]
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_linyn"]
@@ -101,6 +102,8 @@ emitting = false
 one_shot = true
 
 [node name="Health" parent="." instance=ExtResource("3_203s1")]
+hurt_sound = ExtResource("5_mp44s")
+death_sound = ExtResource("5_mp44s")
 
 [node name="ara_top" type="Area2D" parent="."]
 collision_layer = 8

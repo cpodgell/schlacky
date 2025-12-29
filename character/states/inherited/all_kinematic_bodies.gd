@@ -8,10 +8,10 @@ var sprite_body: Sprite2D
 var is_dead := false
 var is_disabled := false
 var inertia := 50.0
-
+var crouching = false
 # --- PLATFORMER TUNING (moved from Player) ---
 var MAX_SPEED = 220.0
-const CROUCH_SPEED_MAX = 150
+const CROUCH_SPEED_MAX = 110
 const WALK_SPEED_MAX = 220.0
 const JUMP_VELOCITY = -300.0
 const acceleration = 1600.00
@@ -19,6 +19,7 @@ const deceleration = 1600.0
 
 # Horizontal input stored by states (walk/idle)
 var input_x: float = 0.0
+var input_y: float = 0.0
 
 # --- Look direction ---
 var _look_direction := Vector2.ZERO

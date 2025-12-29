@@ -21,18 +21,23 @@ func handle_input(event):
 
 	# Gather horizontal-only input (-1..1) and store it on the host.
 	var x := Input.get_joy_axis(host_reference.player_number, JOY_AXIS_LEFT_X)
-	
+	var y := Input.get_joy_axis(host_reference.player_number, JOY_AXIS_LEFT_Y)
 	if abs(x) <= 0.35:
 		x = 0.0
-
-
+	if abs(y) <= 0.50:
+			y = 0.0
+			host_reference.set_crouching(false)
+	else:
+		host_reference.set_crouching(true)
 
 	host_reference.input_x = x
+	host_reference.input_y = y
 	host_reference.print_x(host_reference.input_x)
+	host_reference.print_y(y)
 
 	# Transition logic
 	if abs(host_reference.input_x) > 0.0:
-		host_reference.walk(crouching)
+		host_reference.walk()
 		return "walk"
 	else:
 		return "idle"

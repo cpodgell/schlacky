@@ -13,16 +13,28 @@ func _process(delta: float) -> void:
 		return
 	global_position += direction * speed * delta
 
-func _on_timer_timeout() -> void:
+func _ready() -> void:
+	$tmr_free.start()
+
+func set_death(_death):
+	$tmr_free.wait_time = _death
+	$tmr_free.start()
+
+func destroy_bullet(_play_ricochet = true):
+	remove_child(ricochet)
+	$cls_bullet.disabled = true
+	global.current_level.add_to_ysort(ricochet)
+	ricochet.global_position = self.global_position
+	ricochet.play_ricochet()
 	queue_free()
 
+func _on_timer_timeout() -> void:
+	destroy_bullet()
+
 func _on_body_entered(body: Node2D) -> void:
+	var dead
 	if(body != bullet_owner):
 		if(body.has_method("take_damage")):
-			body.take_damage(damage)
-		remove_child(ricochet)
-		$cls_bullet.disabled = true
-		global.current_level.add_to_ysort(ricochet)
-		ricochet.global_position = self.global_position
-		ricochet.play_ricochet()
-		queue_free()
+			dead = body.take_damage(damage)
+		if(!dead):
+			destroy_bullet()
