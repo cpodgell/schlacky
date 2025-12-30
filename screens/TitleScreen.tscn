@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=3 uid="uid://l2b1x41t8ayj"]
+
+[ext_resource type="Script" uid="uid://kmd57s6l65qq" path="res://screens/title_screen.gd" id="1_3v3c7"]
+[ext_resource type="Texture2D" uid="uid://cet7oe84td34p" path="res://assets/screens/ChatGPT Image Dec 30, 2025, 08_48_25 AM.png" id="2_adsba"]
+[ext_resource type="AudioStream" uid="uid://cl4mafl3phdm8" path="res://assets/sfx/music/welcome to the shlacky shlack.mp3" id="2_dmk5c"]
+[ext_resource type="FontFile" uid="uid://4uum2hl3h3na" path="res://assets/fonts/8-BIT WONDER.TTF" id="4_x1p0u"]
+
+[sub_resource type="Theme" id="Theme_3jkfm"]
+default_font = ExtResource("4_x1p0u")
+default_font_size = 150
+
+[node name="Title_Screen" type="Node2D"]
+script = ExtResource("1_3v3c7")
+
+[node name="SchlackyTitleScreen" type="Sprite2D" parent="."]
+position = Vector2(958, 568.5)
+scale = Vector2(1.2473958, 1.1142578)
+texture = ExtResource("2_adsba")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_dmk5c")
+
+[node name="Label" type="Label" parent="."]
+offset_left = 237.0
+offset_top = 778.0
+offset_right = 1812.0
+offset_bottom = 928.0
+theme = SubResource("Theme_3jkfm")
+text = "PRESS START"

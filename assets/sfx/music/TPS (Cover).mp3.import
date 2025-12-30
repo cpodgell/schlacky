@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://ufrnln3ahedq"
+path="res://.godot/imported/TPS (Cover).mp3-a614e51b42978fd1e60cf144ec09ce4b.mp3str"
+
+[deps]
+
+source_file="res://assets/sfx/music/TPS (Cover).mp3"
+dest_files=["res://.godot/imported/TPS (Cover).mp3-a614e51b42978fd1e60cf144ec09ce4b.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

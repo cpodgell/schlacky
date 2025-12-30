@@ -1,11 +1,11 @@
 # DynamicCamera2D.gd
-extends Camera2D
+class_name GameCamera extends Camera2D
 
 @export var edge_margin_px = 300.0
 @export var zoom_smooth = 8.0
 
 # Godot: smaller zoom = zoom OUT, larger zoom = zoom IN
-@export var min_zoom = 1.2
+@export var min_zoom = 2
 @export var max_zoom = 3.5
 
 func _ready() -> void:

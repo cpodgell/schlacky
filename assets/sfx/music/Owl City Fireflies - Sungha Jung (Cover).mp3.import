@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cj52qkbb5f0uk"
+path="res://.godot/imported/Owl City Fireflies - Sungha Jung (Cover).mp3-15d20bef69b8ee758e91cb527f36db83.mp3str"
+
+[deps]
+
+source_file="res://assets/sfx/music/Owl City Fireflies - Sungha Jung (Cover).mp3"
+dest_files=["res://.godot/imported/Owl City Fireflies - Sungha Jung (Cover).mp3-15d20bef69b8ee758e91cb527f36db83.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

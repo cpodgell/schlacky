@@ -7,7 +7,7 @@ const PLAYER			= 3
 const ENEMY			= 4
 const PLAYER_BULLET	= 5
 const ENEMY_BULLET	= 6
-const PLAYER_HB		= 7
+const PLATFORMS		= 7
 const ENEMY_HB		= 8
 const PICKUPS		= 9
 const PICKER_UPPER	= 10
@@ -23,7 +23,7 @@ func _ready() -> void:
 
 func set_player(body: PhysicsBody2D) -> void:
 	set_layer_bits(body, [PLAYER])
-	set_mask_bits(body, [ENVIRONMENT, WALLS, PLAYER])
+	set_mask_bits(body, [ENVIRONMENT, WALLS, PLAYER, ENEMY, PLATFORMS])
 
 func set_player_bullet(body: Area2D) -> void:
 	set_layer_bits(body, [PLAYER_BULLET])
@@ -31,7 +31,7 @@ func set_player_bullet(body: Area2D) -> void:
 
 func set_enemy(body: PhysicsBody2D) -> void:
 	set_layer_bits(body, [ENEMY])
-	set_mask_bits(body, [WALLS, PLAYER, ENEMY])
+	set_mask_bits(body, [WALLS, PLAYER, ENEMY, PLATFORMS])
 
 func set_enemy_bullet(body: Area2D) -> void:
 	set_layer_bits(body, [ENEMY_BULLET])

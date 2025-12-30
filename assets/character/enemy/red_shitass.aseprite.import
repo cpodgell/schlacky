@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bua2sh5sadqyx"
+path="res://.godot/imported/red_shitass.aseprite-58ab21dd5b2ec10052c1123a7c48a4c3.res"
+
+[deps]
+
+source_file="res://assets/character/enemy/red_shitass.aseprite"
+dest_files=["res://.godot/imported/red_shitass.aseprite-58ab21dd5b2ec10052c1123a7c48a4c3.res"]
+
+[params]
+

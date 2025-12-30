@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://8260pdn4g4qy"]
+
+[ext_resource type="Script" uid="uid://1no48jol5e5h" path="res://objects/falling_block.gd" id="1_ybci3"]
+[ext_resource type="Texture2D" uid="uid://dgp5wl8ai6pvm" path="res://assets/objects/stone_block.png" id="2_pip5u"]
+[ext_resource type="PackedScene" uid="uid://ci2d0j616dbbv" path="res://effects/stone_debris.tscn" id="3_pip5u"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7por5"]
+size = Vector2(16, 16)
+
+[node name="Falling_Block" type="RigidBody2D"]
+collision_layer = 2
+collision_mask = 2
+mass = 0.001
+script = ExtResource("1_ybci3")
+
+[node name="spr_block" type="Sprite2D" parent="."]
+position = Vector2(0, -8)
+texture = ExtResource("2_pip5u")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_7por5")
+
+[node name="stone_debris" parent="." instance=ExtResource("3_pip5u")]
+position = Vector2(0, -8)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+
+[node name="tmr_cls_disable" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[connection signal="block_debris_finished" from="stone_debris" to="." method="_on_stone_debris_block_debris_finished"]
+[connection signal="timeout" from="tmr_cls_disable" to="." method="_on_timer_timeout"]

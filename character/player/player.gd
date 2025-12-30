@@ -11,6 +11,8 @@ var player_number = 0
 var player_prefix = ""
 var group_name
 var start_position : Vector2 = Vector2.ZERO
+var _is_ascending = false
+var _is_descending = false
 
 func init_states():
 	states_map = {
@@ -25,6 +27,7 @@ func _ready():
 	initialize_states()
 	current_state = states_map["idle"]
 	current_state.enter()
+	reset()
 
 func reset():
 	velocity = Vector2.ZERO
@@ -39,9 +42,19 @@ func reset():
 func _physics_process(delta: float) -> void:
 	if(player_dead):
 		$sb_container.rotation += .3
+	
 	# --- always apply gravity (platformer baseline) ---
 	if not is_on_floor():
 		velocity += get_gravity() * delta
+	
+	# --- Determine if the player is ascending or descending ---
+	if velocity.y > 0 and not is_descending:  # Player is falling
+		is_descending = true
+		is_ascending = false  # Stop ascending if descending starts
+	
+	elif velocity.y < 0 and not is_ascending:  # Player is ascending
+		is_ascending = true
+		is_descending = false  # Stop descending if ascending starts
 
 	# --- horizontal accel/decel (now handled by base class constants) ---
 	accelerate_horizontal(delta)
@@ -92,6 +105,36 @@ func _input(event):
 		var new_state = current_state.handle_input(event)
 		if new_state and new_state != current_state.get_state():
 			_change_state(new_state)
+
+# Getter and Setter for is_ascending
+var is_ascending: bool:
+	get:
+		return _is_ascending
+	set(value):
+		if _is_ascending != value:
+			_is_ascending = value
+			if _is_ascending:
+				# treees and platforms, players can go through
+				global_collisions.set_mask_bits(self, [global_collisions.PLATFORMS], false)
+				# Add any custom logic when ascending starts here
+			else:
+				global_collisions.set_mask_bits(self, [global_collisions.PLATFORMS], true)
+				print("Player stopped ascending")
+				# Add any custom logic when ascending stops here
+
+# Getter and Setter for is_descending
+var is_descending: bool:
+	get:
+		return _is_descending
+	set(value):
+		if _is_descending != value:
+			_is_descending = value
+			if _is_descending:
+				print("Player started descending")
+				# Add any custom logic when descending starts here
+			else:
+				print("Player stopped descending")
+				# Add any custom logic when descending stops here
 
 func set_player_number(value):
 	player_number = value

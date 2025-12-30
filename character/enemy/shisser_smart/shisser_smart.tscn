@@ -1,0 +1,123 @@
+[gd_scene load_steps=11 format=4 uid="uid://ca0cwd5ss453o"]
+
+[ext_resource type="Script" uid="uid://dfckvunfa8o0f" path="res://character/enemy/shisser_smart/shisser_smart.gd" id="1_t6mhq"]
+[ext_resource type="PackedScene" uid="uid://bnk5012wxbkep" path="res://effects/blood.tscn" id="2_xxywp"]
+[ext_resource type="PackedScene" uid="uid://cxr60bx56li3o" path="res://mechanics/health.tscn" id="3_s1va1"]
+[ext_resource type="AudioStream" uid="uid://b3wh5vsaqemlh" path="res://assets/sfx/death/smw_stomp.wav" id="4_go03w"]
+
+[sub_resource type="PortableCompressedTexture2D" id="PortableCompressedTexture2D_gearl"]
+_data = PackedByteArray("AAADAAUAAAABAAAAMAAAACQAAADYAAAAUklGRtAAAABXRUJQVlA4TMQAAAAvL8AIEB8gkE3xYVoCgSSQ6ScVCyZzyt+sY/4D8FOD29a22+Y1giYwVAlahSM4Eew8RSrfQE6rxN5LpOrjOZDfYYKI/its27ZROrPzBn6XWDn6YMnR98Wq1O+k2tU3pf4kdaX+QrWOfrmdOHqJX+iTeFXiVeJ1IZoWNImWxOgKQgW0oQamQKiB3tt1jPfxJ4mVQ7Dk0BedayfVLk3JSepKLlTrsNxOHCR+x1Wc9WM+tImLy/2cJYwvMWPuNQWMljPOHQAA")
+size_override = Vector2(48, 36)
+
+[sub_resource type="Animation" id="Animation_mp44s"]
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+
+[sub_resource type="Animation" id="Animation_linyn"]
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_linyn"]
+_data = {
+&"Squish": SubResource("Animation_mp44s"),
+&"Walk": SubResource("Animation_linyn")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_884uy"]
+radius = 7.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_203s1"]
+size = Vector2(14, 9)
+
+[node name="Smart_Shisser" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_t6mhq")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -9)
+texture = SubResource("PortableCompressedTexture2D_gearl")
+hframes = 3
+vframes = 2
+metadata/_aseprite_wizard_interface_config_ = {
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"convert_fps_field": 60.0,
+"convert_ms_field": 16.0,
+"convert_to_fps": false,
+"embed_tex": true,
+"i_mode": 0,
+"keep_anim_length": false,
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"player": "AnimationPlayer",
+"scale": "1.0",
+"slice": "",
+"source": "res://assets/character/enemy/red_shitass.aseprite",
+"source_uid": 3791869474374289759
+}
+metadata/_aseprite_wizard_source_file_hash_ = "b09c1ceb6f34ba6eb9c6710bb155f53a"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_linyn")
+}
+
+[node name="Collision2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, -7)
+shape = SubResource("CircleShape2D_884uy")
+
+[node name="blood" parent="." instance=ExtResource("2_xxywp")]
+position = Vector2(1, -7)
+emitting = false
+one_shot = true
+
+[node name="Health" parent="." instance=ExtResource("3_s1va1")]
+health = 2
+hurt_sound = ExtResource("4_go03w")
+death_sound = ExtResource("4_go03w")
+
+[node name="ara_top" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 4
+
+[node name="cls_top" type="CollisionShape2D" parent="ara_top"]
+position = Vector2(1, -13.5)
+shape = SubResource("RectangleShape2D_203s1")
+
+[node name="EdgeRayCast" type="RayCast2D" parent="."]
+position = Vector2(9, -12)
+target_position = Vector2(0, 13)
+collision_mask = 66
+collide_with_areas = true
+
+[connection signal="body_entered" from="ara_top" to="." method="_on_ara_top_body_entered"]

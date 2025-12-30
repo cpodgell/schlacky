@@ -76,6 +76,7 @@ func accelerate_horizontal(delta: float) -> void:
 func try_jump() -> void:
 	if is_on_floor():
 		velocity.y = JUMP_VELOCITY
+		$asp_jump.play()
 
 # -------------------------------------------------------------
 
