@@ -13,6 +13,7 @@ var group_name
 var start_position : Vector2 = Vector2.ZERO
 var _is_ascending = false
 var _is_descending = false
+var attack_on = false
 
 func init_states():
 	states_map = {
@@ -69,7 +70,6 @@ func _physics_process(delta: float) -> void:
 
 	# --- always move ---
 	move_and_slide()
-
 	update_camera()
 
 func initialize_states():
@@ -119,7 +119,7 @@ var is_ascending: bool:
 				# Add any custom logic when ascending starts here
 			else:
 				global_collisions.set_mask_bits(self, [global_collisions.PLATFORMS], true)
-				print("Player stopped ascending")
+				#print("Player stopped ascending")
 				# Add any custom logic when ascending stops here
 
 # Getter and Setter for is_descending
@@ -130,10 +130,12 @@ var is_descending: bool:
 		if _is_descending != value:
 			_is_descending = value
 			if _is_descending:
-				print("Player started descending")
+				pass
+				#print("Player started descending")
 				# Add any custom logic when descending starts here
 			else:
-				print("Player stopped descending")
+				pass
+				#print("Player stopped descending")
 				# Add any custom logic when descending stops here
 
 func set_player_number(value):
@@ -149,10 +151,10 @@ func update_camera():
 	pass
 
 func attack_1_on():
-	$sb_container/Pistol.fire()
+	$sb_container/Pistol.fire_down()
 
 func attack_1_off():
-	pass
+	$sb_container/Pistol.fire_up()
 
 func set_crouching(_crouching):
 	crouching = _crouching

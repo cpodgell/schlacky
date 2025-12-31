@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://evrealr6nbq3"
+path="res://.godot/imported/shclokey.aseprite-8703cb7f09de197504efb2e98b791eed.res"
+
+[deps]
+
+source_file="res://assets/character/enemy/shclokey.aseprite"
+dest_files=["res://.godot/imported/shclokey.aseprite-8703cb7f09de197504efb2e98b791eed.res"]
+
+[params]
+

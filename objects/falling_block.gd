@@ -1,11 +1,5 @@
 extends RigidBody2D
 
-var rock_smash_01 = preload("res://assets/hits/rock_smashable_hit_impact_01.wav")
-var rock_smash_02 = preload("res://assets/hits/rock_smashable_hit_impact_02.wav")
-var rock_smash_03 = preload("res://assets/hits/rock_smashable_hit_impact_03.wav")
-
-var rock_smashes = [rock_smash_01, rock_smash_02, rock_smash_03]
-
 func _ready():
 	lock_rotation = true
 	angular_velocity = 0
@@ -23,7 +17,7 @@ func _ready():
 func take_damage(_damage) -> int:
 	$stone_debris.play()
 	$spr_block.visible = false
-	$AudioStreamPlayer.stream = rock_smashes[randi_range(0, 2)]  # Randomly pick a sound
+	$AudioStreamPlayer.pitch_scale = randf_range(.6, 1.1) # Randomly pick a sound
 	$AudioStreamPlayer.play()
 	$tmr_cls_disable.start()
 	return 1
@@ -34,3 +28,10 @@ func _on_stone_debris_block_debris_finished() -> void:
 
 func _on_timer_timeout() -> void:
 	$CollisionShape2D.set_deferred("disabled", true)
+
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	if(body.has_method("take_damage")):
+		$CollisionShape2D.set_deferred("disabled", true)
+		body.take_damage(1)
+		take_damage(1)
