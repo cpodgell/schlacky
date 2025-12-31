@@ -18,6 +18,9 @@ func handle_input(event):
 		host_reference.attack_1_on()
 	if event.is_action_released(host_reference.player_prefix + global_input_map.ATTACK_1):
 		host_reference.attack_1_off()
+	if event.is_action_released(host_reference.player_prefix + global_input_map.RELOAD):
+		host_reference.attack_1_off()
+		host_reference.reload()
 
 	var x := Input.get_joy_axis(host_reference.player_number, JOY_AXIS_LEFT_X)
 	var y := Input.get_joy_axis(host_reference.player_number, JOY_AXIS_LEFT_Y)

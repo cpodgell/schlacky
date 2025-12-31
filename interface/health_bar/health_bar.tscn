@@ -1,15 +1,19 @@
-[gd_scene load_steps=5 format=3 uid="uid://6l1gwpv3latl"]
+[gd_scene load_steps=6 format=3 uid="uid://6l1gwpv3latl"]
 
 [ext_resource type="Texture2D" uid="uid://b80orjm77a26o" path="res://assets/interface/health/background.png" id="1_nqv5y"]
 [ext_resource type="Texture2D" uid="uid://byimp4lipsbiv" path="res://assets/interface/health/border.png" id="2_cv0mx"]
 [ext_resource type="Texture2D" uid="uid://tjcomo1780fr" path="res://assets/interface/health/fill.png" id="3_sdnvy"]
 [ext_resource type="Script" uid="uid://bhthf6tj6k3ky" path="res://interface/health_bar/health_bar.gd" id="4_cv0mx"]
+[ext_resource type="PackedScene" uid="uid://cu7fg41ic1egh" path="res://interface/rising_number_small.tscn" id="5_sdnvy"]
 
 [node name="health_bar" type="TextureProgressBar"]
+anchors_preset = -1
+anchor_top = -0.030000001
+anchor_bottom = -0.030000001
 offset_left = -8.0
-offset_top = -38.0
-offset_right = 32.0
-offset_bottom = 2.0
+offset_top = -7.279999
+offset_right = 8.0
+offset_bottom = 5.720001
 value = 50.0
 fill_mode = 3
 texture_under = ExtResource("1_nqv5y")
@@ -19,5 +23,20 @@ script = ExtResource("4_cv0mx")
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 2.0
+
+[node name="rising_text_small" parent="." instance=ExtResource("5_sdnvy")]
+visible = false
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 8.0
+offset_top = -7.0
+offset_right = 88.0
+offset_bottom = 16.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

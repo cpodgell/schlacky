@@ -91,15 +91,16 @@ func _change_state(state_name):
 func set_player_color(_color):
 	$sb_container/sprite_body.modulate = _color
 
+func reload():
+	$sb_container/Pistol.reload()
+
 func _input(event):
 	if Input.is_key_pressed(KEY_UP):
 		take_damage(10)
-
 	# Jump uses base class constant + helper
 	if event.is_action_pressed(player_prefix + global_input_map.JUMP) and is_on_floor() and not player_disabled:
 		try_jump()
-	if event.is_action_pressed(player_prefix + global_input_map.ACTION) and is_on_floor() and not player_disabled:
-		attack_1_on()
+
 
 	if current_state:
 		var new_state = current_state.handle_input(event)

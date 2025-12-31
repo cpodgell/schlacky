@@ -96,10 +96,6 @@ emitting = false
 one_shot = true
 
 [node name="health_bar" parent="." instance=ExtResource("10_qh58e")]
-offset_left = -9.0
-offset_top = -38.0
-offset_right = 7.0
-offset_bottom = -25.0
 
 [node name="asp_death" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("11_hr31g")
@@ -117,7 +113,5 @@ position = Vector2(0, -13)
 [node name="asp_jump" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("12_lqp71")
 volume_db = -10.587
-
-[node name="asp_reload" type="AudioStreamPlayer" parent="."]
 
 [connection signal="timeout" from="tmr_respawn" to="." method="_on_tmr_respawn_timeout"]

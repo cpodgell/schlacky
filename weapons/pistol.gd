@@ -9,10 +9,12 @@ enum WeaponType {
 	UZI
 }
 
-signal reload(time)
+var is_reloading = false
+var is_firing = false
+
 var shots_before_reload = 1
 var shots_counter = 0
-var disabled = false
+
 var rounds_in_clip : int = 0
 var cycle_fire = false
 var firing = false
@@ -26,53 +28,59 @@ var gun_owner
 @onready var machine_gun = $gun_sprites/spr_machine_gun
 @onready var uzi = $gun_sprites/spr_uzi
 
+var pistol_max = 12
+var shotgun_max = 12
+var machine_gun_max = 35
+var uzi_max = 50
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	reset_gun()
 	pass # Replace with function body.
 
-func _input(event):
-	if Input.is_key_pressed(KEY_P):
-		gun_cycle_number += 1
-		weapon_type = gun_cycle_number % WeaponType.size()
-		reset_gun()
-		$asp_gun_cycle.play()
+func cycle_gun():
+	gun_cycle_number += 1
+	weapon_type = gun_cycle_number % WeaponType.size()
+	reset_gun()
+	$asp_gun_cycle.play()
 
 func reset_gun():
 	for c in $gun_sprites.get_children():
-		c.visible = false
+		if c is Sprite2D:
+			c.visible = false
 	match weapon_type:
 		WeaponType.PISTOL:
 			$casings.process_material.anim_offset_max = 0.5
 			$casings.process_material.anim_offset_min = 0.5
 			pistol.visible = true
-			rounds_in_clip = 6
+			rounds_in_clip = pistol_max
 			$tmr_shot_delay.wait_time = .2
 		WeaponType.SHOTGUN:
 			$casings.process_material.anim_offset_max = 0.0
 			$casings.process_material.anim_offset_min = 0.0
 			$tmr_shot_delay.wait_time = .7
+			rounds_in_clip = shotgun_max
 			shotgun.visible = true
 		WeaponType.MACHINE_GUN:
 			cycle_fire = true
 			$casings.process_material.anim_offset_max = 0.5
 			$casings.process_material.anim_offset_min = 0.5
 			machine_gun.visible = true
-			rounds_in_clip = 30
+			rounds_in_clip = machine_gun_max
 			$tmr_shot_delay.wait_time = .1
 		WeaponType.UZI:
 			cycle_fire = true
 			$casings.process_material.anim_offset_max = 0.5
 			$casings.process_material.anim_offset_min = 0.5
 			uzi.visible = true
-			rounds_in_clip = 30
-			$tmr_shot_delay.wait_time = .3
+			rounds_in_clip = uzi_max
+			$tmr_shot_delay.wait_time = .04
 	gun_owner = get_parent().get_parent()
 
 func fire_down():
 	firing = true
-	if(!disabled):
+	if(!is_firing and !is_reloading):
 		_fire()
 
 func fire_up():
@@ -83,7 +91,7 @@ func _fire():
 		$asp_dry_fire.play()
 		return
 	rounds_in_clip -= 1
-	disabled = true
+	is_firing = true
 	release_casing()
 	$AnimationPlayer.stop(true)
 	$AnimationPlayer.play("gun_shot")
@@ -122,24 +130,34 @@ func spawn_bullet(_direction = Vector2.ZERO, _speed = 0,  _death  = 0):
 	bullet.bullet_owner = gun_owner
 	
 	if(_direction.y == 0):
-		print(x)
-		print($gun_sprites.rotation)
 		var direction_new = Vector2(x, sin($gun_sprites.rotation))
 		bullet.direction = direction_new
 	else:
 		bullet.direction = Vector2(x,_direction.y)
-	bullet.rotation = $gun_sprites.rotation
+	#print("Bullet: " + str(bullet.global_position))
+	#print("marker: " + str($gun_sprites/mrk_aimer.global_position))
+	var angle = ($gun_sprites/mrk_aimer.global_position - $gun_sprites.global_position).angle()
+	print($gun_sprites.rotation)
+	print(get_parent().scale.x)
+	bullet.rotation = get_parent().scale.x * $gun_sprites.rotation
 	bullet.set_death(_death)
 	if(_speed != 0):
 		bullet.speed = _speed
 	bullet.global_position = $Marker2D.global_position
+
+func reload():
+	is_reloading = true
+	$AnimationPlayer.play("reload")
+
+func play_reload_sound():
+	$asp_reload2.play()
 
 func release_casing():
 	$casings.restart()
 	$casings.emitting = true
 	
 func _on_tmr_shot_delay_timeout() -> void:
-	disabled = false
+	is_firing = false
 	$gun_sprites.rotation = 0
 	if(firing):
 		_fire()
@@ -151,3 +169,9 @@ func _on_tmr_reload_sound_timeout() -> void:
 
 func _on_tmr_decay_timeout() -> void:
 	pass # Replace with function body.
+
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	if anim_name == "reload":
+		is_reloading = false
+		reset_gun()

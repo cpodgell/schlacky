@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dice1e7tigbs"]
+[gd_scene load_steps=23 format=3 uid="uid://dice1e7tigbs"]
 
 [ext_resource type="Texture2D" uid="uid://c4u8thw8yr7tb" path="res://assets/gun/pistol.png" id="1_1ohd4"]
 [ext_resource type="Script" uid="uid://ci8wuqf631gg" path="res://weapons/pistol.gd" id="1_5icxk"]
@@ -9,9 +9,11 @@
 [ext_resource type="AudioStream" uid="uid://cpjflgr0bcn6f" path="res://assets/sfx/gun_shots/pistol_01.ogg" id="5_o30jq"]
 [ext_resource type="Texture2D" uid="uid://cc7f3jd3qqdha" path="res://assets/gun/uzi.png" id="5_qvlev"]
 [ext_resource type="AudioStream" uid="uid://j3sy5gb167xe" path="res://assets/sfx/misc/shotgun_cock.ogg" id="6_tkml6"]
+[ext_resource type="Texture2D" uid="uid://bmss0jpsjuvbp" path="res://assets/misc/corshair.png" id="7_ferxg"]
 [ext_resource type="AudioStream" uid="uid://rp34eewghucc" path="res://assets/sfx/gun_shots/gun_submachine_silenced_shot_0_first.wav" id="9_x8w74"]
 [ext_resource type="AudioStream" uid="uid://dv1n317qfd14n" path="res://assets/sfx/misc/gun_cycle_2.ogg" id="10_6674i"]
 [ext_resource type="AudioStream" uid="uid://ti7vlp5nl1qj" path="res://assets/sfx/foly/dry_fire_01.wav" id="12_otuqi"]
+[ext_resource type="AudioStream" uid="uid://276g6es2s5bu" path="res://assets/sfx/gun_shots/gun_semi_auto_rifle_magazine_load_03.wav" id="14_ds5a7"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_qvlev"]
 particles_animation = true
@@ -56,6 +58,18 @@ tracks/0/keys = {
 "update": 0,
 "values": [Vector2(0, 0)]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("gun_sprites:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
 
 [sub_resource type="Animation" id="Animation_tkml6"]
 resource_name = "gun_shot"
@@ -73,10 +87,53 @@ tracks/0/keys = {
 "values": [Vector2(-3, 0), Vector2(0, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_ferxg"]
+resource_name = "reload"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("gun_sprites:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.17, 0.37, 0.46),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -1.5707964, -1.5707964, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("gun_sprites:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.17, 0.26, 0.36),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, 3), Vector2(0, 0)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.16666667),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"play_reload_sound"
+}]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_qvlev"]
 _data = {
 &"RESET": SubResource("Animation_icjny"),
-&"gun_shot": SubResource("Animation_tkml6")
+&"gun_shot": SubResource("Animation_tkml6"),
+&"reload": SubResource("Animation_ferxg")
 }
 
 [node name="Pistol" type="Node2D"]
@@ -112,6 +169,12 @@ texture = ExtResource("5_qvlev")
 position = Vector2(4, 2)
 texture = ExtResource("5_72fyo")
 
+[node name="mrk_aimer" type="Marker2D" parent="gun_sprites"]
+position = Vector2(48, -2)
+
+[node name="Corshair" type="Sprite2D" parent="gun_sprites/mrk_aimer"]
+texture = ExtResource("7_ferxg")
+
 [node name="Marker2D" type="Marker2D" parent="."]
 position = Vector2(2, 0)
 
@@ -128,7 +191,7 @@ volume_db = -10.196
 
 [node name="tmr_shot_delay" type="Timer" parent="."]
 
-[node name="asp_reload" type="AudioStreamPlayer" parent="."]
+[node name="asp_reload_shotgun" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_tkml6")
 volume_db = -10.196
 
@@ -149,5 +212,9 @@ pitch_scale = 1.1
 [node name="asp_dry_fire" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("12_otuqi")
 
+[node name="asp_reload2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("14_ds5a7")
+
 [connection signal="timeout" from="tmr_shot_delay" to="." method="_on_tmr_shot_delay_timeout"]
 [connection signal="timeout" from="tmr_reload_sound" to="." method="_on_tmr_reload_sound_timeout"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

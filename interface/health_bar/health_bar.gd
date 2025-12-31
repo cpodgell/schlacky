@@ -15,6 +15,7 @@ func add_health(_value):
 	value += _value
 	visible = true
 	$Timer.start()
+	$rising_text_small.play_number(_value)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
