@@ -13,7 +13,6 @@ func enter():
 func handle_input(event):
 	if host_reference.player_disabled:
 		return "disabled"
-
 	if event.is_action_pressed(host_reference.player_prefix + global_input_map.ATTACK_1):
 		host_reference.attack_1_on()
 	if event.is_action_released(host_reference.player_prefix + global_input_map.ATTACK_1):
@@ -21,7 +20,9 @@ func handle_input(event):
 	if event.is_action_released(host_reference.player_prefix + global_input_map.RELOAD):
 		host_reference.attack_1_off()
 		host_reference.reload()
-
+	if event.is_action_released(host_reference.player_prefix + global_input_map.SWITCH_GUN):
+		host_reference.cycle_gun()
+	
 	var x := Input.get_joy_axis(host_reference.player_number, JOY_AXIS_LEFT_X)
 	var y := Input.get_joy_axis(host_reference.player_number, JOY_AXIS_LEFT_Y)
 	if abs(x) <= 0.35:
@@ -37,8 +38,6 @@ func handle_input(event):
 
 	host_reference.input_x = x
 	host_reference.input_y = y
-	host_reference.print_x(host_reference.input_x)
-	host_reference.print_y(y)
 
 	# Transition logic
 	if abs(host_reference.input_x) > 0.0:

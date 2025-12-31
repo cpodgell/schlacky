@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://dxntbvgdwtltu"]
+
+[ext_resource type="Theme" uid="uid://cfk2jxfff81dj" path="res://themes/theme_player_hud.tres" id="1_aptme"]
+[ext_resource type="Script" uid="uid://tb66v8a3ha7f" path="res://interface/hud/player_hud.gd" id="1_ua0wg"]
+
+[node name="Player_HUD" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = ExtResource("1_aptme")
+script = ExtResource("1_ua0wg")
+
+[node name="lbl_bullet_amount" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "0/0"

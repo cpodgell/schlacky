@@ -1,5 +1,7 @@
 extends RigidBody2D
 
+var is_dead = false
+
 func _ready():
 	lock_rotation = true
 	angular_velocity = 0
@@ -15,11 +17,13 @@ func _ready():
 	linear_damp = 10.0  
 
 func take_damage(_damage) -> int:
-	$stone_debris.play()
-	$spr_block.visible = false
-	$AudioStreamPlayer.pitch_scale = randf_range(.6, 1.1) # Randomly pick a sound
-	$AudioStreamPlayer.play()
-	$tmr_cls_disable.start()
+	if(!is_dead):
+		$stone_debris.play()
+		$spr_block.visible = false
+		$AudioStreamPlayer.pitch_scale = randf_range(.6, 1.1) # Randomly pick a sound
+		$AudioStreamPlayer.play()
+		$tmr_cls_disable.start()
+		is_dead = true
 	return 1
 
 func _on_stone_debris_block_debris_finished() -> void:

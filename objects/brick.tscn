@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://cvpmxlohcj7jg"]
+
+[ext_resource type="Script" uid="uid://bfnpk04rvxbj8" path="res://objects/brick.gd" id="1_hbwgr"]
+[ext_resource type="Texture2D" uid="uid://c3ihp1g8jfdbt" path="res://assets/objects/bricks.png" id="2_7nfhm"]
+[ext_resource type="PackedScene" uid="uid://cv8mnkymmln18" path="res://effects/brick_debris.tscn" id="3_2u2la"]
+[ext_resource type="AudioStream" uid="uid://d3uc00xvi4sao" path="res://assets/sfx/hits/rock_smashable_hit_impact_01.wav" id="4_pm7ss"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2u2la"]
+size = Vector2(16, 14)
+
+[node name="Brick" type="StaticBody2D"]
+collision_layer = 2
+collision_mask = 12
+script = ExtResource("1_hbwgr")
+
+[node name="spr_brick" type="Sprite2D" parent="."]
+texture = ExtResource("2_7nfhm")
+hframes = 2
+frame = 1
+
+[node name="cls_brick" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_2u2la")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="brick_debris" parent="." instance=ExtResource("3_2u2la")]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_pm7ss")
+
+[node name="tmr_cls_disable" type="Timer" parent="."]
+
+[connection signal="block_debris_finished" from="brick_debris" to="." method="_on_brick_debris_block_debris_finished"]
+[connection signal="timeout" from="tmr_cls_disable" to="." method="_on_tmr_cls_disable_timeout"]

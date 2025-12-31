@@ -3,7 +3,6 @@ class_name Player
 extends all_kinematic_bodies
 
 var current_state = null
-var state_name
 var states_map
 var player_disabled = false
 var player_dead = false
@@ -14,6 +13,8 @@ var start_position : Vector2 = Vector2.ZERO
 var _is_ascending = false
 var _is_descending = false
 var attack_on = false
+
+
 
 func init_states():
 	states_map = {
@@ -32,6 +33,8 @@ func _ready():
 
 func reset():
 	velocity = Vector2.ZERO
+	input_x = 0
+	input_y = 0
 	$health_bar.reset()
 	_change_state('idle')
 	player_disabled = false
@@ -67,6 +70,8 @@ func _physics_process(delta: float) -> void:
 			_change_state(new_state)
 
 	set_look_direction_manual(velocity)
+	if(velocity.y > max_fall_speed):
+		velocity.y = max_fall_speed
 
 	# --- always move ---
 	move_and_slide()
@@ -93,6 +98,9 @@ func set_player_color(_color):
 
 func reload():
 	$sb_container/Pistol.reload()
+
+func cycle_gun():
+	$sb_container/Pistol.cycle_gun()
 
 func _input(event):
 	if Input.is_key_pressed(KEY_UP):

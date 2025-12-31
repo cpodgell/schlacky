@@ -2,6 +2,7 @@ extends Node
 
 var number_of_players
 var current_level : BaseLevel
+var main : Main
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

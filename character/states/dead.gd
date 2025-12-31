@@ -2,6 +2,8 @@ extends state
 
 
 func enter():
+	host_reference.velocity = Vector2.ZERO
+	host_reference.attack_1_off()
 	host_reference.player_dead = true
 	host_reference.player_disabled = true
 	global_collisions.set_all_layer_bits(host_reference, false)

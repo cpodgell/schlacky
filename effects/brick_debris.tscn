@@ -1,0 +1,87 @@
+[gd_scene load_steps=7 format=3 uid="uid://cv8mnkymmln18"]
+
+[ext_resource type="Script" uid="uid://8osrt5fk53ut" path="res://stone_debris.gd" id="1_rphko"]
+[ext_resource type="Texture2D" uid="uid://cmoceavki38ab" path="res://assets/effects/brick_debris.png" id="2_rphko"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_mkmwv"]
+particles_animation = true
+particles_anim_h_frames = 2
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_t5uyq"]
+particle_flag_disable_z = true
+angle_min = 1.0728835e-05
+angle_max = 1.0728835e-05
+direction = Vector3(1, -0.5, 0)
+spread = 32.374
+initial_velocity_min = 62.59
+initial_velocity_max = 150.0
+angular_velocity_min = -720.0
+angular_velocity_max = 719.99994
+gravity = Vector3(0, 300, 0)
+anim_offset_min = 0.1414
+anim_offset_max = 0.3081
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_hlx1t"]
+particle_flag_disable_z = true
+angle_min = 1.0728835e-05
+angle_max = 1.0728835e-05
+direction = Vector3(-1, -0.5, 0)
+spread = 32.374
+initial_velocity_min = 62.59
+initial_velocity_max = 150.0
+angular_velocity_min = -720.0
+angular_velocity_max = 719.99994
+gravity = Vector3(0, 300, 0)
+anim_offset_min = 0.1414
+anim_offset_max = 0.3081
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_bg0be"]
+particle_flag_disable_z = true
+angle_min = 1.0728835e-05
+angle_max = 1.0728835e-05
+direction = Vector3(0, -2, 0)
+spread = 32.374
+initial_velocity_min = 102.99
+initial_velocity_max = 190.4
+angular_velocity_min = -720.0
+angular_velocity_max = 719.99994
+gravity = Vector3(0, 300, 0)
+anim_offset_min = 0.1414
+anim_offset_max = 0.3081
+
+[node name="brick_debris" type="Node2D"]
+script = ExtResource("1_rphko")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 7.0
+one_shot = true
+
+[node name="particles" type="Node2D" parent="."]
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="particles"]
+material = SubResource("CanvasItemMaterial_mkmwv")
+amount = 2
+texture = ExtResource("2_rphko")
+explosiveness = 1.0
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_t5uyq")
+
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="particles"]
+material = SubResource("CanvasItemMaterial_mkmwv")
+amount = 2
+texture = ExtResource("2_rphko")
+explosiveness = 1.0
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_hlx1t")
+
+[node name="GPUParticles2D3" type="GPUParticles2D" parent="particles"]
+material = SubResource("CanvasItemMaterial_mkmwv")
+amount = 2
+texture = ExtResource("2_rphko")
+explosiveness = 1.0
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_bg0be")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

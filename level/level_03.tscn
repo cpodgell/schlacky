@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=4 uid="uid://ctuobfipac8jr"]
+[gd_scene load_steps=13 format=4 uid="uid://ctuobfipac8jr"]
 
 [ext_resource type="PackedScene" uid="uid://bhb5rbq20d7br" path="res://level/inherit/base_level.tscn" id="1_2agqu"]
 [ext_resource type="Texture2D" uid="uid://cge3fmqrqsomt" path="res://assets/tiles/tree.png" id="2_ykc5s"]
@@ -8,6 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://ca0cwd5ss453o" path="res://character/enemy/shisser_smart/shisser_smart.tscn" id="6_2agqu"]
 [ext_resource type="PackedScene" uid="uid://dw8n47su7k3wo" path="res://mechanics/enemy_spawner.tscn" id="7_2agqu"]
 [ext_resource type="PackedScene" uid="uid://8260pdn4g4qy" path="res://objects/falling_block.tscn" id="8_ykc5s"]
+[ext_resource type="PackedScene" uid="uid://o8lrtn8tkkvs" path="res://effects/casing.tscn" id="9_ykc5s"]
+[ext_resource type="PackedScene" uid="uid://cvpmxlohcj7jg" path="res://objects/brick.tscn" id="10_73xum"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eh72w"]
 texture = ExtResource("2_ykc5s")
@@ -77,6 +79,9 @@ position = Vector2(131, 613)
 [node name="start_position_3" parent="start_positions" index="3"]
 position = Vector2(242, 608)
 
+[node name="ysort" parent="." index="2"]
+y_sort_enabled = false
+
 [node name="Enemy_Spawner" parent="ysort" index="0" instance=ExtResource("7_2agqu")]
 position = Vector2(341, 642)
 enemy_scene = ExtResource("8_ykc5s")
@@ -116,5 +121,17 @@ position = Vector2(198, 508)
 [node name="Smart_Shisser9" parent="ysort" index="11" instance=ExtResource("6_2agqu")]
 position = Vector2(264, 458)
 
-[node name="Smart_Shisser10" parent="ysort" index="12" instance=ExtResource("6_2agqu")]
+[node name="casing" parent="ysort" index="12" instance=ExtResource("9_ykc5s")]
+position = Vector2(75, 671)
+
+[node name="casing2" parent="ysort" index="13" instance=ExtResource("9_ykc5s")]
+position = Vector2(92, 679)
+
+[node name="casing3" parent="ysort" index="14" instance=ExtResource("9_ykc5s")]
+position = Vector2(75, 701)
+
+[node name="Smart_Shisser10" parent="ysort" index="15" instance=ExtResource("6_2agqu")]
 position = Vector2(379, 425)
+
+[node name="Brick" parent="." index="3" instance=ExtResource("10_73xum")]
+position = Vector2(246, 738)

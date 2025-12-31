@@ -33,7 +33,7 @@ stream = ExtResource("4_7por5")
 pitch_scale = 0.98
 
 [node name="tmr_cls_disable" type="Timer" parent="."]
-wait_time = 0.1
+wait_time = 0.09
 one_shot = true
 
 [node name="Area2D" type="Area2D" parent="."]

@@ -1,10 +1,9 @@
-[gd_scene load_steps=23 format=3 uid="uid://dice1e7tigbs"]
+[gd_scene load_steps=18 format=3 uid="uid://dice1e7tigbs"]
 
 [ext_resource type="Texture2D" uid="uid://c4u8thw8yr7tb" path="res://assets/gun/pistol.png" id="1_1ohd4"]
 [ext_resource type="Script" uid="uid://ci8wuqf631gg" path="res://weapons/pistol.gd" id="1_5icxk"]
 [ext_resource type="AudioStream" uid="uid://dlg68athtakh4" path="res://assets/sfx/gun_shots/pistol.ogg" id="3_f30ot"]
 [ext_resource type="Texture2D" uid="uid://dg81etljyx2kh" path="res://assets/gun/shotgun.png" id="3_fcwqf"]
-[ext_resource type="Texture2D" uid="uid://c304wtpcjdd3n" path="res://assets/effects/bullet-casing-sheet.png" id="4_icjny"]
 [ext_resource type="Texture2D" uid="uid://dhtdalf371qrk" path="res://assets/gun/machine_gun.png" id="5_72fyo"]
 [ext_resource type="AudioStream" uid="uid://cpjflgr0bcn6f" path="res://assets/sfx/gun_shots/pistol_01.ogg" id="5_o30jq"]
 [ext_resource type="Texture2D" uid="uid://cc7f3jd3qqdha" path="res://assets/gun/uzi.png" id="5_qvlev"]
@@ -14,35 +13,6 @@
 [ext_resource type="AudioStream" uid="uid://dv1n317qfd14n" path="res://assets/sfx/misc/gun_cycle_2.ogg" id="10_6674i"]
 [ext_resource type="AudioStream" uid="uid://ti7vlp5nl1qj" path="res://assets/sfx/foly/dry_fire_01.wav" id="12_otuqi"]
 [ext_resource type="AudioStream" uid="uid://276g6es2s5bu" path="res://assets/sfx/gun_shots/gun_semi_auto_rifle_magazine_load_03.wav" id="14_ds5a7"]
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_qvlev"]
-particles_animation = true
-particles_anim_h_frames = 2
-particles_anim_v_frames = 1
-particles_anim_loop = false
-
-[sub_resource type="Gradient" id="Gradient_72fyo"]
-offsets = PackedFloat32Array(0, 0.8116592, 1)
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_6674i"]
-gradient = SubResource("Gradient_72fyo")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_x8w74"]
-particle_flag_disable_z = true
-angle_min = -720.0
-angle_max = 720.0
-direction = Vector3(0, -1, 0)
-spread = 0.0
-flatness = 0.153
-initial_velocity_min = 229.97
-initial_velocity_max = 250.87999
-angular_velocity_min = -720.0
-angular_velocity_max = 719.99994
-gravity = Vector3(0, 900, 0)
-color_ramp = SubResource("GradientTexture1D_6674i")
-anim_offset_min = 0.50519997
-anim_offset_max = 0.50519997
 
 [sub_resource type="Animation" id="Animation_icjny"]
 length = 0.001
@@ -112,7 +82,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.17, 0.26, 0.36),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, 3), Vector2(0, 0)]
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, 5), Vector2(0, 0)]
 }
 tracks/2/type = "method"
 tracks/2/imported = false
@@ -138,16 +108,6 @@ _data = {
 
 [node name="Pistol" type="Node2D"]
 script = ExtResource("1_5icxk")
-
-[node name="casings" type="GPUParticles2D" parent="."]
-material = SubResource("CanvasItemMaterial_qvlev")
-position = Vector2(4, -1)
-emitting = false
-amount = 1
-texture = ExtResource("4_icjny")
-lifetime = 0.7
-one_shot = true
-process_material = SubResource("ParticleProcessMaterial_x8w74")
 
 [node name="gun_sprites" type="Node2D" parent="."]
 

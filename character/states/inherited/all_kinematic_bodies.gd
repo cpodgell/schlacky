@@ -10,6 +10,7 @@ var is_disabled := false
 var inertia := 50.0
 var crouching = false
 # --- PLATFORMER TUNING (moved from Player) ---
+var max_fall_speed = 400
 var MAX_SPEED = 220.0
 const CROUCH_SPEED_MAX = 110
 const WALK_SPEED_MAX = 220.0
@@ -35,34 +36,6 @@ var look_direction: Vector2:
 	get:
 		return _look_direction
 
-# --- Motion (optional legacy support) ---
-var _motion := Vector2.ZERO
-var motion: Vector2:
-	set(value):
-		_motion = value
-	get:
-		return _motion
-
-# -------------------------------------------------------------
-# TOP-DOWN STYLE HELPERS (kept for compatibility)
-
-func apply_friction(amount: float) -> void:
-	if _motion.length() > amount:
-		_motion -= _motion.normalized() * amount
-	else:
-		_motion = Vector2.ZERO
-
-func apply_movement(acceleration_vec: Vector2, max_speed: float) -> void:
-	_motion += acceleration_vec
-	_motion = _motion.limit_length(max_speed)
-
-	# Update facing based on X
-	look_direction = Vector2(-1, 0) if _motion.x < 0.0 else Vector2(1, 0)
-
-func apply_external_force(amount: float, direction: Vector2, max_speed: float) -> void:
-	_motion += amount * direction.normalized()
-	_motion = _motion.limit_length(max_speed)
-
 # -------------------------------------------------------------
 # PLATFORMER HELPERS
 
@@ -77,24 +50,6 @@ func try_jump() -> void:
 	if is_on_floor():
 		velocity.y = JUMP_VELOCITY
 		$asp_jump.play()
-
-# -------------------------------------------------------------
-
-func manual_move_and_slide() -> void:
-	velocity = _motion
-	move_and_slide()
-	_motion = velocity
-
-	# Flip based on actual resulting velocity
-	if abs(velocity.x) > 0.01:
-		set_look_direction_manual(Vector2(sign(velocity.x), 0))
-
-	for i in range(get_slide_collision_count()):
-		var collision := get_slide_collision(i)
-		var body := collision.get_collider()
-		if body and body.is_in_group("item_base"):
-			if body.has_method("apply_impulse"):
-				body.apply_impulse(-collision.get_normal() * inertia)
 
 func set_look_direction_manual(direction: Vector2) -> void:
 	if direction.x > 0.0:

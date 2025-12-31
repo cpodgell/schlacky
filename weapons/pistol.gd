@@ -1,5 +1,7 @@
 extends Node2D
 
+var casing_scene = preload("res://effects/casing.tscn")
+
 @export var weapon_type : int
 
 enum WeaponType {
@@ -11,17 +13,22 @@ enum WeaponType {
 
 var is_reloading = false
 var is_firing = false
+var fire_button_down = false
 
 var shots_before_reload = 1
 var shots_counter = 0
 
 var rounds_in_clip : int = 0
+var max_rounds_in_clip : int = 0
+
 var cycle_fire = false
-var firing = false
 var gun_cycle_number = 0
 
 var bullet_scene = preload("res://weapons/bullets/bullet.tscn")
-var gun_owner
+var gun_owner : Player
+var shot_count = 0
+
+var current_case_type = 0
 
 @onready var pistol = $gun_sprites/spr_gun
 @onready var shotgun = $gun_sprites/spr_shot_gun
@@ -33,12 +40,16 @@ var shotgun_max = 12
 var machine_gun_max = 35
 var uzi_max = 50
 
-
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	reset_gun()
+		
 	pass # Replace with function body.
 
+func update_hud(_bullet_max, _bullet_amount):
+	if(global.main and gun_owner):
+		global.main.update_hud(_bullet_max, _bullet_amount, gun_owner.player_number)
+	
 func cycle_gun():
 	gun_cycle_number += 1
 	weapon_type = gun_cycle_number % WeaponType.size()
@@ -46,51 +57,51 @@ func cycle_gun():
 	$asp_gun_cycle.play()
 
 func reset_gun():
+	current_case_type = 1
 	for c in $gun_sprites.get_children():
 		if c is Sprite2D:
 			c.visible = false
 	match weapon_type:
 		WeaponType.PISTOL:
-			$casings.process_material.anim_offset_max = 0.5
-			$casings.process_material.anim_offset_min = 0.5
 			pistol.visible = true
 			rounds_in_clip = pistol_max
+			max_rounds_in_clip = pistol_max
 			$tmr_shot_delay.wait_time = .2
 		WeaponType.SHOTGUN:
-			$casings.process_material.anim_offset_max = 0.0
-			$casings.process_material.anim_offset_min = 0.0
 			$tmr_shot_delay.wait_time = .7
 			rounds_in_clip = shotgun_max
+			max_rounds_in_clip = shotgun_max
 			shotgun.visible = true
+			current_case_type = 0
 		WeaponType.MACHINE_GUN:
 			cycle_fire = true
-			$casings.process_material.anim_offset_max = 0.5
-			$casings.process_material.anim_offset_min = 0.5
 			machine_gun.visible = true
 			rounds_in_clip = machine_gun_max
+			max_rounds_in_clip = machine_gun_max
 			$tmr_shot_delay.wait_time = .1
 		WeaponType.UZI:
 			cycle_fire = true
-			$casings.process_material.anim_offset_max = 0.5
-			$casings.process_material.anim_offset_min = 0.5
 			uzi.visible = true
 			rounds_in_clip = uzi_max
+			max_rounds_in_clip = uzi_max
 			$tmr_shot_delay.wait_time = .04
 	gun_owner = get_parent().get_parent()
+	update_hud(max_rounds_in_clip,rounds_in_clip)
 
 func fire_down():
-	firing = true
+	fire_button_down = true
 	if(!is_firing and !is_reloading):
 		_fire()
 
 func fire_up():
-	firing = false
+	fire_button_down = false
 
 func _fire():
 	if(rounds_in_clip <= 0):
 		$asp_dry_fire.play()
 		return
 	rounds_in_clip -= 1
+	update_hud(max_rounds_in_clip,rounds_in_clip)
 	is_firing = true
 	release_casing()
 	$AnimationPlayer.stop(true)
@@ -136,7 +147,7 @@ func spawn_bullet(_direction = Vector2.ZERO, _speed = 0,  _death  = 0):
 		bullet.direction = Vector2(x,_direction.y)
 	#print("Bullet: " + str(bullet.global_position))
 	#print("marker: " + str($gun_sprites/mrk_aimer.global_position))
-	var angle = ($gun_sprites/mrk_aimer.global_position - $gun_sprites.global_position).angle()
+	#var angle = ($gun_sprites/mrk_aimer.global_position - $gun_sprites.global_position).angle()
 	print($gun_sprites.rotation)
 	print(get_parent().scale.x)
 	bullet.rotation = get_parent().scale.x * $gun_sprites.rotation
@@ -153,18 +164,38 @@ func play_reload_sound():
 	$asp_reload2.play()
 
 func release_casing():
-	$casings.restart()
-	$casings.emitting = true
+	var case : Casing = casing_scene.instantiate()
+	global.current_level.add_to_ysort(case)
+	case.global_position = global_position
+	case.linear_velocity = Vector2.ZERO
+	case.set_type(current_case_type)
+	var x = get_parent().scale.x * -1
+	x = randf_range(x*20, x*40)
+	var y = randf_range(-300, -100)
+	#case.apply_impulse(Vector2(x, randf_range(-300,-200)), Vector2(0, 0))  # Stronger upward impulse
+	#case.apply_impulse(Vector2(randf_range(-200, -100), -300), Vector2(0, 0))  # Random backward and upward impulse with spin
+	case.apply_impulse(Vector2(x,y), Vector2(0, 0))
+	case.angular_velocity = randf_range(5, 20)
+
+
+	case.visible = true
+
+
+
+
+	# Increment shot count to cycle through the casings
+	shot_count += 1
+
 	
 func _on_tmr_shot_delay_timeout() -> void:
 	is_firing = false
 	$gun_sprites.rotation = 0
-	if(firing):
-		_fire()
+	if(fire_button_down):
+		fire_down()
 
 
 func _on_tmr_reload_sound_timeout() -> void:
-	$asp_reload.play()
+	$asp_reload_shotgun.play()
 
 
 func _on_tmr_decay_timeout() -> void:

@@ -12,13 +12,7 @@ func play():
 	$Timer.start()
 	for c in $particles.get_children():
 		c.emitting = true
-		c.one_shot = false
-		
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
+		c.one_shot = true
 
 func _on_timer_timeout() -> void:
 	emit_signal("block_debris_finished")
