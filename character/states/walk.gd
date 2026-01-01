@@ -23,6 +23,10 @@ func handle_input(event):
 		host_reference.reload()
 	if event.is_action_released(host_reference.player_prefix + global_input_map.SWITCH_GUN):
 		host_reference.cycle_gun()
+	if event.is_action_pressed(host_reference.player_prefix + global_input_map.GRENADE):
+		host_reference.prepare_grenade()
+	if event.is_action_released(host_reference.player_prefix + global_input_map.GRENADE):
+		host_reference.release_grenade()
 	# Gather horizontal-only input (-1..1) and store it on the host.
 	var x := Input.get_joy_axis(host_reference.player_number, JOY_AXIS_LEFT_X)
 	var y := Input.get_joy_axis(host_reference.player_number, JOY_AXIS_LEFT_Y)

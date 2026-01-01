@@ -2,6 +2,9 @@
 class_name Player
 extends all_kinematic_bodies
 
+var grenade_scene = preload("res://weapons/bombs/grenade.tscn")
+var grenade : RigidBody2D = null
+
 var current_state = null
 var states_map
 var player_disabled = false
@@ -76,6 +79,8 @@ func _physics_process(delta: float) -> void:
 	# --- always move ---
 	move_and_slide()
 	update_camera()
+	if global_position.y >= 2000 and !player_dead:
+		death()
 
 func initialize_states():
 	current_state = states_map["idle"]
@@ -174,6 +179,23 @@ func set_crouching(_crouching):
 	else:
 		MAX_SPEED = WALK_SPEED_MAX
 		$sb_container/Pistol.global_position = $mrk_stand_gun.global_position
+
+func prepare_grenade():
+	grenade = grenade_scene.instantiate()
+	grenade.position = Vector2(0,-20)
+	grenade.freeze = true
+	self.add_child(grenade)
+	
+func release_grenade():
+	if(grenade != null):
+		grenade.freeze = false
+		grenade.reparent(global.current_level)
+		var impulse = self.velocity * grenade.mass
+		impulse.y += -1000
+		impulse.x += ($sb_container.scale.x * 1000)
+		grenade.angular_velocity = $sb_container.scale.x * 120.0
+		grenade.apply_impulse(impulse)
+		
 
 func walk():
 	if(crouching):

@@ -30,6 +30,7 @@ shape = SubResource("RectangleShape2D_2u2la")
 stream = ExtResource("4_pm7ss")
 
 [node name="tmr_cls_disable" type="Timer" parent="."]
+wait_time = 0.05
 
 [connection signal="block_debris_finished" from="brick_debris" to="." method="_on_brick_debris_block_debris_finished"]
 [connection signal="timeout" from="tmr_cls_disable" to="." method="_on_tmr_cls_disable_timeout"]

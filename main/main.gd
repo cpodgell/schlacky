@@ -1,7 +1,7 @@
 class_name Main extends Node2D
 
-@export var number_of_players: int = 2
-@export var testing : bool = false
+@export var number_of_players: int = 1
+@export var testing : bool = true
 
 var game_camera : GameCamera = null
 var title_screen
