@@ -1,6 +1,7 @@
 extends Node2D
 
 var casing_scene = preload("res://effects/casing.tscn")
+@export var laser_scene: PackedScene = preload("res://weapons/bullets/laser.tscn")
 
 @export var weapon_type : int
 
@@ -8,7 +9,8 @@ enum WeaponType {
 	PISTOL,
 	SHOTGUN,
 	MACHINE_GUN,
-	UZI
+	UZI,
+	LASER
 }
 
 var is_reloading = false
@@ -34,11 +36,14 @@ var current_case_type = 0
 @onready var shotgun = $gun_sprites/spr_shot_gun
 @onready var machine_gun = $gun_sprites/spr_machine_gun
 @onready var uzi = $gun_sprites/spr_uzi
+@onready var laser_gun = $gun_sprites/spr_laser
+
 
 var pistol_max = 12
 var shotgun_max = 12
 var machine_gun_max = 35
-var uzi_max = 50
+var uzi_max = 200
+var laser_max = 20
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -85,6 +90,12 @@ func reset_gun():
 			rounds_in_clip = uzi_max
 			max_rounds_in_clip = uzi_max
 			$tmr_shot_delay.wait_time = .04
+		WeaponType.LASER:
+			cycle_fire = true
+			laser_gun.visible = true
+			rounds_in_clip = laser_max
+			max_rounds_in_clip = uzi_max
+			$tmr_shot_delay.wait_time = .4
 	gun_owner = get_parent().get_parent()
 	update_hud(max_rounds_in_clip,rounds_in_clip)
 
@@ -131,8 +142,27 @@ func _fire():
 		$asp_uzi.play()
 		$gun_sprites.rotation = randf_range(-.4,.4)
 		spawn_bullet(Vector2.ZERO, speed)
+	if(weapon_type == WeaponType.LASER):
+		$tmr_shot_delay.start()
+		$asp_uzi.play()
+		$gun_sprites.rotation = randf_range(-.1,.1)
+		spawn_laser()
 
-func spawn_bullet(_direction = Vector2.ZERO, _speed = 0,  _death  = 0):
+func spawn_laser() -> void:
+	var laser: LaserBeam = laser_scene.instantiate()
+	# Spawn at the gun's position
+	laser.global_position = $mkr_fire_position.global_position
+	laser.bullet_owner = gun_owner
+	# Shoot straight right (local +X)
+	laser.direction = Vector2(get_parent().scale.x, 0)
+	# Optional tuning (safe defaults)
+	laser.damage = 2
+	laser.owner = self
+	# Add to scee (NOT as a child of the gun)
+	get_tree().current_scene.add_child(laser)
+	laser.fire()
+
+func spawn_bullet(_direction = Vector2.ZERO, _speed : float = 0,  _death : float = 0):
 	var bullet : Bullet = bullet_scene.instantiate()
 	bullet.bullet_type = Bullet.BulletType.FLAT
 	global_collisions.set_player_bullet(bullet)
@@ -145,16 +175,11 @@ func spawn_bullet(_direction = Vector2.ZERO, _speed = 0,  _death  = 0):
 		bullet.direction = direction_new
 	else:
 		bullet.direction = Vector2(x,_direction.y)
-	#print("Bullet: " + str(bullet.global_position))
-	#print("marker: " + str($gun_sprites/mrk_aimer.global_position))
-	#var angle = ($gun_sprites/mrk_aimer.global_position - $gun_sprites.global_position).angle()
-	print($gun_sprites.rotation)
-	print(get_parent().scale.x)
 	bullet.rotation = get_parent().scale.x * $gun_sprites.rotation
 	bullet.set_death(_death)
 	if(_speed != 0):
 		bullet.speed = _speed
-	bullet.global_position = $Marker2D.global_position
+	bullet.global_position = $mkr_fire_position.global_position
 
 func reload():
 	is_reloading = true

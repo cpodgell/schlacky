@@ -11,9 +11,9 @@ var inertia := 50.0
 var crouching = false
 # --- PLATFORMER TUNING (moved from Player) ---
 var max_fall_speed = 400
-var MAX_SPEED = 220.0
+var MAX_SPEED = 180.0
 const CROUCH_SPEED_MAX = 110
-const WALK_SPEED_MAX = 220.0
+const WALK_SPEED_MAX = 180.0
 const JUMP_VELOCITY = -300.0
 const acceleration = 1600.00
 const deceleration = 1600.0
