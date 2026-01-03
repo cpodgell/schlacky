@@ -1,15 +1,19 @@
-[gd_scene load_steps=7 format=3 uid="uid://cywqpog3f0we7"]
+[gd_scene load_steps=9 format=3 uid="uid://cywqpog3f0we7"]
 
 [ext_resource type="Script" uid="uid://fvl6nwcy1yid" path="res://weapons/bombs/grenade.gd" id="1_0fpje"]
 [ext_resource type="Texture2D" uid="uid://dn3jhlsc5tj0n" path="res://assets/bombs/grenade_no_pin.png" id="1_fb44o"]
 [ext_resource type="PackedScene" uid="uid://dft8a4lxlc7q3" path="res://effects/explosion.tscn" id="3_uc0u7"]
 [ext_resource type="AudioStream" uid="uid://d0abiucn7ieu8" path="res://assets/sfx/explosion/Explosion_Light_Nuc.ogg" id="4_wmn8y"]
+[ext_resource type="AudioStream" uid="uid://c3mpltmhr3fuw" path="res://assets/sfx/hits/pick_axe_stone_small_hit_mine_impact_02.wav" id="5_1wnik"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0fpje"]
 radius = 5.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wmn8y"]
 radius = 44.181442
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_n8vnw"]
+radius = 7.071068
 
 [node name="grenade" type="RigidBody2D"]
 collision_layer = 0
@@ -48,7 +52,20 @@ one_shot = true
 [node name="asp_explosion" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_wmn8y")
 
+[node name="ara_hit_sound" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 66
+
+[node name="cls_hit_sound" type="CollisionShape2D" parent="ara_hit_sound"]
+shape = SubResource("CircleShape2D_n8vnw")
+
+[node name="asp_hit" type="AudioStreamPlayer" parent="ara_hit_sound"]
+stream = ExtResource("5_1wnik")
+volume_db = 3.37
+pitch_scale = 0.5
+
 [connection signal="timeout" from="tmr_dmg" to="." method="_on_tmr_dmg_timeout"]
 [connection signal="timeout" from="tmr_fuse" to="." method="_on_tmr_fuse_timeout"]
 [connection signal="body_entered" from="ara_dmg" to="." method="_on_ara_dmg_body_entered"]
 [connection signal="timeout" from="tmr_queue_free" to="." method="_on_tmr_queue_free_timeout"]
+[connection signal="body_entered" from="ara_hit_sound" to="." method="_on_ara_hit_sound_body_entered"]

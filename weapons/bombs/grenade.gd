@@ -31,3 +31,6 @@ func _on_tmr_queue_free_timeout() -> void:
 func _on_ara_dmg_body_entered(body: Node2D) -> void:
 	if(body.has_method("take_damage")):
 		body.take_damage(4)
+
+func _on_ara_hit_sound_body_entered(body: Node2D) -> void:
+	$ara_hit_sound/asp_hit.play()

@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://bjeqybrc4g6nr"]
+
+[ext_resource type="Script" uid="uid://bylejtipgxtyn" path="res://mechanics/spawners/brick_spawner.gd" id="1_spjk6"]
+[ext_resource type="Texture2D" uid="uid://dub013ole50l2" path="res://assets/spawners/spawner_brick.png" id="2_h3nft"]
+[ext_resource type="PackedScene" uid="uid://dw8n47su7k3wo" path="res://mechanics/enemy_spawner.tscn" id="3_eehyp"]
+[ext_resource type="PackedScene" uid="uid://8260pdn4g4qy" path="res://objects/falling_block.tscn" id="4_uwhd0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_spjk6"]
+
+[node name="brick_spawner" type="Node2D"]
+script = ExtResource("1_spjk6")
+
+[node name="spr_brick" type="Sprite2D" parent="."]
+texture = ExtResource("2_h3nft")
+
+[node name="Enemy_Spawner" parent="." instance=ExtResource("3_eehyp")]
+visible = false
+enemy_scene = ExtResource("4_uwhd0")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 66
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_spjk6")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
