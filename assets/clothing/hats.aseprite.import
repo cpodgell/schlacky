@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dak78yunt3bvg"
+path="res://.godot/imported/hats.aseprite-390497dcac439200670e83f93ac03d7a.res"
+
+[deps]
+
+source_file="res://assets/clothing/hats.aseprite"
+dest_files=["res://.godot/imported/hats.aseprite-390497dcac439200670e83f93ac03d7a.res"]
+
+[params]
+

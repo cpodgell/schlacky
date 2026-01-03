@@ -9,7 +9,7 @@
 radius = 5.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wmn8y"]
-radius = 26.0
+radius = 44.181442
 
 [node name="grenade" type="RigidBody2D"]
 collision_layer = 0

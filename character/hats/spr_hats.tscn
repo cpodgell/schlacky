@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://3u3nvxqvaq8r"]
+
+[ext_resource type="Texture2D" uid="uid://1swgydp5n208" path="res://assets/clothing/hats.png" id="1_da5em"]
+[ext_resource type="Script" uid="uid://bmgtsjml3m10y" path="res://character/hats/spr_hats.gd" id="2_p7tmv"]
+
+[node name="spr_hats" type="Sprite2D"]
+texture = ExtResource("1_da5em")
+hframes = 20
+vframes = 20
+script = ExtResource("2_p7tmv")

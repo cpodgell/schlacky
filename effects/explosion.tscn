@@ -11,8 +11,8 @@ particles_anim_loop = false
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ilkv6"]
 particle_flag_disable_z = true
 gravity = Vector3(0, -98, 0)
-anim_speed_min = 2.24
-anim_speed_max = 2.44
+anim_speed_min = 1.3199999
+anim_speed_max = 1.52
 
 [node name="explosion" type="GPUParticles2D"]
 material = SubResource("CanvasItemMaterial_vv155")

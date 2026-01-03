@@ -32,6 +32,7 @@ func _ready():
 	initialize_states()
 	current_state = states_map["idle"]
 	current_state.enter()
+	#$Flickerer.initialize($sb_container/sprite_body)
 	reset()
 
 func reset():
@@ -99,7 +100,7 @@ func _change_state(state_name):
 		$lbl_state.text = current_state.get_state()
 
 func set_player_color(_color):
-	$sb_container/sprite_body.modulate = _color
+	$sb_container/sprite_body.set_color(_color)
 
 func reload():
 	$sb_container/Pistol.reload()
@@ -235,7 +236,13 @@ func take_damage(_damage: int) -> int:
 	var health = $health_bar.value
 	if health <= 0:
 		death()
+		return  health
+	flicker()
 	return health
+
+func flicker():
+	pass
+	#$Flickerer.flicker()
 
 func _on_tmr_respawn_timeout() -> void:
 	reset()

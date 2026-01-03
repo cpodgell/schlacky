@@ -1,5 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://ci2d0j616dbbv"]
+[gd_scene load_steps=8 format=3 uid="uid://ci2d0j616dbbv"]
 
+[ext_resource type="Material" uid="uid://boeaids0imlbu" path="res://shader/flickerer/white_flicker_material2.tres" id="1_fch41"]
 [ext_resource type="Script" uid="uid://8osrt5fk53ut" path="res://stone_debris.gd" id="1_nla0o"]
 [ext_resource type="Texture2D" uid="uid://6folhlt00htx" path="res://assets/effects/stone_debris.png" id="2_fch41"]
 
@@ -49,6 +50,7 @@ gravity = Vector3(0, 300, 0)
 anim_offset_max = 1.0
 
 [node name="stone_debris" type="Node2D"]
+material = ExtResource("1_fch41")
 script = ExtResource("1_nla0o")
 
 [node name="Timer" type="Timer" parent="."]

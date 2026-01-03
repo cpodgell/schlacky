@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bbs22pldwshds"]
+
+[ext_resource type="Script" uid="uid://bkknxsafxbm4j" path="res://shader/flickerer/flickerer.gd" id="1_q8kp7"]
+
+[node name="Flickerer" type="Node"]
+script = ExtResource("1_q8kp7")
+
+[node name="tmr_flicker_length" type="Timer" parent="."]
+
+[connection signal="timeout" from="tmr_flicker_length" to="." method="_on_tmr_flicker_length_timeout"]

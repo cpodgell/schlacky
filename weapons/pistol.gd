@@ -6,6 +6,7 @@ var casing_scene = preload("res://effects/casing.tscn")
 @export var weapon_type : int
 
 enum WeaponType {
+	NONE,
 	PISTOL,
 	SHOTGUN,
 	MACHINE_GUN,

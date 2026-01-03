@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://ceh85pg510wsk"]
+
+[ext_resource type="Script" uid="uid://dx2fif2x7t4rd" path="res://interface/character_select.gd" id="1_lrwax"]
+[ext_resource type="PackedScene" uid="uid://2l8rxidok4e1" path="res://character/sprite_body/sprite_body.tscn" id="1_lublx"]
+
+[node name="Character_Select" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lrwax")
+
+[node name="Control" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="sprite_body" parent="Control" instance=ExtResource("1_lublx")]
+position = Vector2(37, 32)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(54, 54)
+zoom = Vector2(6, 6)

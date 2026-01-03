@@ -9,7 +9,7 @@ func add_players():
 	start_positions.sort_custom(func(a, b): return a.name < b.name)
 
 	for i in range(player_manager.players.size()):
-		var player = player_manager.players[i]
+		var player : Player = player_manager.players[i]
 
 		if player.get_parent() != $ysort:
 			player.reparent($ysort)

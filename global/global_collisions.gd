@@ -27,7 +27,7 @@ func set_player(body: PhysicsBody2D) -> void:
 
 func set_player_bullet(body: Area2D) -> void:
 	set_layer_bits(body, [PLAYER_BULLET])
-	set_mask_bits(body, [WALLS, ENEMY])
+	set_mask_bits(body, [WALLS, PLAYER, ENEMY])
 
 func set_enemy(body: PhysicsBody2D) -> void:
 	set_layer_bits(body, [ENEMY])

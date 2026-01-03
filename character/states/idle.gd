@@ -46,6 +46,7 @@ func handle_input(event):
 	# Transition logic
 	if abs(host_reference.input_x) > 0.0:
 		return "walk"
+	else: return "idle"
 
 func get_state() -> String:
 	return name.to_lower()

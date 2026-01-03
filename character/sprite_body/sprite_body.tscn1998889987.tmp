@@ -1,9 +1,7 @@
-[gd_scene load_steps=13 format=4 uid="uid://2l8rxidok4e1"]
+[gd_scene load_steps=12 format=4 uid="uid://2l8rxidok4e1"]
 
 [ext_resource type="Script" uid="uid://dtl26132qvfvl" path="res://character/sprite_body/sprite_body.gd" id="1_86qrs"]
-[ext_resource type="PackedScene" uid="uid://3u3nvxqvaq8r" path="res://character/hats/spr_hats.tscn" id="2_3a0bs"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_3a0bs"]
+[ext_resource type="Texture2D" uid="uid://1swgydp5n208" path="res://assets/clothing/hats.png" id="2_3a0bs"]
 
 [sub_resource type="PortableCompressedTexture2D" id="PortableCompressedTexture2D_86qrs"]
 _data = PackedByteArray("AAADAAUAAAABAAAAkAAAAJAAAADyAAAAUklGRuoAAABXRUJQVlA4TN0AAAAvj8AjEBcw//M///MfgAe3tfU0j3BgA8dpGMFJONTZ01BT/8nfoDLIORQR/WfgtpEi7zEO7CvotzeYTX4MDrD3EoOXeJ8aD6IkxivxqFx+WFXyI5Vo0xWcy9R4APt8Y6ALjEIMCyaFGMJIst2mx6NhFEw+Z51VYKgr1WchmfTohzmYTT4H2HuxVxGVNnf+CLORpcesbZPKe41NjDonD4ouMPmP0IIpTTiXYymIUSrgTim8NulRxpz8HxoT7ikocL4T291OY3M56Vx+Mi4ajzh4hU0Axo/DAZbyB7PJQgA=")
@@ -40,32 +38,6 @@ tracks/0/keys = {
 "update": 1,
 "values": [0, 0]
 }
-tracks/1/type = "method"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("..")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"place_hat_at_stand"
-}]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("../hat:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
-}
 
 [sub_resource type="Animation" id="Animation_y4m87"]
 length = 0.1
@@ -83,21 +55,6 @@ tracks/0/keys = {
 "values": [3]
 }
 
-[sub_resource type="Animation" id="Animation_3wc80"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("../hat:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
-}
-
 [sub_resource type="Animation" id="Animation_x40f3"]
 length = 0.2
 loop_mode = 1
@@ -113,28 +70,14 @@ tracks/0/keys = {
 "update": 1,
 "values": [1, 2]
 }
-tracks/1/type = "method"
+tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("..")
-tracks/1/interp = 1
+tracks/1/path = NodePath("../hat:position")
+tracks/1/interp = 0
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"place_hat_at_stand"
-}]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("../hat:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.2),
+"times": PackedFloat32Array(0, 0.10000001),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector2(0, 0), Vector2(0, -1)]
@@ -172,6 +115,21 @@ tracks/0/keys = {
 "values": [6, 5]
 }
 
+[sub_resource type="Animation" id="Animation_3wc80"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../hat:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_scib7"]
 _data = {
 &"Disabled": SubResource("Animation_scib7"),
@@ -184,15 +142,15 @@ _data = {
 }
 
 [node name="sprite_body" type="Node2D"]
-material = SubResource("ShaderMaterial_3a0bs")
 script = ExtResource("1_86qrs")
 
 [node name="spr_schlacky" type="Sprite2D" parent="."]
 texture_filter = 1
-position = Vector2(0, -24)
+position = Vector2(-1, -11)
 texture = SubResource("PortableCompressedTexture2D_86qrs")
 hframes = 3
 vframes = 3
+frame = 1
 metadata/_aseprite_wizard_interface_config_ = {
 "pending_changes": {}
 }
@@ -224,11 +182,14 @@ libraries = {
 
 [node name="Sprite2D2" type="Sprite2D" parent="."]
 
-[node name="mrk_stand" type="Marker2D" parent="."]
-position = Vector2(1, -34)
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(0, 4)
 
 [node name="hat" type="Node2D" parent="."]
 
-[node name="spr_hats" parent="hat" instance=ExtResource("2_3a0bs")]
-position = Vector2(1, -34)
-frame = 38
+[node name="spr_hats" type="Sprite2D" parent="hat"]
+position = Vector2(0, -12)
+texture = ExtResource("2_3a0bs")
+hframes = 10
+vframes = 15
+frame = 1

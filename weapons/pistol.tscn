@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://dice1e7tigbs"]
+[gd_scene load_steps=20 format=3 uid="uid://dice1e7tigbs"]
 
 [ext_resource type="Texture2D" uid="uid://c4u8thw8yr7tb" path="res://assets/gun/pistol.png" id="1_1ohd4"]
 [ext_resource type="Script" uid="uid://ci8wuqf631gg" path="res://weapons/pistol.gd" id="1_5icxk"]
@@ -9,6 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://cpjflgr0bcn6f" path="res://assets/sfx/gun_shots/pistol_01.ogg" id="5_o30jq"]
 [ext_resource type="Texture2D" uid="uid://cc7f3jd3qqdha" path="res://assets/gun/uzi.png" id="5_qvlev"]
 [ext_resource type="AudioStream" uid="uid://j3sy5gb167xe" path="res://assets/sfx/misc/shotgun_cock.ogg" id="6_tkml6"]
+[ext_resource type="Texture2D" uid="uid://tlgteujpyaqe" path="res://assets/gun/mini_gun.png" id="7_2v7i3"]
 [ext_resource type="Texture2D" uid="uid://bmss0jpsjuvbp" path="res://assets/misc/corshair.png" id="7_ferxg"]
 [ext_resource type="AudioStream" uid="uid://rp34eewghucc" path="res://assets/sfx/gun_shots/gun_submachine_silenced_shot_0_first.wav" id="9_x8w74"]
 [ext_resource type="AudioStream" uid="uid://dv1n317qfd14n" path="res://assets/sfx/misc/gun_cycle_2.ogg" id="10_6674i"]
@@ -109,7 +110,6 @@ _data = {
 
 [node name="Pistol" type="Node2D"]
 script = ExtResource("1_5icxk")
-weapon_type = 4
 
 [node name="gun_sprites" type="Node2D" parent="."]
 
@@ -133,6 +133,10 @@ texture = ExtResource("5_qvlev")
 position = Vector2(4, 2)
 texture = ExtResource("5_72fyo")
 
+[node name="spr_mini_gun" type="Sprite2D" parent="gun_sprites"]
+position = Vector2(9, -1)
+texture = ExtResource("7_2v7i3")
+
 [node name="mrk_aimer" type="Marker2D" parent="gun_sprites"]
 position = Vector2(48, -2)
 
@@ -140,7 +144,6 @@ position = Vector2(48, -2)
 texture = ExtResource("7_ferxg")
 
 [node name="mkr_fire_position" type="Marker2D" parent="."]
-position = Vector2(16, 0)
 
 [node name="asp_pistol" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_f30ot")
