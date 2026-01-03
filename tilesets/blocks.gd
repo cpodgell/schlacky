@@ -21,7 +21,9 @@ func check_for_block_spawners() -> void:
 			print("BLOCK SPAWNER FOUND AT:", cell)
 			spawn_falling_block(cell)
 		if block_type == "brown_brick":
-			spanw_brown_brick(cell)
+			spawn_brown_brick(cell)
+		if block_type == "blue_brick":
+			spawn_blue_brick(cell)
 
 func spawn_falling_block(cell: Vector2i) -> void:
 	var block_spanwer: Node2D = spawner_scene.instantiate()
@@ -33,12 +35,24 @@ func spawn_falling_block(cell: Vector2i) -> void:
 	if erase_tiles_after_spawning:
 		erase_cell(cell)
 
-func spanw_brown_brick(cell: Vector2i) -> void:
+func spawn_brown_brick(cell: Vector2i) -> void:
 	var brown_brick: Node2D = brown_brick_scene.instantiate()
+	brown_brick.set_brick(1)
 	add_child(brown_brick)
 
 	var local_pos: Vector2 = map_to_local(cell)
 	brown_brick.global_position = to_global(local_pos) + Vector2(0,0)
+
+	if erase_tiles_after_spawning:
+		erase_cell(cell)
+
+func spawn_blue_brick(cell: Vector2i) -> void:
+	var blue_brick: Node2D = brown_brick_scene.instantiate()
+	blue_brick.set_brick(0)
+	add_child(blue_brick)
+
+	var local_pos: Vector2 = map_to_local(cell)
+	blue_brick.global_position = to_global(local_pos) + Vector2(0,0)
 
 	if erase_tiles_after_spawning:
 		erase_cell(cell)

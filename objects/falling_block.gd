@@ -16,6 +16,11 @@ func _ready():
 
 	linear_damp = 10.0  
 
+func _process(delta: float) -> void:
+	if global_position.y > 3000:
+		queue_free()
+		
+
 func take_damage(_damage) -> int:
 	if(!is_dead):
 		$stone_debris.play()

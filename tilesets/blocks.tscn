@@ -9,7 +9,10 @@ texture = ExtResource("1_wckil")
 5:2/0 = 0
 6:2/0 = 0
 7:2/0 = 0
+8:2/next_alternative_id = 2
 8:2/0 = 0
+8:2/0/custom_data_0 = "blue_brick"
+8:2/1 = 1
 9:2/0 = 0
 9:2/0/terrain_set = 0
 9:2/0/terrain = 0
@@ -75,6 +78,5 @@ custom_data_layer_1/type = 0
 sources/0 = SubResource("TileSetAtlasSource_wx0su")
 
 [node name="Blocks" type="TileMapLayer"]
-tile_map_data = PackedByteArray(0, 0, 4, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 tile_set = SubResource("TileSet_kycna")
 script = ExtResource("2_wx0su")

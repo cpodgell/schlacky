@@ -62,7 +62,7 @@ func start_game():
 func load_level():
 	$asp_music.stream = music[randi_range(0,music.size() - 1)]
 	$asp_music.play()
-	var current_level = preload("res://level/level_03.tscn").instantiate()
+	var current_level = preload("res://level/level_04.tscn").instantiate()
 	global.current_level = current_level
 	$staging.add_child(current_level)
 	global.current_level.add_players()
