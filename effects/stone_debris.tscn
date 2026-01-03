@@ -61,7 +61,7 @@ one_shot = true
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="particles"]
 material = SubResource("CanvasItemMaterial_bbxn2")
-amount = 2
+amount = 1
 texture = ExtResource("2_fch41")
 lifetime = 5.0
 explosiveness = 1.0
@@ -70,7 +70,7 @@ process_material = SubResource("ParticleProcessMaterial_85m1t")
 
 [node name="GPUParticles2D2" type="GPUParticles2D" parent="particles"]
 material = SubResource("CanvasItemMaterial_bbxn2")
-amount = 2
+amount = 1
 texture = ExtResource("2_fch41")
 lifetime = 5.0
 explosiveness = 1.0

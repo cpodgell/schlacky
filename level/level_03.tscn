@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://ctuobfipac8jr"]
+[gd_scene load_steps=14 format=4 uid="uid://ctuobfipac8jr"]
 
 [ext_resource type="PackedScene" uid="uid://bhb5rbq20d7br" path="res://level/inherit/base_level.tscn" id="1_2agqu"]
 [ext_resource type="Texture2D" uid="uid://cge3fmqrqsomt" path="res://assets/tiles/tree.png" id="2_ykc5s"]
@@ -11,7 +11,6 @@
 [ext_resource type="PackedScene" uid="uid://o8lrtn8tkkvs" path="res://effects/casing.tscn" id="9_ykc5s"]
 [ext_resource type="PackedScene" uid="uid://cywqpog3f0we7" path="res://weapons/bombs/grenade.tscn" id="10_8ke7r"]
 [ext_resource type="PackedScene" uid="uid://cvpmxlohcj7jg" path="res://objects/brick.tscn" id="10_73xum"]
-[ext_resource type="PackedScene" uid="uid://cxo1p2pe1wy0j" path="res://character/enemy/shnibber/shnibber.tscn" id="10_gglqh"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eh72w"]
 texture = ExtResource("2_ykc5s")
@@ -134,13 +133,10 @@ position = Vector2(92, 679)
 [node name="casing3" parent="ysort" index="14" instance=ExtResource("9_ykc5s")]
 position = Vector2(75, 701)
 
-[node name="shnibber" parent="ysort" index="15" instance=ExtResource("10_gglqh")]
-position = Vector2(336, 757)
-
-[node name="Smart_Shisser10" parent="ysort" index="16" instance=ExtResource("6_2agqu")]
+[node name="Smart_Shisser10" parent="ysort" index="15" instance=ExtResource("6_2agqu")]
 position = Vector2(379, 425)
 
-[node name="grenade" parent="ysort" index="17" instance=ExtResource("10_8ke7r")]
+[node name="grenade" parent="ysort" index="16" instance=ExtResource("10_8ke7r")]
 position = Vector2(71, 771)
 
 [node name="Brick" parent="." index="3" instance=ExtResource("10_73xum")]
