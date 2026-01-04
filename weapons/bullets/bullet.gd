@@ -16,6 +16,7 @@ enum BulletType { BASIC, FLAT }
 
 var direction: Vector2 = Vector2.ZERO
 var bullet_owner: Node = null
+var ordnance = false
 
 @onready var ricochet: Node = $ricochet
 @onready var spr_bullet: Sprite2D = $spr_bullet
@@ -54,7 +55,13 @@ func destroy_bullet(play_ricochet: bool = true) -> void:
 	global.current_level.add_to_ysort(ricochet)
 	ricochet.global_position = global_position
 	ricochet.play_ricochet()
+	
+	if(ordnance):
+		$ara_damage.play_damage()
 	queue_free()
+
+func add_ordenance():
+	ordnance = true
 
 func _on_timer_timeout() -> void:
 	destroy_bullet()

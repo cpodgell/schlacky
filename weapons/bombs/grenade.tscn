@@ -1,19 +1,18 @@
-[gd_scene load_steps=9 format=3 uid="uid://cywqpog3f0we7"]
+[gd_scene load_steps=8 format=3 uid="uid://cywqpog3f0we7"]
 
 [ext_resource type="Script" uid="uid://fvl6nwcy1yid" path="res://weapons/bombs/grenade.gd" id="1_0fpje"]
 [ext_resource type="Texture2D" uid="uid://dn3jhlsc5tj0n" path="res://assets/bombs/grenade_no_pin.png" id="1_fb44o"]
-[ext_resource type="PackedScene" uid="uid://dft8a4lxlc7q3" path="res://effects/explosion.tscn" id="3_uc0u7"]
-[ext_resource type="AudioStream" uid="uid://d0abiucn7ieu8" path="res://assets/sfx/explosion/Explosion_Light_Nuc.ogg" id="4_wmn8y"]
 [ext_resource type="AudioStream" uid="uid://c3mpltmhr3fuw" path="res://assets/sfx/hits/pick_axe_stone_small_hit_mine_impact_02.wav" id="5_1wnik"]
+[ext_resource type="PackedScene" uid="uid://dv74878ff5j61" path="res://weapons/area_damager.tscn" id="5_n8vnw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0fpje"]
 radius = 5.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_wmn8y"]
-radius = 44.181442
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_n8vnw"]
 radius = 7.071068
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fwcoe"]
+radius = 44.0
 
 [node name="grenade" type="RigidBody2D"]
 collision_layer = 0
@@ -25,32 +24,15 @@ script = ExtResource("1_0fpje")
 position = Vector2(-0.5, -2)
 texture = ExtResource("1_fb44o")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="cls_grenade" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_0fpje")
-
-[node name="tmr_dmg" type="Timer" parent="."]
-wait_time = 0.3
-one_shot = true
 
 [node name="tmr_fuse" type="Timer" parent="."]
 wait_time = 3.0
 one_shot = true
 
-[node name="ara_dmg" type="Area2D" parent="."]
-modulate = Color(1, 0.120000005, 0.120000005, 1)
-collision_mask = 14
-
-[node name="cls_dmg" type="CollisionShape2D" parent="ara_dmg"]
-shape = SubResource("CircleShape2D_wmn8y")
-disabled = true
-
-[node name="explosion" parent="." instance=ExtResource("3_uc0u7")]
-
 [node name="tmr_queue_free" type="Timer" parent="."]
 one_shot = true
-
-[node name="asp_explosion" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_wmn8y")
 
 [node name="ara_hit_sound" type="Area2D" parent="."]
 collision_layer = 0
@@ -64,8 +46,13 @@ stream = ExtResource("5_1wnik")
 volume_db = 3.37
 pitch_scale = 0.5
 
-[connection signal="timeout" from="tmr_dmg" to="." method="_on_tmr_dmg_timeout"]
+[node name="ara_damager" parent="." instance=ExtResource("5_n8vnw")]
+collision_mask = 14
+damage_amount = 4
+
+[node name="cls_ara_damager" type="CollisionShape2D" parent="ara_damager"]
+shape = SubResource("CircleShape2D_fwcoe")
+
 [connection signal="timeout" from="tmr_fuse" to="." method="_on_tmr_fuse_timeout"]
-[connection signal="body_entered" from="ara_dmg" to="." method="_on_ara_dmg_body_entered"]
 [connection signal="timeout" from="tmr_queue_free" to="." method="_on_tmr_queue_free_timeout"]
 [connection signal="body_entered" from="ara_hit_sound" to="." method="_on_ara_hit_sound_body_entered"]

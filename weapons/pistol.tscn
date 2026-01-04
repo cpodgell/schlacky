@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dice1e7tigbs"]
+[gd_scene load_steps=22 format=3 uid="uid://dice1e7tigbs"]
 
 [ext_resource type="Texture2D" uid="uid://c4u8thw8yr7tb" path="res://assets/gun/pistol.png" id="1_1ohd4"]
 [ext_resource type="Script" uid="uid://ci8wuqf631gg" path="res://weapons/pistol.gd" id="1_5icxk"]
@@ -11,10 +11,12 @@
 [ext_resource type="AudioStream" uid="uid://j3sy5gb167xe" path="res://assets/sfx/misc/shotgun_cock.ogg" id="6_tkml6"]
 [ext_resource type="Texture2D" uid="uid://tlgteujpyaqe" path="res://assets/gun/mini_gun.png" id="7_2v7i3"]
 [ext_resource type="Texture2D" uid="uid://bmss0jpsjuvbp" path="res://assets/misc/corshair.png" id="7_ferxg"]
+[ext_resource type="Texture2D" uid="uid://bsj8n0hups2os" path="res://assets/gun/rocket_launcher.png" id="8_7j482"]
 [ext_resource type="AudioStream" uid="uid://rp34eewghucc" path="res://assets/sfx/gun_shots/gun_submachine_silenced_shot_0_first.wav" id="9_x8w74"]
 [ext_resource type="AudioStream" uid="uid://dv1n317qfd14n" path="res://assets/sfx/misc/gun_cycle_2.ogg" id="10_6674i"]
 [ext_resource type="AudioStream" uid="uid://ti7vlp5nl1qj" path="res://assets/sfx/foly/dry_fire_01.wav" id="12_otuqi"]
 [ext_resource type="AudioStream" uid="uid://276g6es2s5bu" path="res://assets/sfx/gun_shots/gun_semi_auto_rifle_magazine_load_03.wav" id="14_ds5a7"]
+[ext_resource type="AudioStream" uid="uid://b0o1ue5ptj1r2" path="res://assets/sfx/gun_shots/rocket_launcher_shot_01.wav" id="17_k4pq3"]
 
 [sub_resource type="Animation" id="Animation_icjny"]
 length = 0.001
@@ -137,6 +139,10 @@ texture = ExtResource("5_72fyo")
 position = Vector2(9, -1)
 texture = ExtResource("7_2v7i3")
 
+[node name="spr_rocket_launcher" type="Sprite2D" parent="gun_sprites"]
+position = Vector2(2, 0)
+texture = ExtResource("8_7j482")
+
 [node name="mrk_aimer" type="Marker2D" parent="gun_sprites"]
 position = Vector2(48, -2)
 
@@ -181,6 +187,9 @@ stream = ExtResource("12_otuqi")
 
 [node name="asp_reload2" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("14_ds5a7")
+
+[node name="asp_rocket" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("17_k4pq3")
 
 [connection signal="timeout" from="tmr_shot_delay" to="." method="_on_tmr_shot_delay_timeout"]
 [connection signal="timeout" from="tmr_reload_sound" to="." method="_on_tmr_reload_sound_timeout"]

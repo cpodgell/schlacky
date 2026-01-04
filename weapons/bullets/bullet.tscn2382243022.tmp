@@ -17,6 +17,10 @@ z_index = 500
 collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_d6jwi")
+bullet_type = null
+speed = null
+damage = null
+enable = null
 
 [node name="spr_bullet" type="Sprite2D" parent="."]
 texture = ExtResource("1_si2ka")

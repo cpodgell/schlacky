@@ -11,7 +11,8 @@ enum WeaponType {
 	SHOTGUN,
 	MACHINE_GUN,
 	UZI,
-	LASER
+	LASER,
+	ROCKET_LAUNCHER
 }
 
 var is_reloading = false
@@ -38,13 +39,14 @@ var current_case_type = 0
 @onready var machine_gun = $gun_sprites/spr_machine_gun
 @onready var uzi = $gun_sprites/spr_uzi
 @onready var laser_gun = $gun_sprites/spr_laser
-
+@onready var rocket_gun = $gun_sprites/spr_rocket_launcher
 
 var pistol_max = 12
 var shotgun_max = 12
 var machine_gun_max = 35
 var uzi_max = 200
 var laser_max = 20
+var rocket_max = 1
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -97,6 +99,12 @@ func reset_gun():
 			rounds_in_clip = laser_max
 			max_rounds_in_clip = uzi_max
 			$tmr_shot_delay.wait_time = .4
+		WeaponType.ROCKET_LAUNCHER:
+			cycle_fire = false
+			rocket_gun.visible = true
+			rounds_in_clip = rocket_max
+			max_rounds_in_clip = rocket_max
+			$tmr_shot_delay.wait_time = 2
 	gun_owner = get_parent().get_parent()
 	update_hud(max_rounds_in_clip,rounds_in_clip)
 
@@ -148,6 +156,11 @@ func _fire():
 		$asp_uzi.play()
 		$gun_sprites.rotation = randf_range(-.1,.1)
 		spawn_laser()
+	if(weapon_type == WeaponType.ROCKET_LAUNCHER):
+		var speed = 400
+		$tmr_shot_delay.start()
+		$asp_rocket.play()
+		spawn_bullet(Vector2.ZERO, speed).add_ordenance()
 
 func spawn_laser() -> void:
 	var laser: LaserBeam = laser_scene.instantiate()
@@ -163,7 +176,7 @@ func spawn_laser() -> void:
 	get_tree().current_scene.add_child(laser)
 	laser.fire()
 
-func spawn_bullet(_direction = Vector2.ZERO, _speed : float = 0,  _death : float = 0):
+func spawn_bullet(_direction = Vector2.ZERO, _speed : float = 0,  _time_till_death : float = 0):
 	var bullet : Bullet = bullet_scene.instantiate()
 	bullet.bullet_type = Bullet.BulletType.FLAT
 	global_collisions.set_player_bullet(bullet)
@@ -177,10 +190,11 @@ func spawn_bullet(_direction = Vector2.ZERO, _speed : float = 0,  _death : float
 	else:
 		bullet.direction = Vector2(x,_direction.y)
 	bullet.rotation = get_parent().scale.x * $gun_sprites.rotation
-	bullet.set_death(_death)
+	bullet.set_death(_time_till_death)
 	if(_speed != 0):
 		bullet.speed = _speed
 	bullet.global_position = $mkr_fire_position.global_position
+	return bullet
 
 func reload():
 	is_reloading = true
@@ -203,12 +217,7 @@ func release_casing():
 	case.apply_impulse(Vector2(x,y), Vector2(0, 0))
 	case.angular_velocity = randf_range(5, 20)
 
-
 	case.visible = true
-
-
-
-
 	# Increment shot count to cycle through the casings
 	shot_count += 1
 

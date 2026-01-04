@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://dft8a4lxlc7q3"]
+[gd_scene load_steps=5 format=3 uid="uid://dft8a4lxlc7q3"]
 
 [ext_resource type="Texture2D" uid="uid://nodcoy5wclww" path="res://assets/explosions/explosions.png" id="1_ilkv6"]
+[ext_resource type="Script" uid="uid://cg63dqlctu632" path="res://effects/explosion.gd" id="2_vv155"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_vv155"]
 particles_animation = true
@@ -16,6 +17,14 @@ anim_speed_max = 1.52
 
 [node name="explosion" type="GPUParticles2D"]
 material = SubResource("CanvasItemMaterial_vv155")
+emitting = false
 amount = 1
 texture = ExtResource("1_ilkv6")
+one_shot = true
 process_material = SubResource("ParticleProcessMaterial_ilkv6")
+script = ExtResource("2_vv155")
+
+[node name="tmr_queue_free" type="Timer" parent="."]
+wait_time = 0.5
+
+[connection signal="timeout" from="tmr_queue_free" to="." method="_on_tmr_queue_free_timeout"]
