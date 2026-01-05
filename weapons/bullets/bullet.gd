@@ -2,7 +2,7 @@
 class_name Bullet
 extends Area2D
 
-enum BulletType { BASIC, FLAT }
+enum BulletType { BASIC, FLAT, ROCKET }
 
 @export var bullet_type: BulletType = BulletType.BASIC:
 	set(value):
@@ -26,6 +26,7 @@ var ordnance = false
 const BULLET_TEXTURES := {
 	BulletType.BASIC: preload("res://assets/bullets/basic_bullet.png"),
 	BulletType.FLAT: preload("res://assets/bullets/flat_bullet.png"),
+	BulletType.ROCKET: preload("res://assets/bullets/rocket.png"),
 }
 
 func _ready() -> void:
@@ -38,12 +39,7 @@ func _process(delta: float) -> void:
 	global_position += direction * speed * delta
 
 func _apply_bullet_visuals() -> void:
-	if spr_bullet == null:
-		return
-	spr_bullet.texture = BULLET_TEXTURES.get(
-		bullet_type,
-		BULLET_TEXTURES[BulletType.BASIC]
-	)
+	spr_bullet.texture = BULLET_TEXTURES[bullet_type]
 
 func set_death(seconds: float) -> void:
 	tmr_free.wait_time = seconds
@@ -58,9 +54,8 @@ func destroy_bullet(play_ricochet: bool = true) -> void:
 	
 	if(ordnance):
 		$ara_damage.play_damage()
-	queue_free()
-
-func add_ordenance():
+	#queue_free()
+func add_ordnance():
 	ordnance = true
 
 func _on_timer_timeout() -> void:

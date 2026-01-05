@@ -105,6 +105,7 @@ func reset_gun():
 			rounds_in_clip = rocket_max
 			max_rounds_in_clip = rocket_max
 			$tmr_shot_delay.wait_time = 2
+			current_case_type = 2
 	gun_owner = get_parent().get_parent()
 	update_hud(max_rounds_in_clip,rounds_in_clip)
 
@@ -160,7 +161,10 @@ func _fire():
 		var speed = 400
 		$tmr_shot_delay.start()
 		$asp_rocket.play()
-		spawn_bullet(Vector2.ZERO, speed).add_ordenance()
+		var bullet : Bullet = spawn_bullet(Vector2.ZERO, speed)
+		bullet.add_ordnance()
+		bullet.bullet_type = bullet.BulletType.ROCKET
+		bullet._apply_bullet_visuals()
 
 func spawn_laser() -> void:
 	var laser: LaserBeam = laser_scene.instantiate()
