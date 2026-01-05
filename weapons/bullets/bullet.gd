@@ -54,7 +54,7 @@ func destroy_bullet(play_ricochet: bool = true) -> void:
 	
 	if(ordnance):
 		$ara_damage.play_damage()
-	#queue_free()
+	queue_free()
 func add_ordnance():
 	ordnance = true
 

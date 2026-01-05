@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://c2bwek0cnuxwj"]
+
+[ext_resource type="Script" uid="uid://dqps3r250n5st" path="res://weapons/bullets/electro_zap.gd" id="1_n353p"]
+
+[node name="ElectroZap" type="Node2D"]
+position = Vector2(269, 128)
+script = ExtResource("1_n353p")
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0, 50, 0)
+width = 7.0
+default_color = Color(0.3, 1, 0.96500003, 1)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="Line2D2" type="Line2D" parent="."]
+width = 3.0
+default_color = Color(0.81, 1, 0.99050003, 1)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="tmr_zap" type="Timer" parent="."]
+wait_time = 0.009999999999999998
+
+[connection signal="timeout" from="tmr_zap" to="." method="_on_tmr_zap_timeout"]

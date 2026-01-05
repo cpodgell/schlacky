@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://stqx2joa75gt"]
+
+[ext_resource type="TileSet" uid="uid://8pilhql2id2n" path="res://tilesets/graveyard_blocks.tres" id="1_ynea3"]
+
+[node name="graveyard_blocks" type="TileMapLayer"]
+tile_set = ExtResource("1_ynea3")
