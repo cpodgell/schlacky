@@ -1,7 +1,9 @@
-[gd_scene load_steps=12 format=4 uid="uid://cca3lvj8wfak2"]
+[gd_scene load_steps=14 format=4 uid="uid://cca3lvj8wfak2"]
 
 [ext_resource type="Script" uid="uid://b43xnljxfyx06" path="res://character/NPC/crow.gd" id="1_vaitv"]
 [ext_resource type="AudioStream" uid="uid://d4d1trjkpcmmh" path="res://assets/sfx/foly/pigeon_fly_away.wav" id="2_qbrp3"]
+[ext_resource type="PackedScene" uid="uid://bnk5012wxbkep" path="res://effects/blood.tscn" id="2_t54ta"]
+[ext_resource type="PackedScene" uid="uid://c2iwxlcr77h5w" path="res://effects/feathers.tscn" id="3_ou0vd"]
 
 [sub_resource type="Animation" id="Animation_t54ta"]
 length = 0.1
@@ -102,8 +104,8 @@ size_override = Vector2(108, 105)
 radius = 40.012497
 
 [node name="crow" type="CharacterBody2D"]
-collision_layer = 2
-collision_mask = 2
+collision_layer = 8
+collision_mask = 18
 script = ExtResource("1_vaitv")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -118,7 +120,6 @@ position = Vector2(-1, -17.5)
 texture = SubResource("PortableCompressedTexture2D_kc1l4")
 hframes = 3
 vframes = 3
-frame = 3
 metadata/_aseprite_wizard_interface_config_ = {
 "pending_changes": {}
 }
@@ -145,7 +146,12 @@ metadata/_aseprite_wizard_source_file_hash_ = "170d5eb0cd4a9893f5d6600f3d526fc2"
 [node name="tmr_peck" type="Timer" parent="."]
 one_shot = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="blood" parent="." instance=ExtResource("2_t54ta")]
+position = Vector2(0, -10)
+emitting = false
+one_shot = true
+
+[node name="cls_crow" type="CollisionShape2D" parent="."]
 position = Vector2(0, -10)
 shape = SubResource("CircleShape2D_vaitv")
 
@@ -153,7 +159,7 @@ shape = SubResource("CircleShape2D_vaitv")
 collision_layer = 0
 collision_mask = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ara_lift_off"]
+[node name="cls_lift_off" type="CollisionShape2D" parent="ara_lift_off"]
 position = Vector2(0, -10)
 shape = SubResource("CircleShape2D_qbrp3")
 
@@ -161,6 +167,14 @@ shape = SubResource("CircleShape2D_qbrp3")
 stream = ExtResource("2_qbrp3")
 volume_db = 3.506
 
+[node name="tmr_queue_free" type="Timer" parent="."]
+wait_time = 4.0
+
+[node name="feathers" parent="." instance=ExtResource("3_ou0vd")]
+emitting = false
+one_shot = true
+
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="timeout" from="tmr_peck" to="." method="_on_tmr_peck_timeout"]
 [connection signal="body_entered" from="ara_lift_off" to="." method="_on_ara_lift_off_body_entered"]
+[connection signal="timeout" from="tmr_queue_free" to="." method="_on_tmr_queue_free_timeout"]

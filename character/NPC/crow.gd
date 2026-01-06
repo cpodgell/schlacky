@@ -7,6 +7,7 @@ var is_flying = false
 var is_taking_off = false
 var take_off_rate = -.1
 var take_off_direction = .2
+var is_dead = false
 
 func _ready() -> void:
 	$spr_crow.scale.x = [-1, 1].pick_random()
@@ -19,6 +20,7 @@ func _physics_process(delta: float) -> void:
 
 	if is_taking_off:
 		take_off_rate += -.02
+		take_off_rate = clamp(take_off_rate, -3, -.001)
 		direction.y = take_off_rate
 		direction.x = take_off_direction
 	if direction:
@@ -41,12 +43,25 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 			randomize_peck()
 			$spr_crow.scale.x = [-1, 1].pick_random()
 		
-
 func _on_ara_lift_off_body_entered(body: Node2D) -> void:
 	$AnimationPlayer.play("lift_off")
 	$AnimationPlayer.speed_scale = 2.0
 	is_flying = true
 	is_taking_off = true
 	direction.y = take_off_rate
-	direction.x = take_off_direction
+	direction.x = [-1, 1].pick_random()/5
 	$AudioStreamPlayer.play()
+	$tmr_queue_free.start()
+
+func take_damage(_damage):
+	global_collisions.set_enemy_dead_walls(self)
+	$ara_lift_off/cls_lift_off.set_deferred("disabled",  true)
+	is_dead = true
+	$spr_crow.visible = false
+	$feathers.emitting = true
+	$blood.play_blood()
+	$tmr_queue_free.start()
+	return 0
+
+func _on_tmr_queue_free_timeout() -> void:
+	queue_free()

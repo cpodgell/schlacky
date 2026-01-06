@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=3 uid="uid://c2iwxlcr77h5w"]
+
+[ext_resource type="Texture2D" uid="uid://b3rhpl1d35tqd" path="res://assets/effects/feather.png" id="1_mxtx2"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_mxtx2"]
+particles_animation = true
+particles_anim_h_frames = 8
+particles_anim_v_frames = 1
+particles_anim_loop = true
+
+[sub_resource type="Gradient" id="Gradient_mxtx2"]
+offsets = PackedFloat32Array(0, 0.8606557, 0.9221311)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_krxlp"]
+gradient = SubResource("Gradient_mxtx2")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_krxlp"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 7.0
+direction = Vector3(0, -1, 0)
+spread = 51.6
+initial_velocity_min = 61.69
+initial_velocity_max = 155.84999
+angular_velocity_min = -1.6093254e-05
+angular_velocity_max = -1.6093254e-05
+radial_velocity_min = -2.2351742e-05
+radial_velocity_max = -2.2351742e-05
+gravity = Vector3(0, 120, 0)
+damping_min = 78.57101
+damping_max = 87.662
+color_ramp = SubResource("GradientTexture1D_krxlp")
+anim_speed_min = 4.98
+anim_speed_max = 6.39
+anim_offset_max = 1.0
+
+[node name="feathers" type="GPUParticles2D"]
+material = SubResource("CanvasItemMaterial_mxtx2")
+texture = ExtResource("1_mxtx2")
+lifetime = 3.0
+explosiveness = 1.0
+randomness = 0.98
+process_material = SubResource("ParticleProcessMaterial_krxlp")

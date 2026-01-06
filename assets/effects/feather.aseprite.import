@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://be8yvum2nt3ny"
+path="res://.godot/imported/feather.aseprite-fed4e530a6ad1eaef896a76609c3070d.res"
+
+[deps]
+
+source_file="res://assets/effects/feather.aseprite"
+dest_files=["res://.godot/imported/feather.aseprite-fed4e530a6ad1eaef896a76609c3070d.res"]
+
+[params]
+
