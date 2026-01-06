@@ -1,6 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://dfftwywwxu2s3"]
+[gd_scene format=3 uid="uid://dfftwywwxu2s3"]
 
-[ext_resource type="Script" uid="uid://bbpvha3swe21d" path="res://heart.gd" id="1_oo615"]
+[ext_resource type="Script" uid="uid://bbpvha3swe21d" path="res://items/heart.gd" id="1_oo615"]
 [ext_resource type="Texture2D" uid="uid://cfnamjuiq1f20" path="res://assets/interface/health/full_heart.png" id="2_3qxe1"]
 [ext_resource type="PackedScene" uid="uid://b5ow4yn0jc65" path="res://effects/lines.tscn" id="3_4uynk"]
 [ext_resource type="AudioStream" uid="uid://dldft5dokhvhg" path="res://assets/sfx/powerup/health.wav" id="4_3weh3"]
@@ -8,31 +8,31 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_4uynk"]
 radius = 8.062258
 
-[node name="Heart" type="Area2D"]
+[node name="Heart" type="Area2D" unique_id=1017022984]
 collision_layer = 256
 collision_mask = 6
 script = ExtResource("1_oo615")
 
-[node name="spr_heart" type="Sprite2D" parent="."]
+[node name="spr_heart" type="Sprite2D" parent="." unique_id=408085251]
 position = Vector2(0, -6)
 texture = ExtResource("2_3qxe1")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1540885035]
 position = Vector2(0, -8)
 shape = SubResource("CircleShape2D_4uynk")
 
-[node name="GroundRay" type="RayCast2D" parent="."]
+[node name="GroundRay" type="RayCast2D" parent="." unique_id=139620528]
 collision_mask = 2
 
-[node name="Lines" parent="." instance=ExtResource("3_4uynk")]
+[node name="Lines" parent="." unique_id=415227807 instance=ExtResource("3_4uynk")]
 position = Vector2(0, -5)
 emitting = false
 one_shot = true
 
-[node name="tmr_queue_free" type="Timer" parent="."]
+[node name="tmr_queue_free" type="Timer" parent="." unique_id=1428738563]
 wait_time = 4.0
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=820506192]
 stream = ExtResource("4_3weh3")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

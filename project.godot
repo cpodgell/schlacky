@@ -8,11 +8,15 @@
 
 config_version=5
 
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
 [application]
 
 config/name="Shchlacky"
 run/main_scene="uid://726armfby5mi"
-config/features=PackedStringArray("4.5", "GL Compatibility")
+config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="uid://5bqbe8dk6khr"
 
 [autoload]
@@ -461,9 +465,8 @@ click={
 2d_physics/layer_5="Player_Bullet"
 2d_physics/layer_6="Enemy_Bullet"
 2d_physics/layer_7="Platforms"
-2d_physics/layer_8="Enemy_HB"
-2d_physics/layer_9="Pickups"
-2d_physics/layer_10="Pickup_HB"
+2d_physics/layer_8="Pickup_Area"
+2d_physics/layer_9="NPC"
 
 [rendering]
 

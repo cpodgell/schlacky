@@ -1,4 +1,4 @@
-extends Node2D
+class_name Pistol extends Node2D
 
 var casing_scene = preload("res://effects/casing.tscn")
 @export var laser_scene: PackedScene = preload("res://weapons/bullets/laser.tscn")
@@ -51,7 +51,6 @@ var rocket_max = 1
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	reset_gun()
-		
 	pass # Replace with function body.
 
 func update_hud(_bullet_max, _bullet_amount):
@@ -98,7 +97,7 @@ func reset_gun():
 			laser_gun.visible = true
 			rounds_in_clip = laser_max
 			max_rounds_in_clip = uzi_max
-			$tmr_shot_delay.wait_time = .4
+			$tmr_shot_delay.wait_time = .1
 		WeaponType.ROCKET_LAUNCHER:
 			cycle_fire = false
 			rocket_gun.visible = true
