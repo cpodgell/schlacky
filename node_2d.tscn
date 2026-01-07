@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://c1pqksmigiptd"]
+
+[ext_resource type="Script" uid="uid://ds60yrgcpss0d" path="res://node_2d.gd" id="1_0e48y"]
+[ext_resource type="PackedScene" uid="uid://dice1e7tigbs" path="res://weapons/pistol.tscn" id="2_0e48y"]
+
+[node name="Node2D" type="Node2D" unique_id=381981098]
+script = ExtResource("1_0e48y")
+
+[node name="Pistol2" parent="." unique_id=1774843862 instance=ExtResource("2_0e48y")]
+script = null

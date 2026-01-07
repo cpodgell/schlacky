@@ -5,6 +5,12 @@ var casing_scene = preload("res://effects/casing.tscn")
 
 @export var weapon_type : int
 
+@export var starting_guns: Array[WeaponType] = [WeaponType.PISTOL, WeaponType.LASER]
+
+var guns_in_inventory: Array[WeaponType] = []
+var gun_index: int = 0
+
+
 enum WeaponType {
 	NONE,
 	PISTOL,
@@ -26,7 +32,6 @@ var rounds_in_clip : int = 0
 var max_rounds_in_clip : int = 0
 
 var cycle_fire = false
-var gun_cycle_number = 0
 
 var bullet_scene = preload("res://weapons/bullets/bullet.tscn")
 var gun_owner : Player
@@ -48,18 +53,28 @@ var uzi_max = 200
 var laser_max = 20
 var rocket_max = 1
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	guns_in_inventory = starting_guns.duplicate()
+	if guns_in_inventory.is_empty():
+		weapon_type = WeaponType.NONE
+	else:
+		weapon_type = guns_in_inventory[0]
 	reset_gun()
-	pass # Replace with function body.
 
 func update_hud(_bullet_max, _bullet_amount):
 	if(global.main and gun_owner):
 		global.main.update_hud(_bullet_max, _bullet_amount, gun_owner.player_number)
 	
-func cycle_gun():
-	gun_cycle_number += 1
-	weapon_type = gun_cycle_number % WeaponType.size()
+func cycle_gun() -> void:
+	if guns_in_inventory.is_empty():
+		return
+	if guns_in_inventory.size() == 1:
+		weapon_type = guns_in_inventory[0]
+		reset_gun()
+		return
+
+	gun_index = (gun_index + 1) % guns_in_inventory.size()
+	weapon_type = guns_in_inventory[gun_index]
 	reset_gun()
 	$asp_gun_cycle.play()
 
@@ -110,7 +125,7 @@ func reset_gun():
 
 func fire_down():
 	fire_button_down = true
-	if(!is_firing and !is_reloading):
+	if !is_firing and !is_reloading and weapon_type != WeaponType.NONE:
 		_fire()
 
 func fire_up():
@@ -173,7 +188,7 @@ func spawn_laser() -> void:
 	# Shoot straight right (local +X)
 	laser.direction = Vector2(get_parent().scale.x, 0)
 	# Optional tuning (safe defaults)
-	laser.damage = 2
+	laser.damage = 20
 	laser.owner = self
 	# Add to scee (NOT as a child of the gun)
 	get_tree().current_scene.add_child(laser)
@@ -200,8 +215,9 @@ func spawn_bullet(_direction = Vector2.ZERO, _speed : float = 0,  _time_till_dea
 	return bullet
 
 func reload():
-	is_reloading = true
-	$AnimationPlayer.play("reload")
+	if(weapon_type != WeaponType.NONE):
+		is_reloading = true
+		$AnimationPlayer.play("reload")
 
 func play_reload_sound():
 	$asp_reload2.play()
@@ -224,7 +240,37 @@ func release_casing():
 	# Increment shot count to cycle through the casings
 	shot_count += 1
 
-	
+func add_gun(gun: WeaponType) -> void:
+	if gun == WeaponType.NONE:
+		return
+	if gun in guns_in_inventory:
+		return
+	guns_in_inventory.append(gun)
+
+	# If you had no gun, auto-equip this one
+	if weapon_type == WeaponType.NONE:
+		gun_index = guns_in_inventory.find(gun)
+		weapon_type = gun
+		reset_gun()
+
+func remove_gun(gun: WeaponType) -> void:
+	if not (gun in guns_in_inventory):
+		return
+
+	var removing_current := (weapon_type == gun)
+	guns_in_inventory.erase(gun)
+
+	if guns_in_inventory.is_empty():
+		weapon_type = WeaponType.NONE
+		return
+
+	if removing_current:
+		gun_index = clamp(gun_index, 0, guns_in_inventory.size() - 1)
+		weapon_type = guns_in_inventory[gun_index]
+		reset_gun()
+	else:
+		gun_index = clamp(gun_index, 0, guns_in_inventory.size() - 1)
+
 func _on_tmr_shot_delay_timeout() -> void:
 	is_firing = false
 	$gun_sprites.rotation = 0

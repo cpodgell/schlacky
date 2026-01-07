@@ -1,13 +1,23 @@
-[gd_scene format=3 uid="uid://cirryj8kttubm"]
+[gd_scene format=3 uid="uid://cw3ilji8tax8o"]
 
-[ext_resource type="Script" uid="uid://bbjhm6iyd2ogn" path="res://items/item.gd" id="1_buahv"]
+[ext_resource type="Script" uid="uid://bvrxtnjoi33u8" path="res://items/item.gd" id="1_buahv"]
+[ext_resource type="PackedScene" uid="uid://cirryj8kttubm" path="res://items/item_area.tscn" id="2_buahv"]
+[ext_resource type="Texture2D" uid="uid://rtfdo8moo3u5" path="res://assets/misc/8x8_Circle.png" id="2_k7rtb"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_pxpuq"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k7rtb"]
 
-[node name="item" type="Area2D" unique_id=104153928]
+[node name="item" type="CharacterBody2D" unique_id=1551492316]
+collision_mask = 2
 script = ExtResource("1_buahv")
 
-[node name="spr_item" type="Sprite2D" parent="." unique_id=1180960004]
+[node name="cls_item" type="CollisionShape2D" parent="." unique_id=676563947]
+position = Vector2(1, -11)
+shape = SubResource("RectangleShape2D_k7rtb")
 
-[node name="cls_item" type="CollisionShape2D" parent="." unique_id=1015635817]
-shape = SubResource("CircleShape2D_pxpuq")
+[node name="item_area" parent="." unique_id=104153928 instance=ExtResource("2_buahv")]
+position = Vector2(0, -12)
+
+[node name="spr_tem" type="Sprite2D" parent="item_area" unique_id=1341219674]
+position = Vector2(0, 2)
+scale = Vector2(2, 2)
+texture = ExtResource("2_k7rtb")

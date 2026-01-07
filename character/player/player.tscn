@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cmys3h2m51j1b"]
+[gd_scene format=3 uid="uid://cmys3h2m51j1b"]
 
 [ext_resource type="Script" uid="uid://qhn36ab35e1h" path="res://character/player/player.gd" id="1_y0s34"]
 [ext_resource type="PackedScene" uid="uid://2l8rxidok4e1" path="res://character/sprite_body/sprite_body.tscn" id="2_8eijk"]
@@ -13,6 +13,7 @@
 [ext_resource type="AudioStream" uid="uid://x81f0bqw7usy" path="res://assets/sfx/death/death_big_man_01.ogg" id="11_hr31g"]
 [ext_resource type="AudioStream" uid="uid://c8nccarmt00kr" path="res://assets/sfx/foly/Jump.wav" id="12_lqp71"]
 [ext_resource type="PackedScene" uid="uid://bbs22pldwshds" path="res://shader/flickerer/flickerer.tscn" id="13_vuhga"]
+[ext_resource type="PackedScene" uid="uid://prasoke43m86" path="res://items/picker_upper.tscn" id="14_muf2e"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hr31g"]
 radius = 5.4
@@ -23,49 +24,49 @@ resource_local_to_scene = true
 radius = 5.4
 height = 14.0
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" unique_id=1271172950]
 collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_y0s34")
 
-[node name="cls_player" type="CollisionShape2D" parent="."]
+[node name="cls_player" type="CollisionShape2D" parent="." unique_id=437314315]
 position = Vector2(0, -11.5)
 shape = SubResource("CapsuleShape2D_hr31g")
 
-[node name="cls_player_crouch" type="CollisionShape2D" parent="."]
+[node name="cls_player_crouch" type="CollisionShape2D" parent="." unique_id=208479350]
 position = Vector2(0, -8)
 shape = SubResource("CapsuleShape2D_lqp71")
 
-[node name="sb_container" type="Node2D" parent="."]
+[node name="sb_container" type="Node2D" parent="." unique_id=594132625]
 position = Vector2(0, -13)
 
-[node name="sprite_body" parent="sb_container" instance=ExtResource("2_8eijk")]
+[node name="sprite_body" parent="sb_container" unique_id=1130456135 instance=ExtResource("2_8eijk")]
 position = Vector2(0, 14)
 
-[node name="Pistol" parent="sb_container" instance=ExtResource("3_noxpy")]
+[node name="Pistol" parent="sb_container" unique_id=982091338 instance=ExtResource("3_noxpy")]
 
-[node name="States" type="Node" parent="."]
+[node name="States" type="Node" parent="." unique_id=667291144]
 
-[node name="Idle" type="Node" parent="States"]
+[node name="Idle" type="Node" parent="States" unique_id=1549065481]
 script = ExtResource("3_eu8pa")
 
-[node name="Dead" type="Node" parent="States"]
+[node name="Dead" type="Node" parent="States" unique_id=1717524924]
 script = ExtResource("4_noxpy")
 
-[node name="Disabled" type="Node" parent="States"]
+[node name="Disabled" type="Node" parent="States" unique_id=1014358696]
 script = ExtResource("5_0cf6c")
 
-[node name="Walk" type="Node" parent="States"]
+[node name="Walk" type="Node" parent="States" unique_id=588185394]
 script = ExtResource("6_v2h1c")
 
-[node name="lbl_previous_state" type="Label" parent="."]
+[node name="lbl_previous_state" type="Label" parent="." unique_id=1918912540]
 visible = false
 offset_left = -19.0
 offset_right = 21.0
 offset_bottom = 23.0
 text = "prev"
 
-[node name="lbl_state" type="Label" parent="."]
+[node name="lbl_state" type="Label" parent="." unique_id=958721992]
 visible = false
 offset_left = -18.0
 offset_top = 17.0
@@ -73,7 +74,7 @@ offset_right = 22.0
 offset_bottom = 40.0
 text = "state"
 
-[node name="lbl_state2" type="Label" parent="."]
+[node name="lbl_state2" type="Label" parent="." unique_id=493116060]
 visible = false
 offset_left = 30.0
 offset_top = -46.0
@@ -81,7 +82,7 @@ offset_right = 70.0
 offset_bottom = -23.0
 text = "X"
 
-[node name="lbl_state_y" type="Label" parent="."]
+[node name="lbl_state_y" type="Label" parent="." unique_id=148768105]
 visible = false
 offset_left = 31.0
 offset_top = -24.0
@@ -89,39 +90,43 @@ offset_right = 71.0
 offset_bottom = -1.0
 text = "y"
 
-[node name="asp_damage" type="AudioStreamPlayer" parent="."]
+[node name="asp_damage" type="AudioStreamPlayer" parent="." unique_id=1260883475]
 stream = ExtResource("8_0cf6c")
 
-[node name="blood" parent="." instance=ExtResource("9_v2h1c")]
+[node name="blood" parent="." unique_id=11971471 instance=ExtResource("9_v2h1c")]
 position = Vector2(0, -12)
 emitting = false
 one_shot = true
 
-[node name="health_bar" parent="." instance=ExtResource("10_qh58e")]
+[node name="health_bar" parent="." unique_id=751838894 instance=ExtResource("10_qh58e")]
 offset_left = -9.0
 offset_top = -38.0
 offset_right = 7.0
 offset_bottom = -25.0
 
-[node name="asp_death" type="AudioStreamPlayer" parent="."]
+[node name="asp_death" type="AudioStreamPlayer" parent="." unique_id=342751103]
 stream = ExtResource("11_hr31g")
 
-[node name="tmr_respawn" type="Timer" parent="."]
+[node name="tmr_respawn" type="Timer" parent="." unique_id=1066790940]
 wait_time = 5.0
 one_shot = true
 
-[node name="mrk_crouch_gun" type="Marker2D" parent="."]
+[node name="mrk_crouch_gun" type="Marker2D" parent="." unique_id=2084421757]
 position = Vector2(2, -6)
 
-[node name="mrk_stand_gun" type="Marker2D" parent="."]
+[node name="mrk_stand_gun" type="Marker2D" parent="." unique_id=611647719]
 position = Vector2(0, -13)
 
-[node name="asp_jump" type="AudioStreamPlayer" parent="."]
+[node name="asp_jump" type="AudioStreamPlayer" parent="." unique_id=151354236]
 stream = ExtResource("12_lqp71")
 volume_db = -10.587
 
-[node name="asp_reload" type="AudioStreamPlayer" parent="."]
+[node name="asp_reload" type="AudioStreamPlayer" parent="." unique_id=1417172629]
 
-[node name="Flickerer" parent="." instance=ExtResource("13_vuhga")]
+[node name="Flickerer" parent="." unique_id=960617662 instance=ExtResource("13_vuhga")]
+
+[node name="Picker_Upper" parent="." unique_id=1410964439 instance=ExtResource("14_muf2e")]
+position = Vector2(0, -12)
+collision_layer = 128
 
 [connection signal="timeout" from="tmr_respawn" to="." method="_on_tmr_respawn_timeout"]

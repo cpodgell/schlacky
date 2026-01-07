@@ -49,7 +49,6 @@ func _physics_process(delta: float) -> void:
 
 func start_game():
 	game_camera = $Camera2D
-	add_child(game_camera)
 	game_camera.make_current()
 	global.number_of_players = number_of_players
 	

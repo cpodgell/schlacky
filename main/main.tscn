@@ -1,48 +1,48 @@
-[gd_scene load_steps=5 format=3 uid="uid://726armfby5mi"]
+[gd_scene format=3 uid="uid://726armfby5mi"]
 
 [ext_resource type="Script" uid="uid://cyfexpmmay6j2" path="res://main/main.gd" id="1_53q0u"]
 [ext_resource type="AudioStream" uid="uid://ufrnln3ahedq" path="res://assets/sfx/music/TPS (Cover).mp3" id="2_pjrb6"]
 [ext_resource type="PackedScene" uid="uid://dxntbvgdwtltu" path="res://interface/hud/player_hud.tscn" id="3_xwkvk"]
 [ext_resource type="PackedScene" uid="uid://dighwickf6510" path="res://mechanics/camera_2d.tscn" id="4_c651c"]
 
-[node name="main" type="Node2D"]
+[node name="main" type="Node2D" unique_id=945436482]
 script = ExtResource("1_53q0u")
 
-[node name="staging" type="Node2D" parent="."]
+[node name="staging" type="Node2D" parent="." unique_id=124397101]
 
-[node name="asp_music" type="AudioStreamPlayer" parent="."]
+[node name="asp_music" type="AudioStreamPlayer" parent="." unique_id=524887740]
 stream = ExtResource("2_pjrb6")
 
-[node name="Player_HUD_4" parent="." instance=ExtResource("3_xwkvk")]
+[node name="Player_HUD_4" parent="." unique_id=523214108 instance=ExtResource("3_xwkvk")]
 offset_left = 459.0
 offset_top = 296.0
 offset_right = 499.0
 offset_bottom = 336.0
 
-[node name="Camera2D" parent="." instance=ExtResource("4_c651c")]
+[node name="Camera2D" parent="." unique_id=106327204 instance=ExtResource("4_c651c")]
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1691596153]
 
-[node name="HUD" type="Control" parent="CanvasLayer"]
+[node name="HUD" type="Control" parent="CanvasLayer" unique_id=543150776]
 layout_mode = 3
 anchors_preset = 0
 
-[node name="Player_HUD_0" parent="CanvasLayer/HUD" instance=ExtResource("3_xwkvk")]
+[node name="Player_HUD_0" parent="CanvasLayer/HUD" unique_id=694274604 instance=ExtResource("3_xwkvk")]
 layout_mode = 0
 offset_right = 0.0
 offset_bottom = 0.0
 
-[node name="Player_HUD_1" parent="CanvasLayer/HUD" instance=ExtResource("3_xwkvk")]
+[node name="Player_HUD_1" parent="CanvasLayer/HUD" unique_id=1899654662 instance=ExtResource("3_xwkvk")]
 layout_mode = 0
 offset_right = 0.0
 offset_bottom = 0.0
 
-[node name="Player_HUD_2" parent="CanvasLayer/HUD" instance=ExtResource("3_xwkvk")]
+[node name="Player_HUD_2" parent="CanvasLayer/HUD" unique_id=1676256463 instance=ExtResource("3_xwkvk")]
 layout_mode = 0
 offset_right = 0.0
 offset_bottom = 0.0
 
-[node name="Player_HUD_3" parent="CanvasLayer/HUD" instance=ExtResource("3_xwkvk")]
+[node name="Player_HUD_3" parent="CanvasLayer/HUD" unique_id=976701857 instance=ExtResource("3_xwkvk")]
 layout_mode = 0
 offset_right = 0.0
 offset_bottom = 0.0

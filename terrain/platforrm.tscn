@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://d4dlxqlsa1e3e"]
+
+[ext_resource type="Texture2D" uid="uid://c3ihp1g8jfdbt" path="res://assets/objects/bricks.png" id="2_vfm6w"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mn04s"]
+size = Vector2(32, 16)
+
+[node name="Platforrm" type="AnimatableBody2D" unique_id=1898280063]
+collision_layer = 2
+collision_mask = 31
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=651888186]
+texture = ExtResource("2_vfm6w")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1225262649]
+shape = SubResource("RectangleShape2D_mn04s")

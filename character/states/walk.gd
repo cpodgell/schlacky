@@ -21,7 +21,11 @@ func handle_input(event):
 	if event.is_action_released(host_reference.player_prefix + global_input_map.RELOAD):
 		host_reference.attack_1_off()
 		host_reference.reload()
-	if event.is_action_released(host_reference.player_prefix + global_input_map.SWITCH_GUN):
+	if event.is_action_released(host_reference.player_prefix + global_input_map.PICKUP_ITEM):
+		host_reference.pickup_item()
+	if event.is_action_released(host_reference.player_prefix + global_input_map.SWITCH_GUN_L):
+		host_reference.cycle_gun()
+	if event.is_action_released(host_reference.player_prefix + global_input_map.SWITCH_GUN_R):
 		host_reference.cycle_gun()
 	if event.is_action_pressed(host_reference.player_prefix + global_input_map.GRENADE):
 		host_reference.prepare_grenade()

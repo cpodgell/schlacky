@@ -198,6 +198,9 @@ func release_grenade():
 		grenade.apply_impulse(impulse)
 		
 
+func pickup_item():
+	$Picker_Upper.pickup_item()
+
 func walk():
 	if(crouching):
 
