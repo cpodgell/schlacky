@@ -3,9 +3,7 @@ class_name Pistol extends Node2D
 @export var weapon_type: GameDefs.WeaponType = GameDefs.WeaponType.NONE
 
 @export var starting_guns: Array[GameDefs.WeaponType] = [
-	GameDefs.WeaponType.PISTOL,
-	GameDefs.WeaponType.LASER,
-	GameDefs.WeaponType.MACHINE_GUN
+	GameDefs.WeaponType.PISTOL
 ]
 
 var guns_in_inventory: Array[GameDefs.WeaponType] = []

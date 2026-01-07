@@ -5,32 +5,40 @@ extends CharacterBody2D
 @export var gravity: float = 1200.0
 @export var max_fall_speed: float = 2000.0
 
-# What this item spawns / represents
-@export var spawner_scene: PackedScene
-
-# DESIGN-TIME selector
-@export var item_type: int = 0:
+# GUN-ONLY ITEM: pick which gun this pickup represents
+@export var weapon_type: GameDefs.WeaponType = GameDefs.WeaponType.PISTOL:
 	set(value):
-		item_type = value
+		weapon_type = value
 		_update_sprite()
 
-@onready var texture: Texture2D = load("res://path/to/texture.png")
-# DESIGN-TIME visuals (drag any placeholder textures here)
-@export var item_sprites: Array[Texture2D] = [texture]
+# Optional: still allow spawning a scene on pickup (ex: a fancy gun node)
+@export var spawner_scene: PackedScene
 
-@onready var item_area: Area2D = $item_area
-@onready var spr_item: Sprite2D = $item_area/spr_item
+@onready var spr_item: Sprite2D = $spr_item
+
+# Design-time sprites keyed by WeaponType (placeholders — swap paths)
+var weapon_sprites: Dictionary = {
+	GameDefs.WeaponType.PISTOL: preload("res://assets/gun/pistol.png"),
+	GameDefs.WeaponType.SHOTGUN: preload("res://assets/gun/shotgun.png"),
+	GameDefs.WeaponType.MACHINE_GUN: preload("res://assets/gun/machine_gun.png"),
+	GameDefs.WeaponType.UZI: preload("res://assets/gun/uzi.png"),
+	GameDefs.WeaponType.LASER: preload("res://assets/gun/laser_gun.png"),
+	GameDefs.WeaponType.ROCKET_LAUNCHER: preload("res://assets/gun/rocket_launcher.png"),
+}
 
 var _settled := false
 var _payload: Node = null
 
 
 func _ready() -> void:
+	add_to_group("gun")
 	_update_sprite()
 
+	# Don't spawn payload while editing in the editor
 	if Engine.is_editor_hint():
 		return
 
+	# Only used if you actually want a runtime payload node for this item
 	if spawner_scene:
 		_payload = spawner_scene.instantiate()
 		add_child(_payload)
@@ -50,12 +58,24 @@ func _physics_process(delta: float) -> void:
 		set_physics_process(false)
 
 
-func pickup() -> void:
+func pickup(player: Player) -> void:
+	if player != null:
+		print("not null")
+		if player.name == "Player":
+			print("is player")
+			if player.has_method("pickup_gun"):
+				player.call("pickup_gun", weapon_type)
 	queue_free()
 
 
 func _update_sprite() -> void:
 	if not spr_item:
 		return
-	if item_type >= 0 and item_type < item_sprites.size():
-		spr_item.texture = item_sprites[item_type]
+
+	var tex: Texture2D = weapon_sprites.get(weapon_type, null)
+	if tex:
+		spr_item.texture = tex
+
+
+func _on_item_area_area_entered(area: Area2D) -> void:
+	pass # Replace with function body.
