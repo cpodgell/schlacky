@@ -69,7 +69,7 @@ position = Vector2(118, -85)
 position = Vector2(209, -92)
 
 [node name="item" parent="ysort" index="0" unique_id=1551492316 instance=ExtResource("4_xoxnd")]
-position = Vector2(292, -181)
+position = Vector2(270, -74)
 
 [node name="Brick" parent="ysort" index="1" unique_id=84351658 instance=ExtResource("5_xoxnd")]
 position = Vector2(450, -58)

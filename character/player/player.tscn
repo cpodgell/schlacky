@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://2l8rxidok4e1" path="res://character/sprite_body/sprite_body.tscn" id="2_8eijk"]
 [ext_resource type="Script" uid="uid://btmjtxoxxqx28" path="res://character/states/idle.gd" id="3_eu8pa"]
 [ext_resource type="PackedScene" uid="uid://dice1e7tigbs" path="res://weapons/pistol.tscn" id="3_noxpy"]
+[ext_resource type="PackedScene" uid="uid://bv4l30ij2r3h5" path="res://weapons/bullets/laser.tscn" id="4_jo6ux"]
 [ext_resource type="Script" uid="uid://bqdjespu4h6wc" path="res://character/states/dead.gd" id="4_noxpy"]
 [ext_resource type="Script" uid="uid://fonbseyemth4" path="res://character/states/disabled.gd" id="5_0cf6c"]
 [ext_resource type="Script" uid="uid://b6770krcxnow0" path="res://character/states/walk.gd" id="6_v2h1c"]
@@ -44,6 +45,7 @@ position = Vector2(0, -13)
 position = Vector2(0, 14)
 
 [node name="Pistol" parent="sb_container" unique_id=982091338 instance=ExtResource("3_noxpy")]
+laser_scene = ExtResource("4_jo6ux")
 
 [node name="States" type="Node" parent="." unique_id=667291144]
 

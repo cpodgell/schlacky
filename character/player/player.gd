@@ -17,9 +17,7 @@ var _is_ascending = false
 var _is_descending = false
 var attack_on = false
 
-
-
-func init_states():
+func assign_states():
 	states_map = {
 		"idle": $States/Idle,
 		"walk": $States/Walk,
@@ -28,12 +26,14 @@ func init_states():
 	}
 
 func _ready():
-	init_states()
+	$sb_container/Pistol.set_pistol_owner(self)
+	assign_states()
 	initialize_states()
 	current_state = states_map["idle"]
 	current_state.enter()
 	#$Flickerer.initialize($sb_container/sprite_body)
 	reset()
+
 
 func reset():
 	velocity = Vector2.ZERO

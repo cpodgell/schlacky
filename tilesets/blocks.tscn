@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://cpd8qou2ewfn3"]
+[gd_scene format=3 uid="uid://cpd8qou2ewfn3"]
 
 [ext_resource type="Texture2D" uid="uid://bcv0km77afi1v" path="res://assets/tiles/blocks.png" id="1_wckil"]
 [ext_resource type="Script" uid="uid://giwuuh4csljl" path="res://tilesets/blocks.gd" id="2_wx0su"]
@@ -77,6 +77,6 @@ custom_data_layer_1/name = ""
 custom_data_layer_1/type = 0
 sources/0 = SubResource("TileSetAtlasSource_wx0su")
 
-[node name="Blocks" type="TileMapLayer"]
+[node name="Blocks" type="TileMapLayer" unique_id=675818386]
 tile_set = SubResource("TileSet_kycna")
 script = ExtResource("2_wx0su")

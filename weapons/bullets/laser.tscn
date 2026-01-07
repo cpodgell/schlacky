@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bv4l30ij2r3h5"]
+[gd_scene format=3 uid="uid://bv4l30ij2r3h5"]
 
 [ext_resource type="Texture2D" uid="uid://bc61knsnpn80q" path="res://assets/misc/shader_shapes/10x10_Circle.png" id="1_dic0k"]
 [ext_resource type="Script" uid="uid://dq5yrdwkbjcx4" path="res://weapons/bullets/laser.gd" id="1_f8jtw"]
@@ -6,8 +6,8 @@
 [ext_resource type="AudioStream" uid="uid://qforgqbx0d01" path="res://assets/sfx/gun_shots/Lightning_nuc_01.ogg" id="4_g1wxj"]
 
 [sub_resource type="Curve" id="Curve_g1wxj"]
-_limits = [0.0, 1.5, 0.0, 1.0]
-_data = [Vector2(0, 1.5), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+_limits = [0.0, 2.0, 0.0, 1.0]
+_data = [Vector2(0, 2), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="CurveTexture" id="CurveTexture_xbc4n"]
@@ -47,22 +47,23 @@ gravity = Vector3(0, 98, 0)
 anim_speed_min = 3.98
 anim_speed_max = 4.89
 
-[node name="laser" type="RayCast2D"]
+[node name="laser" type="RayCast2D" unique_id=858711956]
 collision_mask = 14
 script = ExtResource("1_f8jtw")
 
-[node name="ln_laser_fallout" type="Line2D" parent="."]
+[node name="ln_laser_fallout" type="Line2D" parent="." unique_id=1597264364]
 points = PackedVector2Array(0, 0, 500, 0)
 default_color = Color(0.42655835, 0.85, 0.3315, 1)
 joint_mode = 2
 begin_cap_mode = 2
 end_cap_mode = 2
 
-[node name="ln_laser_main" type="Line2D" parent="."]
+[node name="ln_laser_main" type="Line2D" parent="." unique_id=657906709]
 points = PackedVector2Array(0, 0, 500, 0)
 width = 3.0
 
-[node name="CastingParticles2D" type="GPUParticles2D" parent="."]
+[node name="CastingParticles2D" type="GPUParticles2D" parent="." unique_id=819679144]
+z_index = 100
 emitting = false
 amount = 1
 texture = ExtResource("1_dic0k")
@@ -70,7 +71,7 @@ lifetime = 0.2
 one_shot = true
 process_material = SubResource("ParticleProcessMaterial_xbc4n")
 
-[node name="CollisionParticles2D" type="GPUParticles2D" parent="."]
+[node name="CollisionParticles2D" type="GPUParticles2D" parent="." unique_id=469180017]
 position = Vector2(25, -18)
 emitting = false
 amount = 20
@@ -80,7 +81,7 @@ one_shot = true
 explosiveness = 0.84
 process_material = SubResource("ParticleProcessMaterial_o34ku")
 
-[node name="BeamParticles2D" type="GPUParticles2D" parent="."]
+[node name="BeamParticles2D" type="GPUParticles2D" parent="." unique_id=897014779]
 visible = false
 modulate = Color(0.48175997, 0.96, 0.3744, 0.8980392)
 material = SubResource("CanvasItemMaterial_st5t1")
@@ -91,17 +92,17 @@ explosiveness = 1.0
 randomness = 1.0
 process_material = SubResource("ParticleProcessMaterial_rolki")
 
-[node name="tmr_rate" type="Timer" parent="."]
+[node name="tmr_rate" type="Timer" parent="." unique_id=389580847]
 one_shot = true
 
-[node name="asp_fire" type="AudioStreamPlayer" parent="."]
+[node name="asp_fire" type="AudioStreamPlayer" parent="." unique_id=1984853119]
 stream = ExtResource("4_g1wxj")
 volume_db = -13.065
 
-[node name="tmr_life" type="Timer" parent="."]
+[node name="tmr_life" type="Timer" parent="." unique_id=1974246541]
 one_shot = true
 
-[node name="tmr_queue_free" type="Timer" parent="."]
+[node name="tmr_queue_free" type="Timer" parent="." unique_id=1320223384]
 one_shot = true
 
 [connection signal="timeout" from="tmr_life" to="." method="_on_tmr_life_timeout"]

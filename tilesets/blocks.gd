@@ -1,6 +1,6 @@
 extends TileMapLayer
 
-@export var spawner_scene: PackedScene = preload("res://mechanics/spawners/brick_spawner.tscn")
+@export var spawner_scene: PackedScene
 @export var brown_brick_scene: PackedScene = preload("res://objects/brick.tscn")
 @export var erase_tiles_after_spawning: bool = true
 

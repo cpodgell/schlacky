@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://crr23tdidx573"]
+
+[ext_resource type="Script" uid="uid://fa3nlyn45hx" path="res://global/sound_manager.gd" id="1_6hpsx"]
+[ext_resource type="AudioStream" uid="uid://dlg68athtakh4" path="res://assets/sfx/gun_shots/pistol.ogg" id="1_yj34y"]
+[ext_resource type="AudioStream" uid="uid://cpjflgr0bcn6f" path="res://assets/sfx/gun_shots/pistol_01.ogg" id="2_6hpsx"]
+[ext_resource type="AudioStream" uid="uid://rp34eewghucc" path="res://assets/sfx/gun_shots/gun_submachine_silenced_shot_0_first.wav" id="3_b60pw"]
+[ext_resource type="AudioStream" uid="uid://j3sy5gb167xe" path="res://assets/sfx/misc/shotgun_cock.ogg" id="4_6oiyl"]
+[ext_resource type="AudioStream" uid="uid://dv1n317qfd14n" path="res://assets/sfx/misc/gun_cycle_2.ogg" id="5_bpduw"]
+[ext_resource type="AudioStream" uid="uid://ti7vlp5nl1qj" path="res://assets/sfx/foly/dry_fire_01.wav" id="6_g8kw5"]
+[ext_resource type="AudioStream" uid="uid://276g6es2s5bu" path="res://assets/sfx/gun_shots/gun_semi_auto_rifle_magazine_load_03.wav" id="7_lh2yy"]
+[ext_resource type="AudioStream" uid="uid://b0o1ue5ptj1r2" path="res://assets/sfx/gun_shots/rocket_launcher_shot_01.wav" id="8_38vno"]
+
+[node name="sound_manager" type="Node" unique_id=991774681]
+script = ExtResource("1_6hpsx")
+
+[node name="asp_pistol" type="AudioStreamPlayer" parent="." unique_id=1107267374]
+stream = ExtResource("1_yj34y")
+
+[node name="asp_shotgun" type="AudioStreamPlayer" parent="." unique_id=558415501]
+stream = ExtResource("2_6hpsx")
+volume_db = -10.196
+
+[node name="asp_uzi" type="AudioStreamPlayer" parent="." unique_id=310185242]
+stream = ExtResource("3_b60pw")
+volume_db = -10.196
+
+[node name="asp_reload_shotgun" type="AudioStreamPlayer" parent="." unique_id=1481302745]
+stream = ExtResource("4_6oiyl")
+volume_db = -10.196
+
+[node name="asp_gun_cycle" type="AudioStreamPlayer" parent="." unique_id=1772904505]
+stream = ExtResource("5_bpduw")
+volume_db = -9.964
+pitch_scale = 1.1
+
+[node name="asp_dry_fire" type="AudioStreamPlayer" parent="." unique_id=783458917]
+stream = ExtResource("6_g8kw5")
+
+[node name="asp_reload2" type="AudioStreamPlayer" parent="." unique_id=1175980042]
+stream = ExtResource("7_lh2yy")
+
+[node name="asp_rocket" type="AudioStreamPlayer" parent="." unique_id=619047257]
+stream = ExtResource("8_38vno")

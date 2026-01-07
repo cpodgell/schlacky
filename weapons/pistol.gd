@@ -1,25 +1,20 @@
 class_name Pistol extends Node2D
 
+@export var weapon_type: GameDefs.WeaponType = GameDefs.WeaponType.NONE
+
+@export var starting_guns: Array[GameDefs.WeaponType] = [
+	GameDefs.WeaponType.PISTOL,
+	GameDefs.WeaponType.LASER,
+	GameDefs.WeaponType.MACHINE_GUN
+]
+
+var guns_in_inventory: Array[GameDefs.WeaponType] = []
+
+
 var casing_scene = preload("res://effects/casing.tscn")
 @export var laser_scene: PackedScene = preload("res://weapons/bullets/laser.tscn")
 
-@export var weapon_type : int
-
-@export var starting_guns: Array[WeaponType] = [WeaponType.PISTOL, WeaponType.LASER]
-
-var guns_in_inventory: Array[WeaponType] = []
 var gun_index: int = 0
-
-
-enum WeaponType {
-	NONE,
-	PISTOL,
-	SHOTGUN,
-	MACHINE_GUN,
-	UZI,
-	LASER,
-	ROCKET_LAUNCHER
-}
 
 var is_reloading = false
 var is_firing = false
@@ -54,9 +49,10 @@ var laser_max = 20
 var rocket_max = 1
 
 func _ready() -> void:
+	gun_index = 0
 	guns_in_inventory = starting_guns.duplicate()
 	if guns_in_inventory.is_empty():
-		weapon_type = WeaponType.NONE
+		weapon_type = GameDefs.WeaponType.NONE
 	else:
 		weapon_type = guns_in_inventory[0]
 	reset_gun()
@@ -76,64 +72,68 @@ func cycle_gun() -> void:
 	gun_index = (gun_index + 1) % guns_in_inventory.size()
 	weapon_type = guns_in_inventory[gun_index]
 	reset_gun()
-	$asp_gun_cycle.play()
+	sound_manager.play_gun_cycle()
 
 func reset_gun():
+	cycle_fire = false
 	current_case_type = 1
 	for c in $gun_sprites.get_children():
 		if c is Sprite2D:
 			c.visible = false
 	match weapon_type:
-		WeaponType.PISTOL:
+		GameDefs.WeaponType.PISTOL:
 			pistol.visible = true
 			rounds_in_clip = pistol_max
 			max_rounds_in_clip = pistol_max
 			$tmr_shot_delay.wait_time = .2
-		WeaponType.SHOTGUN:
+		GameDefs.WeaponType.SHOTGUN:
 			$tmr_shot_delay.wait_time = .7
 			rounds_in_clip = shotgun_max
 			max_rounds_in_clip = shotgun_max
 			shotgun.visible = true
 			current_case_type = 0
-		WeaponType.MACHINE_GUN:
+		GameDefs.WeaponType.MACHINE_GUN:
 			cycle_fire = true
 			machine_gun.visible = true
 			rounds_in_clip = machine_gun_max
 			max_rounds_in_clip = machine_gun_max
 			$tmr_shot_delay.wait_time = .1
-		WeaponType.UZI:
+		GameDefs.WeaponType.UZI:
 			cycle_fire = true
 			uzi.visible = true
 			rounds_in_clip = uzi_max
 			max_rounds_in_clip = uzi_max
 			$tmr_shot_delay.wait_time = .04
-		WeaponType.LASER:
+		GameDefs.WeaponType.LASER:
 			cycle_fire = true
 			laser_gun.visible = true
 			rounds_in_clip = laser_max
-			max_rounds_in_clip = uzi_max
+			max_rounds_in_clip = laser_max
 			$tmr_shot_delay.wait_time = .1
-		WeaponType.ROCKET_LAUNCHER:
+		GameDefs.WeaponType.ROCKET_LAUNCHER:
 			cycle_fire = false
 			rocket_gun.visible = true
 			rounds_in_clip = rocket_max
 			max_rounds_in_clip = rocket_max
 			$tmr_shot_delay.wait_time = 2
 			current_case_type = 2
-	gun_owner = get_parent().get_parent()
 	update_hud(max_rounds_in_clip,rounds_in_clip)
 
 func fire_down():
 	fire_button_down = true
-	if !is_firing and !is_reloading and weapon_type != WeaponType.NONE:
+	if !is_firing and !is_reloading and weapon_type != GameDefs.WeaponType.NONE:
 		_fire()
 
 func fire_up():
 	fire_button_down = false
 
+func set_pistol_owner(_owner: Player) -> void:
+	gun_owner = _owner
+	update_hud(max_rounds_in_clip, rounds_in_clip)
+
 func _fire():
 	if(rounds_in_clip <= 0):
-		$asp_dry_fire.play()
+		sound_manager.play_dry_fire()
 		return
 	rounds_in_clip -= 1
 	update_hud(max_rounds_in_clip,rounds_in_clip)
@@ -141,40 +141,40 @@ func _fire():
 	release_casing()
 	$AnimationPlayer.stop(true)
 	$AnimationPlayer.play("gun_shot")
-	if(weapon_type == WeaponType.SHOTGUN):
+	if(weapon_type == GameDefs.WeaponType.SHOTGUN):
 		$tmr_reload_sound.start()
 		$tmr_shot_delay.start()
 		for i in 12:
 			var spread = randf_range(-.15, .15)
 			var speed = randf_range(390, 550)
 			spawn_bullet(Vector2(0,spread), speed, .3)
-			$asp_shotgun.play()
-	if(weapon_type == WeaponType.PISTOL):
+			sound_manager.play_shotgun()
+	if(weapon_type == GameDefs.WeaponType.PISTOL):
 		var speed = 500
 		$tmr_shot_delay.start()
-		$asp_pistol.play()
+		sound_manager.play_pistol()
 		spawn_bullet(Vector2.ZERO, speed)
-	if(weapon_type == WeaponType.MACHINE_GUN):
+	if(weapon_type == GameDefs.WeaponType.MACHINE_GUN):
 		var speed = 600
 		$tmr_shot_delay.start()
-		$asp_pistol.play()
+		sound_manager.play_pistol()
 		spawn_bullet(Vector2.ZERO, speed)
 		spawn_bullet(Vector2.ZERO, speed)
-	if(weapon_type == WeaponType.UZI):
+	if(weapon_type == GameDefs.WeaponType.UZI):
 		var speed = 800
 		$tmr_shot_delay.start()
-		$asp_uzi.play()
+		sound_manager.play_uzi()
 		$gun_sprites.rotation = randf_range(-.4,.4)
 		spawn_bullet(Vector2.ZERO, speed)
-	if(weapon_type == WeaponType.LASER):
+	if(weapon_type == GameDefs.WeaponType.LASER):
 		$tmr_shot_delay.start()
-		$asp_uzi.play()
+		sound_manager.play_uzi()
 		$gun_sprites.rotation = randf_range(-.1,.1)
 		spawn_laser()
-	if(weapon_type == WeaponType.ROCKET_LAUNCHER):
+	if(weapon_type == GameDefs.WeaponType.ROCKET_LAUNCHER):
 		var speed = 400
 		$tmr_shot_delay.start()
-		$asp_rocket.play()
+		sound_manager.play_rocket()
 		var bullet : Bullet = spawn_bullet(Vector2.ZERO, speed)
 		bullet.add_ordnance()
 		bullet.bullet_type = bullet.BulletType.ROCKET
@@ -215,12 +215,12 @@ func spawn_bullet(_direction = Vector2.ZERO, _speed : float = 0,  _time_till_dea
 	return bullet
 
 func reload():
-	if(weapon_type != WeaponType.NONE):
+	if(weapon_type != GameDefs.WeaponType.NONE):
 		is_reloading = true
 		$AnimationPlayer.play("reload")
 
 func play_reload_sound():
-	$asp_reload2.play()
+	sound_manager.play_reload2()
 
 func release_casing():
 	var case : Casing = casing_scene.instantiate()
@@ -240,20 +240,20 @@ func release_casing():
 	# Increment shot count to cycle through the casings
 	shot_count += 1
 
-func add_gun(gun: WeaponType) -> void:
-	if gun == WeaponType.NONE:
+func add_gun(gun) -> void:
+	if gun == GameDefs.WeaponType.NONE:
 		return
 	if gun in guns_in_inventory:
 		return
 	guns_in_inventory.append(gun)
 
 	# If you had no gun, auto-equip this one
-	if weapon_type == WeaponType.NONE:
+	if weapon_type == GameDefs.WeaponType.NONE:
 		gun_index = guns_in_inventory.find(gun)
 		weapon_type = gun
 		reset_gun()
 
-func remove_gun(gun: WeaponType) -> void:
+func remove_gun(gun: GameDefs.WeaponType) -> void:
 	if not (gun in guns_in_inventory):
 		return
 
@@ -261,7 +261,7 @@ func remove_gun(gun: WeaponType) -> void:
 	guns_in_inventory.erase(gun)
 
 	if guns_in_inventory.is_empty():
-		weapon_type = WeaponType.NONE
+		weapon_type = GameDefs.WeaponType.NONE
 		return
 
 	if removing_current:
@@ -279,7 +279,7 @@ func _on_tmr_shot_delay_timeout() -> void:
 
 
 func _on_tmr_reload_sound_timeout() -> void:
-	$asp_reload_shotgun.play()
+	sound_manager.play_reload_shotgun()
 
 
 func _on_tmr_decay_timeout() -> void:

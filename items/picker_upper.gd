@@ -11,7 +11,7 @@ func _process(delta: float) -> void:
 	pass
 
 func pickup_item():
-	if(item_array.size() > 0):
+	if(item_array.size() > 0 and has_method("pickup")):
 		item_array[0].pickup()
 
 func _on_area_entered(area: Area2D) -> void:
