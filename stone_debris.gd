@@ -4,15 +4,15 @@ signal block_debris_finished
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	for c in $particles.get_children():
-		c.emitting = false
 		c.one_shot = true
+		c.emitting = false
 	pass # Replace with function body.
 
 func play():
 	$Timer.start()
 	for c : GPUParticles2D in $particles.get_children():
-		c.emitting = true
 		c.one_shot = true
+		c.emitting = true
 
 func set_blue():
 	for p : GPUParticles2D in $particles.get_children():

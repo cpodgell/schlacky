@@ -1,12 +1,16 @@
 [gd_scene format=3 uid="uid://cw3ilji8tax8o"]
 
 [ext_resource type="Script" uid="uid://bvrxtnjoi33u8" path="res://items/item.gd" id="1_buahv"]
+[ext_resource type="Texture2D" uid="uid://dg81etljyx2kh" path="res://assets/gun/shotgun.png" id="2_buahv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k7rtb"]
 size = Vector2(8, 8)
 
 [node name="item" type="CharacterBody2D" unique_id=1551492316]
-collision_mask = 3
+position = Vector2(0, 25433.445)
+collision_layer = 128
+collision_mask = 2
+velocity = Vector2(0, 2000)
 script = ExtResource("1_buahv")
 weapon_type = 2
 
@@ -16,3 +20,4 @@ shape = SubResource("RectangleShape2D_k7rtb")
 
 [node name="spr_item" type="Sprite2D" parent="." unique_id=291502603]
 position = Vector2(0, -3)
+texture = ExtResource("2_buahv")

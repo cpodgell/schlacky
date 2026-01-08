@@ -466,8 +466,8 @@ click={
 2d_physics/layer_5="Player_Bullet"
 2d_physics/layer_6="Enemy_Bullet"
 2d_physics/layer_7="Platforms"
-2d_physics/layer_8="Pickup_Area"
-2d_physics/layer_9="NPC"
+2d_physics/layer_8="Pickups"
+2d_physics/layer_9="Pickup_Area"
 
 [rendering]
 

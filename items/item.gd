@@ -59,13 +59,11 @@ func _physics_process(delta: float) -> void:
 
 
 func pickup(player: Player) -> void:
-	if player != null:
-		print("not null")
-		if player.name == "Player":
-			print("is player")
-			if player.has_method("pickup_gun"):
-				player.call("pickup_gun", weapon_type)
-	queue_free()
+	var picked_up = false
+	if player != null and player.name == "Player" and player.has_method("pickup_gun"):
+		picked_up = player.call("pickup_gun", weapon_type)
+	if(picked_up):
+		queue_free()
 
 
 func _update_sprite() -> void:

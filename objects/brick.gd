@@ -26,6 +26,5 @@ func set_brick(_frame):
 func _on_tmr_cls_disable_timeout() -> void:
 	$cls_brick.set_deferred("disabled", true)
 
-
 func _on_brick_debris_block_debris_finished() -> void:
 	queue_free()

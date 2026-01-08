@@ -10,44 +10,6 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gjkxd"]
 size = Vector2(32, 16)
 
-[sub_resource type="Animation" id="Animation_bkp38"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(-31, -58)]
-}
-
-[sub_resource type="Animation" id="Animation_wavu4"]
-resource_name = "move_on_path"
-length = 5.0
-loop_mode = 2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 2.5096507, 5),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(-42, -30), Vector2(15, -64), Vector2(15, -128)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_gjkxd"]
-_data = {
-&"RESET": SubResource("Animation_bkp38"),
-&"move_on_path": SubResource("Animation_wavu4")
-}
-
 [node name="level_04" unique_id=191083017 instance=ExtResource("1_pj2ml")]
 
 [node name="graveyard_blocks" parent="TileMaps" index="0" unique_id=676178041 instance=ExtResource("2_33u5q")]
@@ -69,14 +31,19 @@ position = Vector2(118, -85)
 position = Vector2(209, -92)
 
 [node name="item" parent="ysort" index="0" unique_id=1551492316 instance=ExtResource("4_xoxnd")]
-position = Vector2(270, -0.000117242336)
+position = Vector2(256, -62.000004)
+velocity = Vector2(0, 0)
 weapon_type = 6
 
 [node name="item2" parent="ysort" index="1" unique_id=1034355077 instance=ExtResource("4_xoxnd")]
-position = Vector2(321, -16)
-weapon_type = 6
+position = Vector2(321, 0.4849739)
+velocity = Vector2(0, 0)
 
-[node name="Brick" parent="ysort" index="2" unique_id=84351658 instance=ExtResource("5_xoxnd")]
+[node name="item3" parent="ysort" index="2" unique_id=394138271 instance=ExtResource("4_xoxnd")]
+position = Vector2(406, 0.014855862)
+velocity = Vector2(0, 0)
+
+[node name="Brick" parent="ysort" index="3" unique_id=84351658 instance=ExtResource("5_xoxnd")]
 position = Vector2(450, -58)
 
 [node name="AnimatableBody2D" type="AnimatableBody2D" parent="." index="3" unique_id=570354867]
@@ -89,6 +56,3 @@ texture = ExtResource("5_wavu4")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D" index="1" unique_id=2073428568]
 position = Vector2(16, 8)
 shape = SubResource("RectangleShape2D_gjkxd")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatableBody2D" index="2" unique_id=1937427633]
-libraries/ = SubResource("AnimationLibrary_gjkxd")

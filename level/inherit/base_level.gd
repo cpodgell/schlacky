@@ -2,7 +2,6 @@ class_name BaseLevel extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	$AnimatableBody2D/AnimationPlayer.play("move_on_path")
 	pass # Replace with function body.
 
 func add_players():

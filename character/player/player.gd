@@ -163,7 +163,7 @@ func get_look_direction():
 	return look_direction
 
 func pickup_gun(_weapon_type : int):
-	$sb_container/Pistol.add_gun(_weapon_type)
+	return $sb_container/Pistol.add_gun(_weapon_type)
 
 func update_camera():
 	pass

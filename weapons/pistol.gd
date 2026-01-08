@@ -40,11 +40,13 @@ var current_case_type = 0
 @onready var rocket_gun = $gun_sprites/spr_rocket_launcher
 
 var pistol_max = 12
-var shotgun_max = 12
+var shotgun_max = 5
 var machine_gun_max = 35
-var uzi_max = 200
+var uzi_max = 50
 var laser_max = 20
-var rocket_max = 1
+var rocket_max = 3
+
+var bullet_type: GameDefs.AmmoType = GameDefs.AmmoType.BULLETS
 
 func _ready() -> void:
 	gun_index = 0
@@ -57,7 +59,7 @@ func _ready() -> void:
 
 func update_hud(_bullet_max, _bullet_amount):
 	if(global.main and gun_owner):
-		global.main.update_hud(_bullet_max, _bullet_amount, gun_owner.player_number)
+		global.main.update_hud(_bullet_max, _bullet_amount, weapon_type, gun_owner.player_number)
 	
 func cycle_gun() -> void:
 	if guns_in_inventory.is_empty():
@@ -238,18 +240,15 @@ func release_casing():
 	# Increment shot count to cycle through the casings
 	shot_count += 1
 
-func add_gun(gun) -> void:
+func add_gun(gun) -> bool:
 	if gun == GameDefs.WeaponType.NONE:
-		return
+		return -1
 	if gun in guns_in_inventory:
-		return
+		return -1
 	guns_in_inventory.append(gun)
-
-	# If you had no gun, auto-equip this one
-	if weapon_type == GameDefs.WeaponType.NONE:
-		gun_index = guns_in_inventory.find(gun)
-		weapon_type = gun
-		reset_gun()
+	if(guns_in_inventory.size() == 3):
+		remove_gun(weapon_type)
+	return true
 
 func remove_gun(gun: GameDefs.WeaponType) -> void:
 	if not (gun in guns_in_inventory):

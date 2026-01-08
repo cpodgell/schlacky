@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cv8mnkymmln18"]
+[gd_scene format=3 uid="uid://cv8mnkymmln18"]
 
 [ext_resource type="Script" uid="uid://8osrt5fk53ut" path="res://stone_debris.gd" id="1_rphko"]
 [ext_resource type="Texture2D" uid="uid://cmoceavki38ab" path="res://assets/effects/brick_debris.png" id="2_rphko"]
@@ -51,35 +51,44 @@ gravity = Vector3(0, 300, 0)
 anim_offset_min = 0.1414
 anim_offset_max = 0.3081
 
-[node name="brick_debris" type="Node2D"]
+[node name="brick_debris" type="Node2D" unique_id=1978077916]
 script = ExtResource("1_rphko")
 
-[node name="Timer" type="Timer" parent="."]
+[node name="Timer" type="Timer" parent="." unique_id=95733157]
 wait_time = 7.0
 one_shot = true
 
-[node name="particles" type="Node2D" parent="."]
+[node name="particles" type="Node2D" parent="." unique_id=1282346411]
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="particles"]
+[node name="GPUParticles2D" type="GPUParticles2D" parent="particles" unique_id=593719577]
 material = SubResource("CanvasItemMaterial_mkmwv")
+emitting = false
 amount = 2
 texture = ExtResource("2_rphko")
+lifetime = 4.0
+one_shot = true
 explosiveness = 1.0
 randomness = 1.0
 process_material = SubResource("ParticleProcessMaterial_t5uyq")
 
-[node name="GPUParticles2D2" type="GPUParticles2D" parent="particles"]
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="particles" unique_id=1633424646]
 material = SubResource("CanvasItemMaterial_mkmwv")
+emitting = false
 amount = 2
 texture = ExtResource("2_rphko")
+lifetime = 4.0
+one_shot = true
 explosiveness = 1.0
 randomness = 1.0
 process_material = SubResource("ParticleProcessMaterial_hlx1t")
 
-[node name="GPUParticles2D3" type="GPUParticles2D" parent="particles"]
+[node name="GPUParticles2D3" type="GPUParticles2D" parent="particles" unique_id=1965999106]
 material = SubResource("CanvasItemMaterial_mkmwv")
+emitting = false
 amount = 2
 texture = ExtResource("2_rphko")
+lifetime = 4.0
+one_shot = true
 explosiveness = 1.0
 randomness = 1.0
 process_material = SubResource("ParticleProcessMaterial_bg0be")

@@ -1,9 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://dxntbvgdwtltu"]
+[gd_scene format=3 uid="uid://dxntbvgdwtltu"]
 
 [ext_resource type="Theme" uid="uid://cfk2jxfff81dj" path="res://themes/theme_player_hud.tres" id="1_aptme"]
 [ext_resource type="Script" uid="uid://tb66v8a3ha7f" path="res://interface/hud/player_hud.gd" id="1_ua0wg"]
+[ext_resource type="Script" uid="uid://b4p0nv1bf1lg8" path="res://interface/hud/modulator.gd" id="3_y1gfq"]
 
-[node name="Player_HUD" type="Control"]
+[node name="Player_HUD" type="Control" unique_id=520361634]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -11,8 +12,22 @@ offset_bottom = 40.0
 theme = ExtResource("1_aptme")
 script = ExtResource("1_ua0wg")
 
-[node name="lbl_bullet_amount" type="Label" parent="."]
+[node name="lbl_bullet_amount_total" type="Label" parent="." unique_id=1189828230]
+modulate = Color(6.930828e-06, 0.83816886, 0.989996, 1)
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = -1.0
+offset_top = -3.0
+offset_right = 74.0
+offset_bottom = 33.0
+text = "235"
+
+[node name="lbl_bullet_amount" type="Label" parent="." unique_id=797388986]
+layout_mode = 0
+offset_left = 21.0
+offset_top = 24.0
+offset_right = 96.0
+offset_bottom = 60.0
 text = "0/0"
+
+[node name="Modulator" type="Node" parent="lbl_bullet_amount" unique_id=1449144113]
+script = ExtResource("3_y1gfq")
