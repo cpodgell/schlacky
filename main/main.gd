@@ -66,10 +66,12 @@ func load_level():
 	$staging.add_child(current_level)
 	global.current_level.add_players()
 
-func update_hud(_bullet_max, _bullet_amount, _weapon_type, _player_number):
+func update_hud(_bullet_max, _bullet_amount, _bullet_total_max, _bullet_total_amount, _weapon_type, _player_number):
 	var HUD : PlayerHUD = get_hud(_player_number)
 	HUD.set_bullet_max(_bullet_max)
 	HUD.set_bullet_amount(_bullet_amount)
+	HUD.set_total_bullets_max(_bullet_total_max)
+	HUD.set_bullet_clip_amount(_bullet_amount, _bullet_total_amount)
 
 func get_hud(_number) -> PlayerHUD:
 	return get_node("CanvasLayer/HUD/Player_HUD_" + str(_number))

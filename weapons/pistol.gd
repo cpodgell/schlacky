@@ -64,17 +64,27 @@ var bullet_type: GameDefs.AmmoType = GameDefs.AmmoType.BULLETS
 func _ready() -> void:
 	gun_index = 0
 	guns_in_inventory = starting_guns.duplicate()
+
 	if guns_in_inventory.is_empty():
 		weapon_type = GameDefs.WeaponType.NONE
-	else:
-		weapon_type = guns_in_inventory[0]
+		reset_gun()
+		return
 
+	weapon_type = guns_in_inventory[0]
+
+	# Starting guns start LOADED (full clip)
 	for w in guns_in_inventory:
 		_set_clip_for_weapon(w, _get_clip_max_for_weapon(w))
 
-	reset_gun()
+	# Force load the currently equipped weapon from the dict
+	max_rounds_in_clip = _get_clip_max_for_weapon(weapon_type)
+	rounds_in_clip = _get_clip_for_weapon(weapon_type)
 
-	# --- FIX: total ammo includes clip ---
+	reset_gun()
+	_set_clip_for_weapon(weapon_type, _get_clip_max_for_weapon(weapon_type))
+	rounds_in_clip = _get_clip_for_weapon(weapon_type)
+
+	# total ammo includes clip: subtract the loaded clip from the correct reserve pool
 	var ammo_type = GameDefs.get_ammo_type(weapon_type)
 	match ammo_type:
 		GameDefs.AmmoType.BULLETS:
@@ -86,10 +96,37 @@ func _ready() -> void:
 		GameDefs.AmmoType.EXPLOSIVE:
 			explosive_total -= rounds_in_clip
 
+	# safety: never allow negative reserve
+	bullets_total = max(bullets_total, 0)
+	shotgun_total = max(shotgun_total, 0)
+	energy_total = max(energy_total, 0)
+	explosive_total = max(explosive_total, 0)
 
-func update_hud(_bullet_max, _bullet_amount):
-	if(global.main and gun_owner):
-		global.main.update_hud(_bullet_max, _bullet_amount, weapon_type, gun_owner.player_number)
+	update_hud(max_rounds_in_clip, rounds_in_clip, bullets_total_max, bullets_total)
+	print("PISTOL READY clip_by_weapon=", clip_by_weapon, " rounds_in_clip=", rounds_in_clip)
+
+
+
+
+
+
+func update_hud(_bullet_max, _bullet_amount, _bullet_total_max, _bullet_total_amount):
+	if not (global.main and gun_owner):
+		return
+
+	var reserve = _get_reserve_for_current_weapon()
+	var reserve_max = reserve[0]
+	var reserve_cur = reserve[1]
+
+	global.main.update_hud(
+		_bullet_max,
+		_bullet_amount,
+		reserve_max,
+		reserve_cur,
+		weapon_type,
+		gun_owner.player_number
+	)
+
 	
 func cycle_gun() -> void:
 	if guns_in_inventory.is_empty():
@@ -110,11 +147,12 @@ func _get_clip_max_for_weapon(w: GameDefs.WeaponType) -> int:
 func _get_clip_for_weapon(w: GameDefs.WeaponType) -> int:
 	if clip_by_weapon.has(w):
 		return int(clip_by_weapon[w])
-	# first time ever holding this gun: start full
-	return _get_clip_max_for_weapon(w)
+	# first time ever holding this gun: start EMPTY
+	return 0
+
 
 func _set_clip_for_weapon(w: GameDefs.WeaponType, amount: int) -> void:
-	var m := _get_clip_max_for_weapon(w)
+	var m = _get_clip_max_for_weapon(w)
 	clip_by_weapon[w] = clamp(amount, 0, m)
 
 
@@ -161,7 +199,7 @@ func reset_gun():
 			rounds_in_clip = _get_clip_for_weapon(weapon_type)
 			$tmr_shot_delay.wait_time = 2
 			current_case_type = 2
-	update_hud(max_rounds_in_clip,rounds_in_clip)
+	update_hud(max_rounds_in_clip,rounds_in_clip, bullets_total_max, bullets_total)
 
 func fire_down():
 	fire_button_down = true
@@ -172,8 +210,9 @@ func fire_up():
 	fire_button_down = false
 
 func set_pistol_owner(_owner: Player) -> void:
+	print("SET OWNER clip_by_weapon=", clip_by_weapon, " rounds_in_clip=", rounds_in_clip)
 	gun_owner = _owner
-	update_hud(max_rounds_in_clip, rounds_in_clip)
+	update_hud(max_rounds_in_clip,rounds_in_clip, bullets_total_max, bullets_total)
 
 func _fire():
 	if(rounds_in_clip <= 0):
@@ -181,7 +220,7 @@ func _fire():
 		return
 	rounds_in_clip -= 1
 	_set_clip_for_weapon(weapon_type, rounds_in_clip)
-	update_hud(max_rounds_in_clip,rounds_in_clip)
+	update_hud(max_rounds_in_clip,rounds_in_clip, bullets_total_max, bullets_total)
 	is_firing = true
 	release_casing()
 	$AnimationPlayer.stop(true)
@@ -314,17 +353,30 @@ func _set_reserve_amount(ammo_type: GameDefs.AmmoType, value: int) -> void:
 		GameDefs.AmmoType.ENERGY: energy_total = value
 		GameDefs.AmmoType.EXPLOSIVE: explosive_total = value
 
+func _get_reserve_max(ammo_type: GameDefs.AmmoType) -> int:
+	match ammo_type:
+		GameDefs.AmmoType.BULLETS: return bullets_total_max
+		GameDefs.AmmoType.SHOTGUN: return shotgun_total_max
+		GameDefs.AmmoType.ENERGY: return energy_total_max
+		GameDefs.AmmoType.EXPLOSIVE: return explosive_total_max
+		_: return 0
+
+func _get_reserve_for_current_weapon() -> Array:
+	var ammo_type = GameDefs.get_ammo_type(weapon_type)
+	return [_get_reserve_max(ammo_type), _get_reserve_amount(ammo_type)]
+
+
 func _apply_reload_from_reserve() -> void:
 	if weapon_type == GameDefs.WeaponType.NONE:
 		return
 
 	# how much we need to fill the clip
-	var needed := max_rounds_in_clip - rounds_in_clip
+	var needed = max_rounds_in_clip - rounds_in_clip
 	if needed <= 0:
 		return
 
-	var ammo_type := GameDefs.get_ammo_type(weapon_type)
-	var reserve := _get_reserve_amount(ammo_type)
+	var ammo_type = GameDefs.get_ammo_type(weapon_type)
+	var reserve = _get_reserve_amount(ammo_type)
 	if reserve <= 0:
 		return
 
@@ -334,7 +386,7 @@ func _apply_reload_from_reserve() -> void:
 	_set_clip_for_weapon(weapon_type, rounds_in_clip) # <-- YES, right here
 	_set_reserve_amount(ammo_type, reserve - take)
 
-	update_hud(max_rounds_in_clip, rounds_in_clip)
+	update_hud(max_rounds_in_clip,rounds_in_clip, bullets_total_max, bullets_total)
 
 
 func add_gun(gun) -> bool:
@@ -342,17 +394,30 @@ func add_gun(gun) -> bool:
 		return false
 	if gun in guns_in_inventory:
 		return false
+
 	guns_in_inventory.append(gun)
-	_set_clip_for_weapon(gun, _get_clip_max_for_weapon(gun))
+
+	# DON'T overwrite existing clip state if we already have one saved
+	# If it's truly a brand-new gun, choose a default:
+	if not clip_by_weapon.has(gun):
+		# OPTION A: start empty (no free reload)
+		# _set_clip_for_weapon(gun, 0)
+
+		# OPTION B: start full (arcade pickup)
+		_set_clip_for_weapon(gun, _get_clip_max_for_weapon(gun))
+
 	if guns_in_inventory.size() == 3:
 		remove_gun(weapon_type)
+
 	return true
+
+
 
 func remove_gun(gun: GameDefs.WeaponType) -> void:
 	if not (gun in guns_in_inventory):
 		return
 
-	var removing_current := (weapon_type == gun)
+	var removing_current = (weapon_type == gun)
 	guns_in_inventory.erase(gun)
 
 	if guns_in_inventory.is_empty():
