@@ -1,14 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://dw8n47su7k3wo"]
+[gd_scene format=3 uid="uid://dw8n47su7k3wo"]
 
 [ext_resource type="Script" uid="uid://hl2f32fme8ch" path="res://mechanics/enemy_spawner.gd" id="1_5j472"]
 [ext_resource type="Texture2D" uid="uid://cao3xyri0wern" path="res://assets/misc/marker.png" id="1_7twfr"]
 
-[node name="Enemy_Spawner" type="Node2D"]
+[node name="Enemy_Spawner" type="Node2D" unique_id=1651623270]
 script = ExtResource("1_5j472")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1236182320]
 texture = ExtResource("1_7twfr")
 
-[node name="Timer" type="Timer" parent="."]
+[node name="Timer" type="Timer" parent="." unique_id=1671616496]
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

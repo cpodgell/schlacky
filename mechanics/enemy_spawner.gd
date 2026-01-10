@@ -14,6 +14,11 @@ func _ready() -> void:
 		$Timer.start()
 	pass # Replace with function body.
 
+func set_spawn_frequency(_frequency : float) -> void:
+	$Timer.set_deferred("wait_time", _frequency)
+	print($Timer.wait_time)
+	print($Timer.wait_time)
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass

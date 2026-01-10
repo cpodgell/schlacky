@@ -6,6 +6,9 @@ class_name Pistol extends Node2D
 	GameDefs.WeaponType.PISTOL
 ]
 
+var clip_by_weapon: Dictionary = {}
+
+
 var guns_in_inventory: Array[GameDefs.WeaponType] = []
 
 
@@ -39,12 +42,22 @@ var current_case_type = 0
 @onready var laser_gun = $gun_sprites/spr_laser
 @onready var rocket_gun = $gun_sprites/spr_rocket_launcher
 
-var pistol_max = 12
-var shotgun_max = 5
-var machine_gun_max = 35
-var uzi_max = 50
-var laser_max = 20
-var rocket_max = 3
+var pistol_clip_max = GameDefs.get_clip_size(GameDefs.WeaponType.PISTOL)
+var shotgun_clip_max = GameDefs.get_clip_size(GameDefs.WeaponType.SHOTGUN)
+var machine_gun_clip_max = GameDefs.get_clip_size(GameDefs.WeaponType.MACHINE_GUN)
+var uzi_clip_max = GameDefs.get_clip_size(GameDefs.WeaponType.UZI)
+var laser_clip_max = GameDefs.get_clip_size(GameDefs.WeaponType.LASER)
+var rocket_clip_max = GameDefs.get_clip_size(GameDefs.WeaponType.ROCKET_LAUNCHER)
+
+var bullets_total_max = GameDefs.get_total_size(GameDefs.AmmoType.BULLETS)
+var shotgun_total_max = GameDefs.get_total_size(GameDefs.AmmoType.SHOTGUN)
+var energy_total_max = GameDefs.get_total_size(GameDefs.AmmoType.ENERGY)
+var explosive_total_max = GameDefs.get_total_size(GameDefs.AmmoType.EXPLOSIVE)
+
+var bullets_total = bullets_total_max
+var shotgun_total = shotgun_total_max
+var energy_total = energy_total_max
+var explosive_total = explosive_total_max
 
 var bullet_type: GameDefs.AmmoType = GameDefs.AmmoType.BULLETS
 
@@ -55,7 +68,24 @@ func _ready() -> void:
 		weapon_type = GameDefs.WeaponType.NONE
 	else:
 		weapon_type = guns_in_inventory[0]
+
+	for w in guns_in_inventory:
+		_set_clip_for_weapon(w, _get_clip_max_for_weapon(w))
+
 	reset_gun()
+
+	# --- FIX: total ammo includes clip ---
+	var ammo_type = GameDefs.get_ammo_type(weapon_type)
+	match ammo_type:
+		GameDefs.AmmoType.BULLETS:
+			bullets_total -= rounds_in_clip
+		GameDefs.AmmoType.SHOTGUN:
+			shotgun_total -= rounds_in_clip
+		GameDefs.AmmoType.ENERGY:
+			energy_total -= rounds_in_clip
+		GameDefs.AmmoType.EXPLOSIVE:
+			explosive_total -= rounds_in_clip
+
 
 func update_hud(_bullet_max, _bullet_amount):
 	if(global.main and gun_owner):
@@ -74,6 +104,20 @@ func cycle_gun() -> void:
 	reset_gun()
 	sound_manager.play_gun_cycle()
 
+func _get_clip_max_for_weapon(w: GameDefs.WeaponType) -> int:
+	return GameDefs.get_clip_size(w)
+
+func _get_clip_for_weapon(w: GameDefs.WeaponType) -> int:
+	if clip_by_weapon.has(w):
+		return int(clip_by_weapon[w])
+	# first time ever holding this gun: start full
+	return _get_clip_max_for_weapon(w)
+
+func _set_clip_for_weapon(w: GameDefs.WeaponType, amount: int) -> void:
+	var m := _get_clip_max_for_weapon(w)
+	clip_by_weapon[w] = clamp(amount, 0, m)
+
+
 func reset_gun():
 	cycle_fire = false
 	current_case_type = 1
@@ -83,38 +127,38 @@ func reset_gun():
 	match weapon_type:
 		GameDefs.WeaponType.PISTOL:
 			pistol.visible = true
-			rounds_in_clip = pistol_max
-			max_rounds_in_clip = pistol_max
+			max_rounds_in_clip = pistol_clip_max
+			rounds_in_clip = _get_clip_for_weapon(weapon_type)
 			$tmr_shot_delay.wait_time = .2
 		GameDefs.WeaponType.SHOTGUN:
 			$tmr_shot_delay.wait_time = .7
-			rounds_in_clip = shotgun_max
-			max_rounds_in_clip = shotgun_max
+			max_rounds_in_clip = shotgun_clip_max
+			rounds_in_clip = _get_clip_for_weapon(weapon_type)
 			shotgun.visible = true
 			current_case_type = 0
 		GameDefs.WeaponType.MACHINE_GUN:
 			cycle_fire = true
 			machine_gun.visible = true
-			rounds_in_clip = machine_gun_max
-			max_rounds_in_clip = machine_gun_max
+			max_rounds_in_clip = machine_gun_clip_max
+			rounds_in_clip = _get_clip_for_weapon(weapon_type)
 			$tmr_shot_delay.wait_time = .1
 		GameDefs.WeaponType.UZI:
 			cycle_fire = true
 			uzi.visible = true
-			rounds_in_clip = uzi_max
-			max_rounds_in_clip = uzi_max
+			max_rounds_in_clip = uzi_clip_max
+			rounds_in_clip = _get_clip_for_weapon(weapon_type)
 			$tmr_shot_delay.wait_time = .04
 		GameDefs.WeaponType.LASER:
 			cycle_fire = true
 			laser_gun.visible = true
-			rounds_in_clip = laser_max
-			max_rounds_in_clip = laser_max
+			max_rounds_in_clip = laser_clip_max
+			rounds_in_clip = _get_clip_for_weapon(weapon_type)
 			$tmr_shot_delay.wait_time = .1
 		GameDefs.WeaponType.ROCKET_LAUNCHER:
 			cycle_fire = false
 			rocket_gun.visible = true
-			rounds_in_clip = rocket_max
-			max_rounds_in_clip = rocket_max
+			max_rounds_in_clip = rocket_clip_max
+			rounds_in_clip = _get_clip_for_weapon(weapon_type)
 			$tmr_shot_delay.wait_time = 2
 			current_case_type = 2
 	update_hud(max_rounds_in_clip,rounds_in_clip)
@@ -136,6 +180,7 @@ func _fire():
 		sound_manager.play_dry_fire()
 		return
 	rounds_in_clip -= 1
+	_set_clip_for_weapon(weapon_type, rounds_in_clip)
 	update_hud(max_rounds_in_clip,rounds_in_clip)
 	is_firing = true
 	release_casing()
@@ -158,7 +203,6 @@ func _fire():
 		var speed = 600
 		$tmr_shot_delay.start()
 		sound_manager.play_pistol()
-		spawn_bullet(Vector2.ZERO, speed)
 		spawn_bullet(Vector2.ZERO, speed)
 	if(weapon_type == GameDefs.WeaponType.UZI):
 		var speed = 800
@@ -215,9 +259,23 @@ func spawn_bullet(_direction = Vector2.ZERO, _speed : float = 0,  _time_till_dea
 	return bullet
 
 func reload():
-	if(weapon_type != GameDefs.WeaponType.NONE):
-		is_reloading = true
-		$AnimationPlayer.play("reload")
+	if weapon_type == GameDefs.WeaponType.NONE:
+		return
+	if is_reloading:
+		return
+
+	# already full?
+	if rounds_in_clip >= max_rounds_in_clip:
+		return
+
+	# no reserve ammo?
+	var ammo_type = GameDefs.get_ammo_type(weapon_type)
+	if _get_reserve_amount(ammo_type) <= 0:
+		return
+
+	is_reloading = true
+	$AnimationPlayer.play("reload")
+
 
 func play_reload_sound():
 	sound_manager.play_reload2()
@@ -240,13 +298,53 @@ func release_casing():
 	# Increment shot count to cycle through the casings
 	shot_count += 1
 
+func _get_reserve_amount(ammo_type: GameDefs.AmmoType) -> int:
+	match ammo_type:
+		GameDefs.AmmoType.BULLETS: return bullets_total
+		GameDefs.AmmoType.SHOTGUN: return shotgun_total
+		GameDefs.AmmoType.ENERGY: return energy_total
+		GameDefs.AmmoType.EXPLOSIVE: return explosive_total
+		_: return 0
+
+func _set_reserve_amount(ammo_type: GameDefs.AmmoType, value: int) -> void:
+	value = max(value, 0)
+	match ammo_type:
+		GameDefs.AmmoType.BULLETS: bullets_total = value
+		GameDefs.AmmoType.SHOTGUN: shotgun_total = value
+		GameDefs.AmmoType.ENERGY: energy_total = value
+		GameDefs.AmmoType.EXPLOSIVE: explosive_total = value
+
+func _apply_reload_from_reserve() -> void:
+	if weapon_type == GameDefs.WeaponType.NONE:
+		return
+
+	# how much we need to fill the clip
+	var needed := max_rounds_in_clip - rounds_in_clip
+	if needed <= 0:
+		return
+
+	var ammo_type := GameDefs.get_ammo_type(weapon_type)
+	var reserve := _get_reserve_amount(ammo_type)
+	if reserve <= 0:
+		return
+
+	var take = int(min(needed, reserve))
+
+	rounds_in_clip += take
+	_set_clip_for_weapon(weapon_type, rounds_in_clip) # <-- YES, right here
+	_set_reserve_amount(ammo_type, reserve - take)
+
+	update_hud(max_rounds_in_clip, rounds_in_clip)
+
+
 func add_gun(gun) -> bool:
 	if gun == GameDefs.WeaponType.NONE:
-		return -1
+		return false
 	if gun in guns_in_inventory:
-		return -1
+		return false
 	guns_in_inventory.append(gun)
-	if(guns_in_inventory.size() == 3):
+	_set_clip_for_weapon(gun, _get_clip_max_for_weapon(gun))
+	if guns_in_inventory.size() == 3:
 		remove_gun(weapon_type)
 	return true
 
@@ -286,4 +384,4 @@ func _on_tmr_decay_timeout() -> void:
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "reload":
 		is_reloading = false
-		reset_gun()
+		_apply_reload_from_reserve()

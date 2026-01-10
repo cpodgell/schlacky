@@ -11,7 +11,6 @@ func _process(delta: float) -> void:
 	pass
 
 func pickup_item():
-	print("OH YEA: " + str(item_array))
 	if(item_array.size() > 0):
 		var ps : Player = get_parent()
 		item_array[0].pickup(ps)
