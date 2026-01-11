@@ -6,9 +6,8 @@ class_name Main extends Node2D
 var game_camera : GameCamera = null
 var title_screen
 
-var music_00 = preload("res://assets/sfx/music/Owl City Fireflies - Sungha Jung (Cover).mp3")
-var music_01 = preload("res://assets/sfx/music/TPS (Cover).mp3")
-var music = [music_00, music_01]
+var music = []  # List to hold all valid music tracks
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	global.main = self
@@ -20,14 +19,12 @@ func _ready() -> void:
 		$CanvasLayer/HUD.visible = false
 		title_screen = preload("res://screens/TitleScreen.tscn").instantiate()
 		add_child(title_screen)
-		title_screen.connect("start_pressed", Callable(self, "_on_title_screen_start_pressed") )
-	#global.number_of_players = number_of_players
-	#player_manager.create_players()
+		title_screen.connect("start_pressed", Callable(self, "_on_title_screen_start_pressed"))
 	pass # Replace with function body.
 
 func initialize():
 	var screen_width = get_viewport().size.x  # Get the width of the screen
-	
+
 	# Divide the screen width by 4
 	var division = screen_width / 4.0
 
@@ -42,6 +39,15 @@ func initialize():
 		# Keep y position the same as the original (or change it if needed)
 		child.global_position.y = 20  # Or set it to a specific value
 
+	# Load all the mp3 files from the directory dynamically
+	var dir = DirAccess.open("res://assets/sfx/music/")
+	if dir:
+		dir.list_dir_begin()  # Only one argument needed now
+		var file_name = dir.get_next()
+		while file_name != "":
+			if file_name.ends_with(".mp3") and not file_name.begins_with("welcome"):
+				music.append(load("res://assets/sfx/music/" + file_name))  # Use load() instead of preload()
+			file_name = dir.get_next()
 
 func _physics_process(delta: float) -> void:
 	if(game_camera):
@@ -59,8 +65,12 @@ func start_game():
 	load_level()
 
 func load_level():
-	$asp_music.stream = music[randi_range(0,music.size() - 1)]
-	$asp_music.play()
+	if music.size() > 0:
+		# Randomly select a song and play it
+		var selected_music = music[randi_range(0, music.size() - 1)]
+		$asp_music.stream = selected_music
+		$asp_music.play()
+
 	var current_level = preload("res://level/level_04.tscn").instantiate()
 	global.current_level = current_level
 	$staging.add_child(current_level)
@@ -77,5 +87,4 @@ func get_hud(_number) -> PlayerHUD:
 	return get_node("CanvasLayer/HUD/Player_HUD_" + str(_number))
 
 func _on_title_screen_start_pressed() -> void:
-	#title_screen.queue_free()
 	start_game()

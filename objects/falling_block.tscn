@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://8260pdn4g4qy"]
+[gd_scene format=3 uid="uid://8260pdn4g4qy"]
 
 [ext_resource type="Script" uid="uid://1no48jol5e5h" path="res://objects/falling_block.gd" id="1_ybci3"]
 [ext_resource type="Texture2D" uid="uid://dgp5wl8ai6pvm" path="res://assets/objects/stone_block.png" id="2_pip5u"]
@@ -11,38 +11,41 @@ size = Vector2(16, 16)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l0y0e"]
 size = Vector2(16, 11)
 
-[node name="Falling_Block" type="RigidBody2D"]
+[node name="Falling_Block" type="CharacterBody2D" unique_id=305501492]
 collision_layer = 2
 collision_mask = 2
-mass = 0.001
 script = ExtResource("1_ybci3")
 
-[node name="spr_block" type="Sprite2D" parent="."]
+[node name="spr_block" type="Sprite2D" parent="." unique_id=778132326]
 position = Vector2(0, -8)
 texture = ExtResource("2_pip5u")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2027004011]
 position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_7por5")
 
-[node name="stone_debris" parent="." instance=ExtResource("3_pip5u")]
+[node name="stone_debris" parent="." unique_id=1227732519 instance=ExtResource("3_pip5u")]
 position = Vector2(0, -8)
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1885239731]
 stream = ExtResource("4_7por5")
 pitch_scale = 0.98
 
-[node name="tmr_cls_disable" type="Timer" parent="."]
+[node name="tmr_cls_disable" type="Timer" parent="." unique_id=1348137941]
 wait_time = 0.09
 one_shot = true
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=715621221]
 collision_layer = 2
 collision_mask = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1211943070]
 position = Vector2(0, -4.5)
 shape = SubResource("RectangleShape2D_l0y0e")
+
+[node name="Label" type="Label" parent="." unique_id=1164599938]
+offset_right = 40.0
+offset_bottom = 23.0
 
 [connection signal="block_debris_finished" from="stone_debris" to="." method="_on_stone_debris_block_debris_finished"]
 [connection signal="timeout" from="tmr_cls_disable" to="." method="_on_timer_timeout"]

@@ -136,10 +136,14 @@ func cycle_gun() -> void:
 		reset_gun()
 		return
 
+	# Update the gun index and change the weapon
 	gun_index = (gun_index + 1) % guns_in_inventory.size()
 	weapon_type = guns_in_inventory[gun_index]
-	reset_gun()
-	sound_manager.play_gun_cycle()
+	
+	# Immediately reset the gun to apply the changes
+	reset_gun()  
+	
+	sound_manager.play_gun_cycle()  # Play gun cycle sound after changing
 
 func _get_clip_max_for_weapon(w: GameDefs.WeaponType) -> int:
 	return GameDefs.get_clip_size(w)
@@ -409,7 +413,13 @@ func add_gun(gun) -> bool:
 	if guns_in_inventory.size() == 3:
 		remove_gun(weapon_type)
 
+	# Equip the newly picked-up gun:
+	weapon_type = gun    # Equip the new weapon
+	reset_gun()          # Reset the gun (set it up for firing)
+	update_hud(max_rounds_in_clip, rounds_in_clip, bullets_total_max, bullets_total)  # Update HUD with the new weapon's stats
+
 	return true
+
 
 
 
