@@ -8,7 +8,6 @@ class_name Pistol extends Node2D
 
 var clip_by_weapon: Dictionary = {}
 
-
 var guns_in_inventory: Array[GameDefs.WeaponType] = []
 
 
@@ -16,6 +15,8 @@ var casing_scene = preload("res://effects/casing.tscn")
 @export var laser_scene: PackedScene = preload("res://weapons/bullets/laser.tscn")
 
 var gun_index: int = 0
+
+const MAX_WEAPONS = 2
 
 var is_reloading = false
 var is_firing = false
@@ -84,7 +85,7 @@ func _ready() -> void:
 	_set_clip_for_weapon(weapon_type, _get_clip_max_for_weapon(weapon_type))
 	rounds_in_clip = _get_clip_for_weapon(weapon_type)
 
-	# total ammo includes clip: subtract the loaded clip from the correct reserve pool
+	# Total ammo includes clip: subtract the loaded clip from the correct reserve pool
 	var ammo_type = GameDefs.get_ammo_type(weapon_type)
 	match ammo_type:
 		GameDefs.AmmoType.BULLETS:
@@ -96,19 +97,13 @@ func _ready() -> void:
 		GameDefs.AmmoType.EXPLOSIVE:
 			explosive_total -= rounds_in_clip
 
-	# safety: never allow negative reserve
+	# Safety: never allow negative reserve
 	bullets_total = max(bullets_total, 0)
 	shotgun_total = max(shotgun_total, 0)
 	energy_total = max(energy_total, 0)
 	explosive_total = max(explosive_total, 0)
 
 	update_hud(max_rounds_in_clip, rounds_in_clip, bullets_total_max, bullets_total)
-	print("PISTOL READY clip_by_weapon=", clip_by_weapon, " rounds_in_clip=", rounds_in_clip)
-
-
-
-
-
 
 func update_hud(_bullet_max, _bullet_amount, _bullet_total_max, _bullet_total_amount):
 	if not (global.main and gun_owner):
@@ -126,7 +121,6 @@ func update_hud(_bullet_max, _bullet_amount, _bullet_total_max, _bullet_total_am
 		weapon_type,
 		gun_owner.player_number
 	)
-
 	
 func cycle_gun() -> void:
 	if guns_in_inventory.is_empty():
@@ -135,15 +129,25 @@ func cycle_gun() -> void:
 		weapon_type = guns_in_inventory[0]
 		reset_gun()
 		return
-
-	# Update the gun index and change the weapon
+		
+	var previous_weapon_type = weapon_type
 	gun_index = (gun_index + 1) % guns_in_inventory.size()
 	weapon_type = guns_in_inventory[gun_index]
-	
-	# Immediately reset the gun to apply the changes
 	reset_gun()  
-	
 	sound_manager.play_gun_cycle()  # Play gun cycle sound after changing
+
+func toss_weapon(weapon_type: GameDefs.WeaponType) -> void:
+	if weapon_type == GameDefs.WeaponType.NONE:
+		return
+
+	var item = preload("res://items/item.tscn").instantiate()
+	item.weapon_type = weapon_type
+
+	global.current_level.add_to_ysort(item)
+	item.global_position = global_position 
+	
+	print("Dropped weapon as item: ", weapon_type)
+
 
 func _get_clip_max_for_weapon(w: GameDefs.WeaponType) -> int:
 	return GameDefs.get_clip_size(w)
@@ -151,7 +155,6 @@ func _get_clip_max_for_weapon(w: GameDefs.WeaponType) -> int:
 func _get_clip_for_weapon(w: GameDefs.WeaponType) -> int:
 	if clip_by_weapon.has(w):
 		return int(clip_by_weapon[w])
-	# first time ever holding this gun: start EMPTY
 	return 0
 
 
@@ -214,7 +217,6 @@ func fire_up():
 	fire_button_down = false
 
 func set_pistol_owner(_owner: Player) -> void:
-	print("SET OWNER clip_by_weapon=", clip_by_weapon, " rounds_in_clip=", rounds_in_clip)
 	gun_owner = _owner
 	update_hud(max_rounds_in_clip,rounds_in_clip, bullets_total_max, bullets_total)
 
@@ -269,15 +271,13 @@ func _fire():
 
 func spawn_laser() -> void:
 	var laser: LaserBeam = laser_scene.instantiate()
-	# Spawn at the gun's position
 	laser.global_position = $mkr_fire_position.global_position
 	laser.bullet_owner = gun_owner
 	# Shoot straight right (local +X)
 	laser.direction = Vector2(get_parent().scale.x, 0)
-	# Optional tuning (safe defaults)
 	laser.damage = 20
 	laser.owner = self
-	# Add to scee (NOT as a child of the gun)
+
 	get_tree().current_scene.add_child(laser)
 	laser.fire()
 
@@ -307,11 +307,9 @@ func reload():
 	if is_reloading:
 		return
 
-	# already full?
 	if rounds_in_clip >= max_rounds_in_clip:
 		return
 
-	# no reserve ammo?
 	var ammo_type = GameDefs.get_ammo_type(weapon_type)
 	if _get_reserve_amount(ammo_type) <= 0:
 		return
@@ -332,8 +330,6 @@ func release_casing():
 	var x = get_parent().scale.x * -1
 	x = randf_range(x*20, x*40)
 	var y = randf_range(-300, -100)
-	#case.apply_impulse(Vector2(x, randf_range(-300,-200)), Vector2(0, 0))  # Stronger upward impulse
-	#case.apply_impulse(Vector2(randf_range(-200, -100), -300), Vector2(0, 0))  # Random backward and upward impulse with spin
 	case.apply_impulse(Vector2(x,y), Vector2(0, 0))
 	case.angular_velocity = randf_range(5, 20)
 
@@ -374,7 +370,6 @@ func _apply_reload_from_reserve() -> void:
 	if weapon_type == GameDefs.WeaponType.NONE:
 		return
 
-	# how much we need to fill the clip
 	var needed = max_rounds_in_clip - rounds_in_clip
 	if needed <= 0:
 		return
@@ -387,7 +382,7 @@ func _apply_reload_from_reserve() -> void:
 	var take = int(min(needed, reserve))
 
 	rounds_in_clip += take
-	_set_clip_for_weapon(weapon_type, rounds_in_clip) # <-- YES, right here
+	_set_clip_for_weapon(weapon_type, rounds_in_clip)
 	_set_reserve_amount(ammo_type, reserve - take)
 
 	update_hud(max_rounds_in_clip,rounds_in_clip, bullets_total_max, bullets_total)
@@ -399,30 +394,26 @@ func add_gun(gun) -> bool:
 	if gun in guns_in_inventory:
 		return false
 
-	guns_in_inventory.append(gun)
+	# If we already have 2 guns, toss the current one first
+	if guns_in_inventory.size() >= MAX_WEAPONS:
+		remove_gun(weapon_type)  # Toss out the current gun before adding the new one
 
-	# DON'T overwrite existing clip state if we already have one saved
-	# If it's truly a brand-new gun, choose a default:
+	guns_in_inventory.append(gun)  # Add the new gun
+
+	# If the new gun has no clip state, set it to a default value
 	if not clip_by_weapon.has(gun):
-		# OPTION A: start empty (no free reload)
-		# _set_clip_for_weapon(gun, 0)
-
-		# OPTION B: start full (arcade pickup)
 		_set_clip_for_weapon(gun, _get_clip_max_for_weapon(gun))
 
-	if guns_in_inventory.size() == 3:
-		remove_gun(weapon_type)
+	# Equip the new gun
+	weapon_type = gun
+	reset_gun()
 
-	# Equip the newly picked-up gun:
-	weapon_type = gun    # Equip the new weapon
-	reset_gun()          # Reset the gun (set it up for firing)
-	update_hud(max_rounds_in_clip, rounds_in_clip, bullets_total_max, bullets_total)  # Update HUD with the new weapon's stats
+	# Update the HUD with the new weapon's stats
+	update_hud(max_rounds_in_clip, rounds_in_clip, bullets_total_max, bullets_total)
 
 	return true
 
-
-
-
+	
 func remove_gun(gun: GameDefs.WeaponType) -> void:
 	if not (gun in guns_in_inventory):
 		return
@@ -435,11 +426,15 @@ func remove_gun(gun: GameDefs.WeaponType) -> void:
 		return
 
 	if removing_current:
+		# Toss the gun as an item before removing it from the inventory
+		toss_weapon(gun)  # Call toss_weapon to spawn it as an Item
+		
 		gun_index = clamp(gun_index, 0, guns_in_inventory.size() - 1)
 		weapon_type = guns_in_inventory[gun_index]
 		reset_gun()
 	else:
 		gun_index = clamp(gun_index, 0, guns_in_inventory.size() - 1)
+
 
 func _on_tmr_shot_delay_timeout() -> void:
 	is_firing = false
